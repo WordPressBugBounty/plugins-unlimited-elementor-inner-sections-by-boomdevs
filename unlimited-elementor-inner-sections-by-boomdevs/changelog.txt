@@ -15,3 +15,6 @@ Fix: compellability issues with Elementor 3.18.3
 
 = 1.0.6 =
 compatibility: Enhanced compatibility with WordPress 6.5.2
+
+= 1.0.7 =
+compatibility: Enhanced compatibility with WordPress 6.6.2

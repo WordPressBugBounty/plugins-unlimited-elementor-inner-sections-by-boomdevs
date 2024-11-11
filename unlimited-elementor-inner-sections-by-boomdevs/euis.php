@@ -8,18 +8,18 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://boomdevs.com/
+ * @link              https://wpmessiah.com/
  * @since             1.0.0
  * @package           Euis
  *
  * @wordpress-plugin
  * Plugin Name:       Unlimited Elementor Inner Sections By BoomDevs
- * Plugin URI:        https://boomdevs.com/product-category/wordpress/wordpress-plugins/
+ * Plugin URI:        https://wpmessiah.com/product-category/wordpress/wordpress-plugins/
  * Description:       The only plugin that allows to add unlimited inner sections in Elementor without any other bloat-add-ons
- * Version:           1.0.6
- * Author:            BoomDevs
- * Author URI:        https://boomdevs.com/
- * Elementor tested up to: 3.18.3
+ * Version:           1.0.7
+ * Author:            WP Messiah
+ * Author URI:        https://wpmessiah.com/
+ * Elementor tested up to: 3.25.4
  * License:           GPL-2.0+
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       euis
@@ -37,7 +37,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'EUIS_VERSION', '1.0.6' );
+define( 'EUIS_VERSION', '1.0.7' );
 
 require __DIR__ . '/vendor/autoload.php';
 

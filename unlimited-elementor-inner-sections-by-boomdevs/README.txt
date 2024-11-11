@@ -1,13 +1,13 @@
 === Unlimited Elementor Inner Sections By BoomDevs ===
 Plugin Name: Unlimited Elementor Inner Sections By BoomDevs
 Version: 1.0.6
-Author: BoomDevs
-Author URI: https://boomdevs.com/
-Contributors: boomdevs, robin-islam
+Author: WP Messiah
+Author URI: https://wpmessiah.com/
+Contributors: boomdevs, wpmessiah
 Tags: elementor, elementor-addon, elementor-unlimited-inner-section
 Requires at least: 5.0
-Tested up to: 6.5.2
-Stable tag: 1.0.6
+Tested up to: 6.6.2
+Stable tag: 1.0.7
 Requires PHP: 5.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -19,7 +19,7 @@ The only plugin that allows to add unlimited inner sections in Elementor without
 **Unlimited Elementor Inner Sections** brings the most wanted and only missing feature of Elementor to help user create unlimited inner sections.
 The only plugin that allows to add unlimited inner sections in Elementor without any other bloat-add-ons.
 
-Made with ❣️ By [BoomDevs](https://boomdevs.com/)
+Made with ❣️ By [WP Messiah](https://wpmessiah.com/)
 
 If you really like this plugin please don't forget to give us your rating. Thanks so much! ⭐⭐⭐⭐⭐
 
@@ -37,14 +37,6 @@ Here are some of our amazing plugins that you can use to boost your WordPress we
 
 [👥 Tribute Testimonials – WordPress Testimonial Grid/Slider 👥](https://wordpress.org/plugins/tribute-testimonial-gridslider/): Build any grid or slider layout using the drag-and-drop Testimonial Builder. Showcase positive feedback from satisfied customers and build trust with your audience.
 
-## Privacy Policy
-Unlimited Elementor Inner Sections By BoomDevs collects some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
-
-BoomDevs **does not gather any data by default.** The tracking SDK only starts gathering basic telemetry data **when a user allows it via the admin notice**. We collect the data to ensure a great user experience for all our users.
-
-BoomDevs tracking SDK **DOES NOT IMMEDIATELY** start gathering data, **without confirmation from users in any case.**
-
-Learn more about how [BoomDevs collects and uses this data](https://appsero.com/privacy-policy/).
 
 == Screenshots ==
 1. Multiple level nesting demo
@@ -52,7 +44,7 @@ Learn more about how [BoomDevs collects and uses this data](https://appsero.com/
 3. Adding nested section animated demo
 
 == Support==  
-If you have any questions, please email us at (contact@boomdevs.com)
+If you have any questions, please email us at (contact@wpmessiah.com)
 
 == Installation ==  
 
@@ -98,3 +90,6 @@ Fix: compellability issues with Elementor 3.18.3
 
 = 1.0.6 =
 compatibility: Enhanced compatibility with WordPress 6.5.2
+
+= 1.0.7 =
+compatibility: Enhanced compatibility with WordPress 6.6.2

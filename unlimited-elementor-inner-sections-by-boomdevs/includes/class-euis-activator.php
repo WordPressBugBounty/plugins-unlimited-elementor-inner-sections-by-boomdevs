@@ -3,7 +3,7 @@
 /**
  * Fired during plugin activation
  *
- * @link       https://boomdevs.com/
+ * @link       https://wpmessiah.com/
  * @since      1.0.0
  *
  * @package    Euis
@@ -18,7 +18,7 @@
  * @since      1.0.0
  * @package    Euis
  * @subpackage Euis/includes
- * @author     BoomDevs <contact@boomdevs.com>
+ * @author     BoomDevs <contact@wpmessiah.com>
  */
 class Euis_Activator {
 

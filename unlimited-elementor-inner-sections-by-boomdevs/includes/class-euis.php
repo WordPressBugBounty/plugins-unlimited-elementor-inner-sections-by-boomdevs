@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://boomdevs.com/
+ * @link       https://wpmessiah.com/
  * @since      1.0.0
  *
  * @package    Euis
@@ -25,7 +25,7 @@
  * @since      1.0.0
  * @package    Euis
  * @subpackage Euis/includes
- * @author     BoomDevs <contact@boomdevs.com>
+ * @author     BoomDevs <contact@wpmessiah.com>
  */
 class Euis {
 
@@ -71,7 +71,7 @@ class Euis {
         if ( defined( 'EUIS_VERSION' ) ) {
             $this->version = EUIS_VERSION;
         } else {
-            $this->version = '1.0.6';
+            $this->version = '1.0.7';
         }
 
         $this->plugin_name = 'euis';

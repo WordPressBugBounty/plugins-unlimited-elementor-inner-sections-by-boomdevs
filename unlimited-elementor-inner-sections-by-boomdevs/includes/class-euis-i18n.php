@@ -6,7 +6,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       https://boomdevs.com/
+ * @link       https://wpmessiah.com/
  * @since      1.0.0
  *
  * @package    Euis
@@ -22,7 +22,7 @@
  * @since      1.0.0
  * @package    Euis
  * @subpackage Euis/includes
- * @author     BoomDevs <contact@boomdevs.com>
+ * @author     BoomDevs <contact@wpmessiah.com>
  */
 class Euis_i18n {
 
