@@ -6,7 +6,7 @@ Author URI: https://wpmessiah.com/
 Contributors: boomdevs, wpmessiah
 Tags: elementor, elementor-addon, elementor-unlimited-inner-section
 Requires at least: 5.0
-Tested up to: 6.6.2
+Tested up to: 6.7
 Stable tag: 1.0.7
 Requires PHP: 5.4
 License: GPLv2
