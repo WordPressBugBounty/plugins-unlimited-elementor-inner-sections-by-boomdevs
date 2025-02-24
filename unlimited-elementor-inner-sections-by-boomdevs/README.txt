@@ -3,7 +3,7 @@ Plugin Name: Unlimited Elementor Inner Sections By BoomDevs
 Version: 1.0.6
 Author: WP Messiah
 Author URI: https://wpmessiah.com/
-Contributors: boomdevs, wpmessiah
+Contributors: wpmessiah
 Tags: elementor, elementor-addon, elementor-unlimited-inner-section
 Requires at least: 5.0
 Tested up to: 6.7
