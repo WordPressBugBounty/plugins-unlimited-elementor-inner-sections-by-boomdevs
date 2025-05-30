@@ -71,7 +71,7 @@ class Euis {
         if ( defined( 'EUIS_VERSION' ) ) {
             $this->version = EUIS_VERSION;
         } else {
-            $this->version = '1.0.7';
+            $this->version = '1.0.8';
         }
 
         $this->plugin_name = 'euis';
@@ -112,6 +112,8 @@ class Euis {
          * of the plugin.
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-euis-i18n.php';
+
+         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-boomdevs-notification-widget-elementor-inner.php';
 
         /**
          * The class responsible for defining all actions that occur in the admin area.

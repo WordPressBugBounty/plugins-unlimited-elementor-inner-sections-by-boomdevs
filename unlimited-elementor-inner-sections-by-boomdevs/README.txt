@@ -1,13 +1,12 @@
 === Unlimited Elementor Inner Sections By BoomDevs ===
 Plugin Name: Unlimited Elementor Inner Sections By BoomDevs
-Version: 1.0.6
 Author: WP Messiah
 Author URI: https://wpmessiah.com/
 Contributors: wpmessiah
 Tags: elementor, elementor-addon, elementor-unlimited-inner-section
 Requires at least: 5.0
-Tested up to: 6.7
-Stable tag: 1.0.7
+Tested up to: 6.8
+Stable tag: 1.0.8
 Requires PHP: 5.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,3 +92,6 @@ compatibility: Enhanced compatibility with WordPress 6.5.2
 
 = 1.0.7 =
 compatibility: Enhanced compatibility with WordPress 6.6.2
+
+= 1.0.8 =
+compatibility: Enhanced compatibility with WordPress 6.8
