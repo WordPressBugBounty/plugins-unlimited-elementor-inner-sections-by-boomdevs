@@ -71,7 +71,7 @@ class Euis {
         if ( defined( 'EUIS_VERSION' ) ) {
             $this->version = EUIS_VERSION;
         } else {
-            $this->version = '1.0.8';
+            $this->version = '1.0.9';
         }
 
         $this->plugin_name = 'euis';

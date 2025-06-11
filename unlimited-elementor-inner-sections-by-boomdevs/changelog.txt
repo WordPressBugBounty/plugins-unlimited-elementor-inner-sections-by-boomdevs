@@ -21,3 +21,6 @@ compatibility: Enhanced compatibility with WordPress 6.6.2
 
 = 1.0.8 =
 compatibility: Enhanced compatibility with WordPress 6.8
+
+= 1.0.9 =
+Fix: Admin setting panel loading issues

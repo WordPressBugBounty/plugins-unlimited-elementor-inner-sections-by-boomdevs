@@ -16,7 +16,7 @@
  * Plugin Name:       Unlimited Elementor Inner Sections By BoomDevs
  * Plugin URI:        https://wpmessiah.com/product-category/wordpress/wordpress-plugins/
  * Description:       The only plugin that allows to add unlimited inner sections in Elementor without any other bloat-add-ons
- * Version:           1.0.8
+ * Version:           1.0.9
  * Author:            WP Messiah
  * Author URI:        https://wpmessiah.com/
  * Elementor tested up to: 3.25.4
@@ -37,7 +37,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'EUIS_VERSION', '1.0.8' );
+define( 'EUIS_VERSION', '1.0.9' );
 define( 'INNER_BACKEND_URL', 'https://wpmessiah.com/wp-json/notification-api/v1/get');
 
 require __DIR__ . '/vendor/autoload.php';

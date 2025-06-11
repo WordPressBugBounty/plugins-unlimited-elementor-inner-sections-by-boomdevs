@@ -6,7 +6,7 @@ Contributors: wpmessiah
 Tags: elementor, elementor-addon, elementor-unlimited-inner-section
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 Requires PHP: 5.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -95,3 +95,6 @@ compatibility: Enhanced compatibility with WordPress 6.6.2
 
 = 1.0.8 =
 compatibility: Enhanced compatibility with WordPress 6.8
+
+= 1.0.9 =
+Fix: Admin setting panel loading issues
