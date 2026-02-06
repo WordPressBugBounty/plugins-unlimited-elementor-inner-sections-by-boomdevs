@@ -13,120 +13,62 @@
  * @package           Euis
  *
  * @wordpress-plugin
- * Plugin Name:       Unlimited Elementor Inner Sections By BoomDevs
+ * Plugin Name:       Prime Elementor Addons – Lightweight Elementor Widgets for Faster Pages
  * Plugin URI:        https://wpmessiah.com/product-category/wordpress/wordpress-plugins/
- * Description:       The only plugin that allows to add unlimited inner sections in Elementor without any other bloat-add-ons
- * Version:           1.0.9
+ * Description:       Lightweight Elementor Addons plugin with essential Elementor widgets: Accordion, Tabs, CTA, Pricing Table, Testimonials, Post Grid, forms & more.
+ * Version:           1.1.0
  * Author:            WP Messiah
  * Author URI:        https://wpmessiah.com/
  * Elementor tested up to: 3.25.4
  * License:           GPL-2.0+
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       euis
+ * Text Domain:       unlimited-elementor-inner-sections-by-boomdevs
  * Domain Path:       /languages 
  */
 
-// If this file is called directly, abort.
-
-if ( ! defined( 'WPINC' ) ) {
-    die;
-}
+if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
 
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'EUIS_VERSION', '1.0.9' );
-define( 'INNER_BACKEND_URL', 'https://wpmessiah.com/wp-json/notification-api/v1/get');
+define('PEA_UEIS_BACKEND_URL', 'https://wpmessiah.com/wp-json/notification-api/v1/get');
+define('PEA_PLUGIN_FILE', __FILE__);
 
-require __DIR__ . '/vendor/autoload.php';
+// Check if autoloader exists before requiring
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+} else {
+    // Show admin notice if vendor folder is missing
+    add_action('admin_notices', function() {
+        echo '<div class="error"><p>Prime Elementor Addons: vendor folder is missing. Please reinstall the plugin.</p></div>';
+    });
+    return;
+}
 
 /**
  * Initialize the plugin tracker
  *
  * @return void
  */
-function appsero_init_tracker_unlimited_elementor_inner_sections_by_boomdevs() {
+function pea_ueis_init_appsero_tracker() {
 
     if ( ! class_exists( 'Appsero\Client' ) ) {
       require_once __DIR__ . '/appsero/src/Client.php';
     }
 
-    $client = new Appsero\Client( '7d1e2808-f512-4e91-b06f-95ad6e5653e5', 'Unlimited Elementor Inner Sections By BoomDevs', __FILE__ );
+    $client = new Appsero\Client( '7d1e2808-f512-4e91-b06f-95ad6e5653e5', 'Prime Elementor Addons', __FILE__ );
 
     // Active insights
     $client->insights()->init();
 
 }
 
-appsero_init_tracker_unlimited_elementor_inner_sections_by_boomdevs();
+pea_ueis_init_appsero_tracker();
 
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-euis-activator.php
- */
-function activate_euis() {
-    require_once plugin_dir_path( __FILE__ ) . 'includes/class-euis-activator.php';
-    Euis_Activator::activate();
+function prime_elementor_addons(){
+    PrimeElementorAddons\Plugin::instance();
 }
 
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-euis-deactivator.php
- */
-function deactivate_euis() {
-    require_once plugin_dir_path( __FILE__ ) . 'includes/class-euis-deactivator.php';
-    Euis_Deactivator::deactivate();
-}
-
-register_activation_hook( __FILE__, 'activate_euis' );
-register_deactivation_hook( __FILE__, 'deactivate_euis' );
-
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-require plugin_dir_path( __FILE__ ) . 'includes/class-euis.php';
-
-/**
- * Begins execution of the plugin.
- *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
- * @since    1.0.0
- */
-function run_euis() {
-
-// Check if Elementor is installed and activated
-    if ( ! did_action( 'elementor/loaded' ) ) {
-        add_action( 'admin_notices', 'euis_elementor_missing_notice' );
-    } else {
-        // Run plugin
-        $plugin = new Euis();
-        $plugin->run();
-    }
-
-}
-
-add_action( 'plugins_loaded', 'run_euis' );
-
-/**
- * Shows admin notice if Elementor is not installed or activated
- *
- * @since    1.0.0
- */
-function euis_elementor_missing_notice() {
-
-    $message = sprintf(
-        __( 'You must install and activate %s to use %s. %s.', 'euis' ),
-        '<strong>' . __( 'Elementor', 'euis' ) . '</strong>',
-        '<strong>' . __( 'Unlimited Elementor Inner Sections By BoomDevs', 'euis' ) . '</strong>',
-        '<br><a href="' . esc_url( admin_url( 'plugin-install.php?s=Elementor&tab=search&type=term' ) ) . '">' . __( 'Please click on this on link to install or activate Elementor', 'euis' ) . '</a>'
-    );
-
-    printf( '<div class="notice notice-warning is-dismissible"><p style="padding: 15px 0">%1$s</p></div>', $message );
-
-}
+prime_elementor_addons();

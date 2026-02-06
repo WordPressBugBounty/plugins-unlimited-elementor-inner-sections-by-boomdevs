@@ -1,0 +1,229 @@
+.pea-team-member-main-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+.pea-team-member-main-wrapper a:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+.pea-team-member-wrapper .pea-team-member-item {
+    position: relative;
+    overflow: hidden;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-image-wrapper .pea-team-member-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-image-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.do-top-left{
+    top: 0;
+    left: 0;
+}
+.do-top-center{
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%); 
+}
+.do-top-right{
+    top: 0;
+    right: 0;
+}
+.do-center-left{
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+}
+.do-center-center{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.do-center-right{
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+}
+.do-bottom-left{
+    bottom: 0;
+    left: 0;
+}
+.do-bottom-center{
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.do-bottom-right{
+    bottom: 0;
+    right: 0;
+}
+.icon-animation-top{
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 0.5s ease-in-out;
+}
+.icon-animation-bottom{
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-100px);
+    transition: all 0.5s ease-in-out;
+}
+.icon-animation-right{
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: all 0.5s ease-in-out;
+}
+.icon-animation-left{
+visibility: hidden;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all 0.5s ease-in-out;
+}
+.pea-widget-wrapper:hover .icon-animation-bottom, .pea-widget-wrapper:hover .icon-animation-top, .pea-widget-wrapper:hover .icon-animation-right, .pea-widget-wrapper:hover .icon-animation-left{
+    visibility: visible;
+    opacity: 1;
+    transform: translate(0);
+    transition: all 0.5s ease-in-out;
+}
+
+/* css by control  */
+.pea-team-member-wrapper {
+    position: relative;
+    transition: all .3s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-image-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-image {
+    position: relative;
+    z-index: 2;
+    /* overflow: hidden; */
+    width: 260px;
+    height: 260px;
+    border: none;
+    border-radius: 50% 50% 50% 50%;
+    margin: 0 20px 0 20px;
+    transition: all .3s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-content-wrapper {
+    position: relative;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-radius: 8px 8px 8px 8px;
+    margin: 32px 0 0 0;
+    transition: all .3s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-image-wrapper .pea-team-member-image-overlay {
+    background: #0000005e;
+    opacity: 0.5;
+    transition: all 0.3s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-content-wrapper .pea-team-member-content {
+    text-align: center;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-name, .pea-team-member-wrapper .pea-team-member-item .pea-team-member-name a {
+    text-decoration: none;
+    margin: 0 0 8px 0;
+    transition: all .3s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-designation, .pea-team-member-wrapper .pea-team-member-item .pea-team-member-designation a {
+    display: block;
+    text-decoration: none;
+    transition: all .3s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-desc, .pea-team-member-wrapper .pea-team-member-item .pea-team-member-desc a {
+    font-family: Manrope;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all .3s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-social-profile-separator {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-social-profile-separator hr {
+    border: none;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #e1e3e8;
+    width: 100%;
+    margin: 24px 0 24px 0;
+    transition: all .3s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-social-profile-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-style: none;
+    /* overflow: hidden; */
+    transition: all .3s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-social-profile-wrapper .pea-team-member-social-icon-wrapper-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 20px 20px 20px 20px;
+    border-style: none;
+    border-radius: 50% 50% 50% 50%;
+    transition: all .3s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-social-profile-wrapper .pea-team-member-social-icon-wrapper-btn svg {
+    width: 20px;
+    height: 20px;
+    transition: all .3s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-social-profile {
+    display: flex;
+    align-items: center;
+    gap: 29px;
+    transition: all .5s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-social-profile {
+    border-style: none;
+    border-radius: 150px 150px 150px 150px;
+    transition: all .3s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-social-profile .pea-team-member-social-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-social-profile .pea-team-member-social-icon svg {
+    width: 18px;
+    height: 18px;
+    transition: all .3s ease-in-out;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-badge-wrapper {
+    display: flex;
+    position: absolute;
+    width: max-content;
+    z-index: 5;
+}
+.pea-team-member-wrapper .pea-team-member-item .pea-team-member-badge {
+    text-decoration: none;
+    border-style: none;
+    transition: all 0.3s ease-in-out;
+}

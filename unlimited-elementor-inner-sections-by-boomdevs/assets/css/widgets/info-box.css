@@ -1,0 +1,92 @@
+.pea-info-box-wrapper {
+    position: relative;
+    border: none;
+    border-width: 0 0 0 0;
+    transition: all .3s ease-in-out;
+}
+.pea-info-box-wrapper .pea-info-box-wrapper-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+.pea-info-box-wrapper .pea-info-box-wrapper-inner .pea-info-media-container {
+    display: flex;
+    justify-content: left;
+    align-items: flex-start;
+}
+.pea-info-box-wrapper .pea-info-media-wrapper {
+    border-style: none;
+    border-width: 0 0 0 0;
+    background-repeat: none;
+    background-size: cover;
+    justify-content: center;
+    transition: all .3s ease-in-out;
+}
+.pea-info-box-wrapper-inner .pea-info-media-wrapper {
+    align-items: center;
+    display: flex;
+}
+.pea-info-box-wrapper-inner .pea-icon-wrapper {
+    line-height: 0;
+}
+.pea-info-box-wrapper .pea-icon-wrapper svg{
+    width: 24px;
+    height: 24px;
+}
+.pea-info-box-wrapper .pea-info-box-title {
+    font-size: 24px;
+    font-weight: 600;
+    padding: 0 0 0 0;
+    margin: 0 16px 0 16px;
+    border-style: none;
+    border-width: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    text-align: left;
+    transition: all .3s ease-in-out;
+}
+.pea-info-box-wrapper .pea-info-box-description {
+    padding: 15px 0 15px 0;
+    margin: 0 16px 0 16px;
+    text-align: left;
+    transition: all .3s ease-in-out;
+}
+.pea-info-box-wrapper .pea-info-btn-container {
+    text-align: left;
+}
+.pea-info-box-wrapper-inner .pea-info-btn-wrapper {
+    align-items: center;
+    display: inline-flex;
+    gap: 10px;
+}
+.pea-info-box-wrapper .pea-info-btn-wrapper {
+    flex-direction: row;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+    text-decoration: none;
+    padding: 0 0 0 0;
+    margin: 0 16px 0 16px;
+    border-style: none;
+    border-width: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    transition: all .3s ease-in-out;
+}
+.pea-info-box-wrapper-inner .pea-info-btn-wrapper .pea-btn-icon-wrapper {
+    line-height: 0;
+    transition: all .3s ease-in-out;
+}
+.pea-info-box-wrapper .pea-btn-icon-wrapper svg {
+    width: 16px;
+    transition: all .3s ease-in-out;
+}
+.pea-info-box-wrapper.preset-6 .shape {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.pea-info-box-wrapper.preset-6 .pea-info-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 6;
+}

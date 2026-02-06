@@ -1,0 +1,72 @@
+
+.pea-count-down-wrapper .pea-count-down-item:before {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.pea-count-down-wrapper .pea-count-down-item:last-child::before {
+    content: none !important;
+}
+/* css by control */
+
+.pea-count-down-wrapper {
+    display: flex;
+    gap: 104px;
+    justify-content: center;
+    border: none;
+    border-radius: 14px 14px 14px 14px;
+    background: #399cff;
+    padding: 24px 42px 24px 42px;
+    transition: all .3s ease-in-out;
+}
+.pea-count-down-wrapper .pea-count-down-item {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+}
+.pea-count-down-wrapper .pea-count-down-item {
+    border-style: none;
+    transition: all .3s ease-in-out;
+}
+.pea-count-down-wrapper .pea-count-down-item::before {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    content: ":";
+    top: 40px;
+    right: -60px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 48px;
+    transition: all .3s ease-in-out;
+}
+.pea-count-down-wrapper .pea-count-down-item .pea-count-down-time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-family: inherit;
+    font-size: 62px;
+    font-weight: 500;
+    border-style: none;
+    width: 100%;
+    transition: all .3s ease-in-out;
+}
+.pea-count-down-wrapper .pea-count-down-item .pea-count-down-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-family: inherit;
+    font-size: 18px;
+    line-height: 24px;
+    border-style: none;
+    margin: 10px 0 0 0;
+    width: 100%;
+    transition: all .3s ease-in-out;
+}

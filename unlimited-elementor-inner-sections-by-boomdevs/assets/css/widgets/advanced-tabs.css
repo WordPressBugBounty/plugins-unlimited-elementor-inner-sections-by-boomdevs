@@ -1,0 +1,141 @@
+.pea-tabs-wrap ul.pea-tabs-panel {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    margin: 0;
+    padding: 0
+}
+
+.pea-tabs-wrap ul.pea-tabs-panel li {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding: 5px;
+    position: relative
+}
+
+.pea-tabs-wrap ul.pea-tabs-panel li:focus {
+    outline: none!important
+}
+
+.pea-tabs-wrap ul.pea-tabs-panel li:focus-visible {
+    outline: none!important
+}
+
+.pea-tabs-wrap ul.pea-tabs-panel li .pea-tab-icon-image-box .pea-tab-icon {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border: none;
+    transition: all .3s ease-in-out;
+}
+
+.pea-tabs-wrap ul.pea-tabs-panel li .pea-tab-icon-image-box .pea-tab-icon-image img {
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    width: 100%
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrapper {
+    border: none;
+    transition: all .3s ease-in-out
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap.vertical {
+    flex-direction: row;
+}
+
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap.vertical .pea-tabs-body-wrap {
+    width: 100%;
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap ul.pea-tabs-panel {
+    gap: 10px;
+    border: none;
+    transition: all .3s ease-in-out
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap.horizontal ul.pea-tabs-panel {
+    flex-direction: row
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap.vertical ul.pea-tabs-panel {
+    flex-direction: column
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap ul.pea-tabs-panel li {
+    padding: 5px 5px 5px 5px;
+    gap: 10px;
+    border: none;
+    transition: all .3s ease-in-out
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap.vertical ul.pea-tabs-panel li.pea-tab {
+    min-width: 150px
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap ul.pea-tabs-panel li.left,.pea-advanced-tabs-wrapper .pea-tabs-wrap ul.pea-tabs-panel li.right {
+    flex-direction: row
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap ul.pea-tabs-panel li.top,.pea-advanced-tabs-wrapper .pea-tabs-wrap ul.pea-tabs-panel li.bottom {
+    flex-direction: column
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap ul.pea-tabs-panel li.pea-tabs-active {
+    background-color: #f0f0f0
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap ul.pea-tabs-panel li .pea-tab-title {
+    margin: 0;
+    padding: 0;
+    border: none;
+    transition: all .3s ease-in-out
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap ul.pea-tabs-panel li .pea-tab-description {
+    margin: 0 0 0 0;
+    border: none;
+    transition: all .3s ease-in-out
+}
+
+.pea-advanced-tabs-wrapper .pea-tab-icon-image-box .pea-tab-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: #000;
+    transform: rotate(deg);
+    transition: all .3s ease-in-out
+}
+
+.pea-advanced-tabs-wrapper .pea-tab-icon-image-box .pea-tab-icon:hover svg {
+    transform: rotate(deg)
+}
+
+.pea-advanced-tabs-wrapper .pea-tab-icon-image-box .pea-tab-icon-image {
+    width: 20px;
+    height: 20px;
+    transform: rotate(deg);
+    transition: all .3s ease-in-out
+}
+
+.pea-advanced-tabs-wrapper .pea-tab-icon-image-box:hover .pea-tab-icon-image {
+    transform: rotate(deg)
+}
+
+.pea-advanced-tabs-wrapper .pea-tabs-wrap .pea-tabs-body-wrap {
+    transition: all .3s ease-in-out
+}
+
+.pea-tabs-wrap .pea-tabs-item-wrapper {
+    display: none
+}

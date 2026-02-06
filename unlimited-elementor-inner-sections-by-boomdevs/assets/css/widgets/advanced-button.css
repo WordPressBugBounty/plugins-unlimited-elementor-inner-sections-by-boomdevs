@@ -1,0 +1,76 @@
+.pea-advanced-button-wrapper .pea-advanced-button {
+    gap: 10px;
+    background: #399CFF;
+    padding: 12px 24px 12px 24px;
+    border: none;
+    border-radius: 4px 4px 4px 4px;
+    display: inline-flex;
+    transition: all 0.3s ease;
+}
+.pea-advanced-button-wrapper.justify .pea-advanced-button{
+    display: flex;
+}
+.pea-advanced-button-wrapper .pea-advanced-button {
+    font-size: 14px;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    justify-content: center;
+    outline: none;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all .3s ease-in-out;
+}
+.pea-advanced-button-wrapper .pea-advanced-button .pea-advanced-button-text {
+    transition: all .3s ease-in-out;
+    color: #fff;
+    font-family: Work Sans;
+    font-weight: 500;
+    font-style: Medium;
+    line-height: 130%;
+    letter-spacing: 0%;
+
+}
+
+.pea-advanced-button-wrapper .pea-advanced-button-icon-wrapper {
+    display: flex;
+    align-items: center;
+    border: none;
+    transition: all .3s ease-in-out;
+}
+.pea-advanced-button-icon-wrapper .pea-advanced-button-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+.pea-advanced-button-icon-wrapper .pea-advanced-button-icon svg {
+    display: block;
+    height: 16px;
+    width: 16px;
+    fill: #fff;
+    transition: all .3s  ease-in-out;
+    box-sizing: content-box;
+}
+
+.pea-advanced-button-icon-wrapper .pea-advanced-button-icon-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    z-index: 1;
+    object-fit: none;
+    transition: all .3s ease-in-out;
+}
+.pea-advanced-button-wrapper .pea-advanced-button-icon-wrapper .pea-advanced-button-icon-image img {
+    box-sizing: content-box;
+    display: block;
+    height: 100%;
+    width: 100%;
+    transition: all .3s ease-in-out;
+}

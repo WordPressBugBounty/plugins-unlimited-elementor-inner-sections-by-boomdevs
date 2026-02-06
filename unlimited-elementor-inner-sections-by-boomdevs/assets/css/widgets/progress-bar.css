@@ -1,0 +1,72 @@
+
+
+/* css by controls */
+.pea-progress-bar-wrapper .pea-progressbar-item {
+    display: flex;
+    flex-direction: column;
+}
+.pea-progress-bar-wrapper .pea-progressbar-item.vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.pea-progress-bar-wrapper .pea-progressbar-item .pea-progressbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.pea-progress-bar-wrapper .pea-progressbar-item .pea-progressbar-content .pea-progressbar-label {
+    color: #000;
+    transition: all .5s ease-in-out;
+}
+.pea-progress-bar-wrapper .pea-progressbar-item .pea-progressbar-number {
+    color: #000;
+    transition: all .5s ease-in-out;
+}
+.pea-progress-bar-wrapper .pea-progressbar-item .pea-progressbar-line-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #ebf5ff;
+    border-style: none;
+    height: 14px;
+    /* overflow: hidden; */
+    position: relative;
+}
+.pea-progress-bar-wrapper .pea-progressbar-item .pea-progressbar-line-wrapper .pea-progressbar-line {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: #399cff;
+    border-style: none;
+    box-sizing: border-box;
+    transition: width 1.5s ease-in-out;
+}
+.pea-progress-bar-wrapper .pea-progressbar-item .pea-progressbar-line-wrapper .pea-progressbar-content {
+    position: relative;
+    z-index: 5;
+}
+.pea-progress-bar-wrapper .pea-progressbar-item .pea-progressbar-line-wrapper .pea-progressbar-line .pea-progressbar-number {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: left 1.5s ease-in-out;
+    z-index: 10;
+}
+.pea-progress-bar-wrapper .pea-progressbar-item .pea-progressbar-line-wrapper .pea-progressbar-line .pea-progressbar-number {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: left 1.5s ease-in-out;
+    z-index: 10;
+}
+.pea-progress-bar-wrapper .pea-progressbar-item.vertical .pea-progressbar-line-wrapper .pea-progressbar-line .pea-progressbar-number {
+    /* position: absolute; */
+    top: 0;
+    /* left: 50%;
+    transform: translateX(-50%);
+    transition: top 1.5s ease-in-out;
+    z-index: 10; */
+}

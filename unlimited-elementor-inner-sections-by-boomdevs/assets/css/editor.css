@@ -1,0 +1,136 @@
+/* =========================================================
+   Prime Elementor Addons – Elementor Panel Styles
+   ========================================================= */
+
+/* ---------- Variables ---------- */
+.elementor-panel {
+    --pea-icon-size: 30px;
+    --pea-icon-color: #d5d8dc;
+    --pea-badge-bg: #399DFF;
+}
+
+/* ---------- Widget Badge ---------- */
+.elementor-panel .pea-widget-badge::after {
+    content: "PEA";
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 20px;
+    height: 20px;
+    font: bold 14px "Lexend", sans-serif;
+    background: var(--pea-badge-bg);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+}
+
+/* ---------- Elementor Panel Icon Wrapper ---------- */
+.elementor-panel
+#elementor-panel-category-prime-elementor-addons
+.elementor-element .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    padding-top: 15px;
+}
+
+/* ---------- Base Icon Style (ALL PEA widget icons) ---------- */
+.elementor-panel [class^="pea_"][class$="_icon"] {
+    display: block;
+    width: var(--pea-icon-size);
+    height: var(--pea-icon-size);
+    background-color: var(--pea-icon-color);
+    -webkit-mask: var(--pea-icon) no-repeat center / contain;
+    -webkit-mask-size: contain;
+    mask: var(--pea-icon) no-repeat center / contain;
+    mask-size: contain;
+}
+
+/* ---------- Icon Definitions ---------- */
+.elementor-panel .pea_advanced_accordion_icon {
+    --pea-icon: url('../../assets/icons/accordion.svg');
+}
+
+.elementor-panel .pea_advanced_heading_icon {
+    --pea-icon: url('../../assets/icons/advanced-heading.svg');
+}
+
+.elementor-panel .pea_advanced_button_icon,
+.elementor-panel .pea_dual_button_icon {
+    --pea-icon: url('../../assets/icons/advanced-button.svg');
+}
+
+.elementor-panel .pea_advanced_menu_icon {
+    --pea-icon: url('../../assets/icons/advanced-navigation.svg');
+}
+
+.elementor-panel .pea_advanced_image_icon {
+    --pea-icon: url('../../assets/icons/advanced-image.svg');
+}
+
+.elementor-panel .pea_advanced_tabs_icon {
+    --pea-icon: url('../../assets/icons/advanced-tabs.svg');
+}
+
+.elementor-panel .pea_advanced_video_icon {
+    --pea-icon: url('../../assets/icons/advanced-video.svg');
+}
+
+.elementor-panel .pea_count_down_icon {
+    --pea-icon: url('../../assets/icons/countdown.svg');
+}
+
+.elementor-panel .pea_cta_icon {
+    --pea-icon: url('../../assets/icons/call-to-action.svg');
+}
+
+.elementor-panel .pea_contact_form_7_icon,
+.elementor-panel .pea_fluent_form_icon {
+    --pea-icon: url('../../assets/icons/form.svg');
+}
+
+.elementor-panel .pea_counter_icon {
+    --pea-icon: url('../../assets/icons/counter-number.svg');
+}
+
+.elementor-panel .pea_feature_list_icon {
+    --pea-icon: url('../../assets/icons/features-list.svg');
+}
+
+.elementor-panel .pea_flip_box_icon {
+    --pea-icon: url('../../assets/icons/flip-box.svg');
+}
+
+.elementor-panel .pea_icon_box_icon {
+    --pea-icon: url('../../assets/icons/icon-box.svg');
+}
+
+.elementor-panel .pea_image_gallery_icon {
+    --pea-icon: url('../../assets/icons/image-gallery.svg');
+}
+
+.elementor-panel .pea_info_box_icon {
+    --pea-icon: url('../../assets/icons/info-box.svg');
+}
+
+.elementor-panel .pea_post_grid_icon {
+    --pea-icon: url('../../assets/icons/post-grid.svg');
+}
+
+.elementor-panel .pea_progress_bar_icon {
+    --pea-icon: url('../../assets/icons/progressbar.svg');
+}
+
+.elementor-panel .pea_social_icons_icon {
+    --pea-icon: url('../../assets/icons/social-icons.svg');
+}
+
+.elementor-panel .pea_team_member_icon {
+    --pea-icon: url('../../assets/icons/team-member.svg');
+}
+
+.elementor-panel .pea_testimonial_icon {
+    --pea-icon: url('../../assets/icons/testimonial.svg');
+}

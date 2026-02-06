@@ -6,5 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'PrimeElementorAddons\\' => array($baseDir . '/includes'),
     'Appsero\\' => array($vendorDir . '/appsero/client/src'),
 );

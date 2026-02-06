@@ -1,0 +1,441 @@
+.elementor-widget-pea_flip_box{
+    width: 100%;
+}
+.pea-flip-box-wrapper {
+    width: 100%;
+    perspective: 1000px;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper {
+    height: auto;
+    position: relative;
+    transform-style: preserve-3d;
+    width: 100%;
+    transition: transform 0.6s ease-out;
+    transform-origin: center center;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-front, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-back {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 310px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    will-change: transform;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-front .pea-flipbox-content-wrapper, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-back .pea-flipbox-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    -webkit-perspective: 1000;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-front .pea-flipbox-content-wrapper .pea-flip-media-container, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-back .pea-flipbox-content-wrapper .pea-flip-media-container, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-front .pea-flipbox-content-wrapper .pea-flip-back-media-container, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-back .pea-flipbox-content-wrapper .pea-flip-back-media-container {
+    display: flex;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-front {
+    transform: rotateY(0deg);
+    z-index: 2;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-back {
+    transform: rotateY(180deg);
+    z-index: 1;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.pea-editor-mode .pea-flipbox-front, .pea-flip-box-wrapper .pea-flipper-wrapper.pea-editor-mode .pea-flipbox-back {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.pea-editor-mode.pea-show-back {
+    transform: rotateY(-180deg);
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.flip-left:hover {
+    transform: rotateY(-180deg);
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.flip-right:hover {
+    transform: rotateY(180deg);
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.flip-up .pea-flipbox-back {
+    transform: rotateX(-180deg);
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.flip-up:hover {
+    transform: rotateX(180deg);
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.flip-down .pea-flipbox-back {
+    transform: rotateX(180deg);
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.flip-down:hover {
+    transform: rotateX(-180deg);
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.zoom-in:hover {
+    transform: scale(1.1);
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.zoom-in:hover .pea-flipbox-front {
+    opacity: 0;
+    z-index: 1;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.zoom-in:hover .pea-flipbox-back {
+    opacity: 1;
+    z-index: 5;
+    transform: none;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.zoom-out:hover {
+    transform: scale(0.8);
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.zoom-out:hover .pea-flipbox-front {
+    opacity: 0;
+    z-index: 1;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.zoom-out:hover .pea-flipbox-back {
+    opacity: 1;
+    z-index: 5;
+    transform: none;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.fade .pea-flipbox-back {
+    z-index: 1;
+    transform: none;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.fade:hover .pea-flipbox-front {
+    opacity: 0;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.fade:hover .pea-flipbox-back {
+    opacity: 1;
+    z-index: 5;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-flip-button .pea-flip-btn-wrapper, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flip-back-button .pea-flip-btn-wrapper, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flip-button .pea-flip-back-btn-wrapper, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flip-back-button .pea-flip-back-btn-wrapper {
+    display: inline-flex;
+    align-items: center;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-flip-media-wrapper .pea-icon-wrapper, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flip-back-media-wrapper .pea-icon-wrapper {
+    line-height: 0;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-btn-icon-wrapper {
+    line-height: 0;
+}
+ @media (prefers-reduced-motion: reduce) {
+	.pea-flip-box-wrapper .pea-flipper-wrapper {
+		transition: transform 0.2s ease;
+	}
+}
+ 
+.pea-flip-box-wrapper .pea-flipper-wrapper {
+    height: auto;
+    position: relative;
+    transform-origin: center center;
+    transform-style: preserve-3d;
+    transition: transform .6s ease-out;
+    width: 100%;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-back .pea-flipbox-content-wrapper, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-front .pea-flipbox-content-wrapper {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    -webkit-perspective: 1000;
+    position: relative;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    width: 100%;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-back .pea-flipbox-content-wrapper .pea-flip-back-media-container, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-back .pea-flipbox-content-wrapper .pea-flip-media-container, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-front .pea-flipbox-content-wrapper .pea-flip-back-media-container, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-front .pea-flipbox-content-wrapper .pea-flip-media-container {
+    display: flex;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-btn-icon-wrapper, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flip-back-media-wrapper .pea-icon-wrapper, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flip-media-wrapper .pea-icon-wrapper {
+    line-height: 0;
+    transition: all .3s ease-in-out;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-flip-back-button .pea-flip-back-btn-wrapper, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flip-back-button .pea-flip-btn-wrapper, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flip-button .pea-flip-back-btn-wrapper, .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flip-button .pea-flip-btn-wrapper {
+    align-items: center;
+    display: inline-flex;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.zoom-in .pea-flipbox-back, .pea-flip-box-wrapper .pea-flipper-wrapper.zoom-out .pea-flipbox-back, .pea-flip-box-wrapper .pea-flipper-wrapper.fade .pea-flipbox-back{
+    transform: none;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.fade .pea-flipbox-front,
+.pea-flip-box-wrapper .pea-flipper-wrapper.fade .pea-flipbox-back {
+    transition: opacity 0.6s ease-in-out, z-index 0s linear 0.3s;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper.fade .pea-flipbox-back {
+    z-index: 1;
+    transform: none;
+    opacity: 0;
+    will-change: opacity;
+}
+
+/* .pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-front::before {
+    content: '';
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 999999;
+    background-color: transparent;
+}
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-back::before {
+    content: '';
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 999999;
+    background-color: transparent;
+} */
+
+
+/* add by control */
+
+/* ----- Front Box ----- */
+.pea-flip-box-wrapper {
+    position: relative;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    border: none;
+    border-width: 0 0 0 0;
+    border-radius: 6px 6px 6px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+.pea-flipper-wrapper {
+    min-height: 366px;
+    height: fit-content;
+}
+.pea-flip-box-wrapper .pea-flipbox-front {
+    display: flex;
+    align-items: center;
+    min-height: 366px;
+    height: auto;
+    background: #feebd5;
+    padding: 32px 32px 32px 32px;
+    margin: 0 0 0 0;
+    border-style: none;
+    border-width: 0 0 0 0;
+    border-radius: 24px 24px 24px 24px;
+    background-repeat: none;
+    background-size: cover;
+    transition: all .3s ease-in-out;
+}
+.pea-flip-box-wrapper .pea-flipbox-content-wrapper .pea-flip-media-container {
+    justify-content: center;
+}
+.pea-flip-box-wrapper .pea-flip-media-wrapper {
+    background: #f89b2e;
+    padding: 15px 15px 15px 15px;
+    margin: 0 0 24px 0;
+    border-style: none;
+    border-width: 0 0 0 0;
+    border-radius: 50px 50px 50px 50px;
+    background-repeat: none;
+    background-size: cover;
+    justify-content: center;
+    transition: all .3s ease-in-out;
+}
+.pea-flip-box-wrapper .pea-flip-media-wrapper .pea-icon-wrapper svg, .pea-flip-box-wrapper .pea-flip-media-wrapper img {
+    width: 25px;
+    height: 25px;
+    fill: #fff;
+}
+.pea-flip-box-wrapper .pea-flip-box-content-wrapper .pea-heading-text {
+    color: #15171c;
+    font-size: 24px;
+    font-weight: 600;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    border-style: none;
+    border-width: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    text-align: center;
+    transition: all .3s ease-in-out;
+}
+.pea-flip-box-wrapper .pea-description {
+    color: #555e72;
+    font-size: 18px;
+    padding: 15px 0 15px 0;
+    margin: 0 0 0 0;
+    text-align: center;
+    transition: all .3s ease-in-out;
+}
+.pea-flip-box-wrapper .pea-flip-btn-container {
+    text-align: center;
+}
+.pea-flip-box-wrapper .pea-flip-btn-wrapper {
+    flex-direction: row;
+    color: #555e72;
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+    text-decoration: none;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    border-style: none;
+    border-width: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    gap: 8px;
+    transition: all .3s ease-in-out;
+}
+.pea-flip-box-wrapper .pea-btn-icon-wrapper svg {
+    width: 16px;
+    transition: all .3s ease-in-out;
+}
+
+/* ----- Back Box ----- */
+.pea-flip-box-wrapper .pea-flipper-wrapper .pea-flipbox-back{
+    display: flex;
+    align-items: center;
+    min-height: 366px;
+    height: auto;
+    background: #f89b2e;
+    padding: 32px 32px 32px 32px;
+    margin: 0 0 0 0;
+    border-style: none;
+    border-width: 0 0 0 0;
+    border-radius: 24px 24px 24px 24px;
+    background-repeat: none;
+    background-size: cover;
+    transform: false;
+    transition: all .3s ease-in-out;
+}
+.pea-flip-box-wrapper .pea-flipbox-content-wrapper .pea-flip-back-media-container {
+    justify-content: center;
+}
+.pea-flip-box-wrapper .pea-flip-back-media-wrapper {
+    background: #fff;
+    padding: 15px 15px 15px 15px;
+    margin: 0 0 0 0;
+    border-style: none;
+    border-width: 0 0 0 0;
+    border-radius: 50px 50px 50px 50px;
+    background-repeat: none;
+    background-size: cover;
+    justify-content: center;
+    transition: all .3s ease-in-out;
+}
+.pea-flip-box-wrapper .pea-flip-back-media-wrapper .pea-icon-wrapper svg, .pea-flip-box-wrapper .pea-flip-back-media-wrapper img {
+    width: 25px;
+    height: 25px;
+    fill: #f89b2e;
+}
+.pea-flip-box-wrapper .pea-flip-back-box-content-wrapper .pea-heading-text {
+    text-align: center;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600;
+    padding: 24px 32px 0 32px;
+    margin: 0 0 0 0;
+    border-style: none;
+    border-width: 0 0 0 0;
+    border-radius: 0 0 0 0;
+}
+.pea-flip-box-wrapper .pea-flip-back-box-content-wrapper .pea-description {
+    color: #fffaf5;
+    font-size: 18px;
+    padding: 32px 32px 32px 32px;
+    margin: 0 0 0 0;
+    text-align: center;
+}
+.pea-flip-box-wrapper .pea-flipbox-back .pea-flip-back-btn-container {
+    text-align: center;
+}
+.pea-flip-box-wrapper .pea-flip-back-btn-wrapper {
+    flex-direction: row;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+    text-decoration: none;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    border-style: none;
+    border-width: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    gap: 8px;
+    transition: all .3s ease-in-out;
+}
+.pea-flip-box-wrapper .pea-flip-back-btn-wrapper {
+    flex-direction: row;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+    text-decoration: none;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    border-style: none;
+    border-width: 0 0 0 0;
+    border-radius: 0 0 0 0;
+    gap: 8px;
+    transition: all .3s ease-in-out;
+}
+
+/* ============================================
+   EDITOR MODE STYLE
+   ============================================ */
+
+/* Only apply editor mode restrictions when back side is active */
+.pea-flip-box-wrapper .pea-flipper-wrapper.pea-editor-mode.pea-show-back {
+    transform: none !important;
+    pointer-events: auto;
+}
+
+.pea-flip-box-wrapper .pea-flipper-wrapper.pea-editor-mode.pea-show-back:hover {
+    transform: none !important;
+}
+
+/* When front is selected - show front normally (no restrictions) */
+.pea-flip-box-wrapper .pea-flipper-wrapper.pea-editor-mode .pea-flipbox-front {
+    position: absolute;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.pea-flip-box-wrapper .pea-flipper-wrapper.pea-editor-mode .pea-flipbox-back {
+    position: absolute;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* When back is selected - force back to show */
+.pea-flip-box-wrapper .pea-flipper-wrapper.pea-editor-mode.pea-show-back .pea-flipbox-front,
+.pea-flip-box-wrapper .pea-flipper-wrapper.pea-editor-mode.pea-show-back .pea-flipbox-back {
+    position: relative !important;
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
+    transform: none !important;
+}
+
+/* Hide inactive side only when back is selected */
+.pea-flip-box-wrapper .pea-flipper-wrapper.pea-editor-mode.pea-show-back .pea-inactive-side {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Show active side when back is selected */
+.pea-flip-box-wrapper .pea-flipper-wrapper.pea-editor-mode.pea-show-back .pea-active-side {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+/* Smooth transition when switching to back side */
+.pea-flip-box-wrapper .pea-flipper-wrapper.pea-editor-mode.pea-show-back .pea-flipbox-front,
+.pea-flip-box-wrapper .pea-flipper-wrapper.pea-editor-mode.pea-show-back .pea-flipbox-back {
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}

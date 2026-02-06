@@ -1,0 +1,214 @@
+.pea-pricing-wrapper {
+    transition: all .3s ease-in-out;
+}
+.pea-pricing-ribbon-icon-wrapper .pea-pricing-ribbon-icon {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    transition: background-color .3s ease,border-color .3s ease;
+}
+.pea-pricing-title-wrapper {
+    display: block;
+}
+.pea-pricing-title-wrapper .pea-pricing-subtitle, .pea-pricing-title-wrapper .pea-pricing-title {
+    margin: 0;
+}
+.pea-pricing-content .pea-pricing-features-wrapper .pea-pricing-features-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.pea-pricing-content .pea-pricing-features-wrapper .pea-pricing-features-list .pea-pricing-feature-item {
+    align-items: center;
+    display: flex;
+}
+.pea-pricing-content .pea-pricing-features-wrapper .pea-pricing-features-list .pea-pricing-feature-item .pea-pricing-feature-icon {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    /* margin-right: 10px; */
+}
+.pea-pricing-content .pea-pricing-features-wrapper .pea-pricing-features-list .pea-pricing-feature-item .pea-pricing-feature-icon .pea-pricing-feature-icon-inner {
+    display: flex;
+}
+.pea-pricing-content .pea-pricing-feature-after-text-wrapper .pea-pricing-feature-after-text, .pea-pricing-button-wrapper-main .pea-pricing-button-wrapper {
+    align-items: center;
+    display: flex;
+}
+.pea-pricing-table-wrapper .pea-pricing-feature-after-text-wrapper {
+    display: inline-flex;
+}
+.pea-pricing-button-wrapper-main .pea-pricing-button-wrapper .pea-pricing-button {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    text-decoration: none;
+    transition: background-color .3s ease;
+}
+.pea-pricing-button-wrapper-main .pea-pricing-button-wrapper .pea-pricing-button .pea-pricing-button-icon {
+    align-items: center;
+    display: flex;
+}
+/* css by controls */
+.pea-pricing-table-wrapper.pea-pricing-top-section {
+    background: #399cff;
+    border: none;
+    border-radius: 30px 30px 30px 30px;
+    padding: 5px 5px 5px 5px;
+    transition: all .3s ease-in-out;
+}
+.pea-pricing-table-wrapper.pea-pricing-top-section .pea-pricing-top-wrapper {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600;
+    font-style: normal;
+    text-transform: normal;
+    text-decoration: none;
+    line-height: 30px;
+    padding: 20px 0 20px 0;
+    text-align: center;
+    transition: all .3s ease;
+}
+.pea-pricing-table-wrapper .pea-pricing-main-wrapper {
+    background: #ebf5ff;
+    padding: 30px 30px 30px 30px;
+    margin: 0 0 0 0;
+    border: solid;
+    border-width: 0 0 0 0;
+    border-radius: 24px 24px 24px 24px;
+    transition: all .3s ease-in-out;
+    position: relative;
+}
+.pea-pricing-table-wrapper .pea-pricing-header {
+    padding: 0 0 0 0;
+    border: none;
+    border-radius: 0 0 0 0;
+    transition: all .3s ease-in-out;
+}
+.pea-pricing-table-wrapper .pea-pricing-ribbon-icon {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 0 0 0 0;
+    transition: all .3s ease-in-out;
+}
+.pea-pricing-table-wrapper .pea-pricing-ribbon-icon svg {
+    width: 30px;
+    height: 30px;
+    fill: #399cff;
+    transition: fill .3s ease;
+}
+.pea-pricing-table-wrapper .pea-pricing-title {
+    color: #15171c;
+    font-size: 24px;
+    font-weight: 600;
+    transition: all .3s ease;
+}
+.pea-pricing-table-wrapper .pea-pricing-subtitle {
+    display: block;
+    color: #6a758e;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all .3s ease;
+}
+.pea-pricing-table-wrapper .pea-pricing-price-wrapper {
+    text-align: left;
+}
+
+.pea-pricing-table-wrapper .pea-pricing-price-wrapper .pea-pricing-after-text-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pea-pricing-table-wrapper .pea-pricing-price-wrapper .pea-pricing-normal-price {
+    color: #399cff;
+    font-size: 40px;
+    font-weight: 700;
+    transition: all .3s ease;
+}
+.pea-pricing-price-wrapper .pea-pricing-price-inner-wrapper .pea-pricing-normal-price.line-through {
+    padding-right: 8px;
+    text-decoration: line-through;
+}
+.pea-pricing-normal-price, .pea-pricing-sale-price{
+    display: inline-flex;
+    align-items: baseline;
+}
+.pea-pricing-table-wrapper .pea-pricing-price-wrapper .price-currency {
+    transition: all .3s ease;
+    display: inline-flex;
+}
+.pea-pricing-table-wrapper .pea-pricing-price-wrapper .price-period {
+    color: #6a758e;
+    font-size: 16px;
+    font-weight: 400;
+    transition: all .3s ease;
+}
+.pea-pricing-price-wrapper .pea-pricing-sale-price {
+    color: #15171c;
+    font-size: 42px;
+    font-weight: 700;
+    transition: all .3s ease;
+}
+.pea-pricing-table-wrapper .pea-pricing-after-text {
+    font-size: 14px;
+    color: #6a758e;
+    border: none;
+    border-width: 0 0 0 0;
+    border-radius: 50px 50px 50px 50px;
+    padding: 5px 10px 5px 10px;
+    transition: all .3s ease;
+}
+.pea-pricing-table-wrapper .pea-pricing-features-wrapper {
+    padding: 0 0 42px 0;
+}
+.pea-pricing-table-wrapper .pea-pricing-feature-item, .pea-pricing-table-wrapper .pea-pricing-feature-after-text {
+    justify-content: flex-start;
+}
+.pea-pricing-table-wrapper .pea-pricing-feature-item {
+    padding: 10px 0 10px 0;
+    margin: 0 0 0 0;
+    border: none;
+    border-radius: 0 0 0 0;
+    transition: all .3s ease;
+}
+.pea-pricing-table-wrapper .pea-pricing-feature-icon-inner svg {
+    width: 16px;
+    height: 16px;
+    fill: #6a758e;
+    transition: fill .3s ease;
+}
+.pea-pricing-table-wrapper .pea-pricing-feature-text {
+    color: #6a758e;
+    font-size: 16px;
+    transition: all .3s ease;
+}
+.pea-pricing-table-wrapper .pea-pricing-feature-after-text {
+    color: #15171c;
+    font-size: 18px;
+    font-weight: 400;
+    transition: all .3s ease;
+}
+.pea-pricing-table-wrapper .pea-pricing-button-wrapper {
+    justify-content: center;
+}
+.pea-pricing-table-wrapper .pea-pricing-button {
+    width: 100%;
+    color: #fff;
+    padding: 20px 20px 20px 20px;
+    margin: 40px 0 0 0;
+    border: none;
+    border-width: 0 0 0 0;
+    border-radius: 5px 5px 5px 5px;
+    background: #15171c;
+    transition: all .3s ease-in-out;
+}
+.pea-pricing-table-wrapper .pea-pricing-button.pea-button-icon-right .pea-pricing-button-icon {
+    margin-left: 10px;
+}
+.pea-pricing-table-wrapper .pea-pricing-button-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+    transition: fill .3s ease;
+}

@@ -1,0 +1,105 @@
+.pea-call-to-action-wrapper {
+    position: relative;
+}
+
+.pea-call-to-action-wrapper::before {
+    content: "";
+    position: absolute;
+    background: #399cff;
+    inset: 0;
+    opacity: 0.4; /* only background fades */
+    z-index: 5;
+}
+.pea-call-to-action-wrapper .pea-cta-content-wrapper-inner {
+    position: relative;
+    z-index: 999;
+    gap: 20px;
+}
+.pea-call-to-action-wrapper .pea-cta-heading {
+    text-align: center;
+}
+.pea-call-to-action-wrapper .pea-cta-description {
+    text-align: center;
+}
+.pea-call-to-action-wrapper .pea-cta-content-wrapper-inner .pea-cta-buttons-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pea-call-to-action-wrapper .pea-cta-content-wrapper-inner .pea-cta-btn-wrapper {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.pea-call-to-action-wrapper .pea-cta-content-wrapper-inner .pea-cta-btn-wrapper .pea-btn-icon-wrapper {
+    line-height: 0;
+    transition: all .3s ease-in-out;
+}
+/* css by controls */
+.pea-call-to-action-wrapper {
+    padding: 120px 20px 120px 20px;
+    margin: 0 0 0 0;
+    border: none;
+    border-width: 0 0 0 0;
+    border-radius: 0 0 0 0px;
+    transition: all .3s ease-in-out;
+}
+.pea-call-to-action-wrapper .pea-cta-heading {
+    padding: 0 0 24px 0;
+    border: none;
+    transition: all .3s ease-in-out;
+}
+.pea-call-to-action-wrapper .pea-cta-description {
+    color: #fff;
+    padding: 0 0 42px 0;
+    font-size: 24px;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+    text-decoration: none;
+}
+.pea-call-to-action-wrapper .pea-cta-btn-one-wrapper .pea-cta-btn-wrapper {
+    background-color: #4361ee;
+    padding: 12px 20px 12px 20px;
+    margin: 0 10px 0 0;
+    border: solid;
+    border-color: #fff0;
+    border-width: 2px 2px 2px 2px;
+    border-radius: 50px 50px 50px 50px;
+    transition: all .3s ease-in-out;
+}
+.pea-call-to-action-wrapper .pea-cta-btn-one-wrapper .pea-cta-btn-wrapper .pea-cta-button {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+    text-decoration: none;
+    color: #fff;
+}
+.pea-call-to-action-wrapper .pea-cta-btn-one-wrapper .pea-btn-icon-wrapper svg {
+    width: 16px;
+    fill: #fff;
+    /* transform: rotate(145deg); */
+}
+.pea-call-to-action-wrapper .pea-cta-btn-two-wrapper .pea-cta-btn-wrapper {
+    padding: 12px 20px 12px 20px;
+    border: solid;
+    border-color: #4361ee;
+    border-width: 2px 2px 2px 2px;
+    border-radius: 50px 50px 50px 50px;
+    transition: all .3s ease-in-out;
+}
+.pea-call-to-action-wrapper .pea-cta-btn-two-wrapper .pea-cta-btn-wrapper .pea-cta-button {
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+    text-decoration: none;
+    color: #4361ee;
+}
+.pea-call-to-action-wrapper .pea-cta-btn-two-wrapper .pea-btn-icon-wrapper svg {
+    width: 16px;
+    fill: #4361ee;
+    /* transform: rotate(145deg); */
+}
