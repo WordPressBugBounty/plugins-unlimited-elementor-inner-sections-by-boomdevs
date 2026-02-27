@@ -1,0 +1,11 @@
+.pea-google-map-wrapper {
+    transition: all .3s ease-in-out;
+    overflow: hidden;
+    line-height: 0; 
+}
+
+.pea-google-map-wrapper iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+}

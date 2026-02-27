@@ -340,7 +340,7 @@ class CountDown extends Widget_Base {
             $this->add_control(
                 'count_box_size_with_height_css',
                 [
-                    'label' => esc_html__('counter title left, right postion css', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'label' => esc_html__('counter title left, right position css', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'type' => Controls_Manager::HIDDEN,
                     'default' => 'none',
                     'selectors' => [
@@ -634,7 +634,7 @@ class CountDown extends Widget_Base {
             // $this->add_control(
             //     'count_box_size_with_height_css',
             //     [
-            //         'label' => esc_html__('counter title left, right postion css', 'unlimited-elementor-inner-sections-by-boomdevs'),
+            //         'label' => esc_html__('counter title left, right position css', 'unlimited-elementor-inner-sections-by-boomdevs'),
             //         'type' => Controls_Manager::HIDDEN,
             //         'selectors' => [
             //             '{{WRAPPER}} .pea-count-down-item' => 'height: {{count_box_size.SIZE}}{{count_box_size.UNIT}};',

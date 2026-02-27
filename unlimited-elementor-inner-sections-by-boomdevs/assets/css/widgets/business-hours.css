@@ -1,0 +1,73 @@
+* {
+  transition: all 0.3s ease-in-out;
+}
+
+.pea-timezone-main-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.pea_business_hours-wrapper {
+  display: inline-block;
+  background-color: black;
+  color: white;
+  padding: 10px 16px 10px 16px;
+  transition: all 0.3s ease-in-out;
+  /* border-radius: 999px 999px 999px 999px; */
+  transition: all 0.3s ease-in-out;
+}
+
+.pea_business_hours-wrapper span {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.pea_business_hours-wrapper .pea_business_hours-timezone-offset {
+  color: #b1ababff;
+  font-size: 14px;
+}
+
+.pea-timezone-status-wrapper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid green;
+  border-radius: 999px 999px 999px 999px;
+  padding: 2px 12px 2px 2px;
+  color: green;
+  font-size: 16px;
+  gap: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.open {
+  background-color: green;
+  padding: 8px 16px 8px 16px;
+  /* border-radius: 999px 999px 999px 999px; */
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+.pea-timezone-status-wrapper-closed {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #ff0000;
+  border-radius: 999px 999px 999px 999px;
+  padding: 2px 12px 2px 2px;
+  color: #ff0000;
+  font-size: 16px;
+  gap: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.closed {
+  background-color: #ff0000;
+  padding: 8px 16px 8px 16px;
+  border-radius: 999px 999px 999px 999px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}

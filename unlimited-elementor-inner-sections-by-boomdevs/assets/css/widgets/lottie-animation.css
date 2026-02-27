@@ -1,0 +1,135 @@
+.pea-lottie-animation-wrapper {
+    width: 100%;
+}
+
+.pea-lottie-align-left .pea-lottie-animation-inner.pea-lottie-has-source {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.pea-lottie-align-center .pea-lottie-animation-inner.pea-lottie-has-source {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pea-lottie-align-right .pea-lottie-animation-inner.pea-lottie-has-source {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.pea-lottie-animation-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    overflow: hidden;
+    contain: layout paint;
+}
+
+.pea-lottie-animation-player {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.pea-lottie-animation-inner[data-render-type="svg"] .pea-lottie-animation-player,
+.pea-lottie-animation-inner[data-render-type="svg"] .pea-lottie-animation-player svg,
+.pea-lottie-animation-inner[data-render-type="svg"] .pea-lottie-animation-player canvas {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.pea-lottie-animation-player > svg,
+.pea-lottie-animation-player > canvas {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+.pea-lottie-no-source .pea-lottie-animation-player {
+    display: none;
+}
+
+.pea-lottie-animation-status {
+    padding: 20px;
+    border: 1px solid #1d2327;
+    background: #fff;
+    color: #1f2937;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.pea-lottie-animation-error {
+    border-color: #f8b4b4;
+    background: #fff5f5;
+    color: #b91c1c;
+}
+
+.pea-lottie-animation-note {
+    border-color: #cce3f6;
+    background: #f0f7ff;
+    color: #1e3a5f;
+}
+
+.pea-lottie-has-source .pea-lottie-animation-status {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+}
+
+.pea-lottie-animation-placeholder {
+    padding: 20px;
+    border: 1px solid #1d2327;
+    background: #fff;
+}
+
+.pea-lottie-animation-placeholder h4 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    line-height: 1.2;
+    color: #1d2327;
+}
+
+.pea-lottie-animation-placeholder p {
+    margin: 0;
+    color: #1d2327;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.pea-lottie-animation-placeholder-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.pea-lottie-placeholder-action {
+    border: 1px solid #2271b1;
+    background: #2271b1;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 14px;
+    line-height: 1;
+    padding: 10px 16px;
+    cursor: pointer;
+}
+
+.pea-lottie-placeholder-action.is-secondary {
+    background: #fff;
+    color: #2271b1;
+}

@@ -25,7 +25,7 @@ class PricingTable extends Widget_Base {
     }
     
     public function get_icon() {
-        return 'eicon-price-table';
+        return 'pea_pricing_table_icon';
     }
     
     public function get_categories() {

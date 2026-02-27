@@ -933,7 +933,7 @@ class Counter extends Widget_Base {
             $this->add_control(
                 'counter_left_right_position_css',
                 [
-                    'label' => esc_html__('counter title left, right postion css', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'label' => esc_html__('counter title left, right position css', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'type' => Controls_Manager::HIDDEN,
                     'default' => 'center',
                     'selectors' => [

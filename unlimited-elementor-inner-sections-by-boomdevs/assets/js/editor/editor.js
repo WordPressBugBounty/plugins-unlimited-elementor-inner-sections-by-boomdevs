@@ -3,7 +3,132 @@
     'use strict';
 
     $(window).on('elementor:init', function() {
+        const hasUploadContext = () => !!(window.peaEditor && peaEditor.pea_editor_nonce && window.ajaxurl);
+        const uploadAnimationFile = file => {
+            const formData = new FormData();
+            formData.append('action', 'pea_upload_animation_file');
+            formData.append('pea_editor_nonce_check', peaEditor.pea_editor_nonce);
+            formData.append('animation_file', file);
 
+            return $.ajax({
+                url: window.ajaxurl,
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false
+            });
+        };
+        const getMediaUrl = value => {
+            if (typeof value === 'string') {
+                return value;
+            }
+            return value?.url || value?.attributes?.url || '';
+        };
+        const toAttachmentData = attachment => ((typeof attachment?.toJSON === 'function' ? attachment.toJSON() : attachment) || {});
+        const activeMediaFrames = new Map();
+        const uploadedAttachmentIds = new Map();
+        const bindGlobalUploadQueueSync = () => {
+            const queue = window.wp?.Uploader?.queue;
+            if (!queue || queue.__peaGlobalUploadSyncBound) {
+                return;
+            }
+
+            const bindAttachmentSync = attachment => {
+                if (!attachment || typeof attachment.on !== 'function') {
+                    return;
+                }
+
+                let hasSynced = false;
+                const syncWhenReady = () => {
+                    if (hasSynced || attachment.get?.('uploading')) {
+                        return;
+                    }
+
+                    const attachmentId = Number(attachment.get?.('id') || attachment.id || 0);
+                    if (!attachmentId) {
+                        return;
+                    }
+
+                    syncUploadedAttachmentInFrame(window.wp?.media?.frame, attachmentId);
+                    activeMediaFrames.forEach(frame => {
+                        syncUploadedAttachmentInFrame(frame, attachmentId);
+                    });
+
+                    hasSynced = true;
+                    attachment.off?.('change:uploading', syncWhenReady);
+                    attachment.off?.('change:id', syncWhenReady);
+                };
+
+                attachment.on('change:uploading', syncWhenReady);
+                attachment.on('change:id', syncWhenReady);
+                syncWhenReady();
+            };
+
+            queue.on('add', bindAttachmentSync);
+            queue.__peaGlobalUploadSyncBound = true;
+        };
+        const syncUploadedAttachmentInFrame = (frame, attachmentId) => {
+            const id = Number(attachmentId) || 0;
+            if (!frame || !id || !window.wp?.media?.attachment) {
+                return;
+            }
+
+            const state = frame.state?.();
+            const library = state?.get?.('library');
+            if (!library) {
+                return;
+            }
+
+            const attachmentModel = wp.media.attachment(id);
+            if (!attachmentModel) {
+                return;
+            }
+
+            attachmentModel.fetch().always(() => {
+                library.add(attachmentModel, { merge: true });
+            });
+        };
+        const openAnimationMediaLibrary = ({ key, title, buttonText, uploaderParams, onSelect }) => {
+            if (!window.wp || !wp.media || typeof onSelect !== 'function') {
+                return;
+            }
+            bindGlobalUploadQueueSync();
+
+            const options = {
+                title: title || '',
+                button: {
+                    text: buttonText || 'Use this file'
+                },
+                multiple: false
+            };
+
+            if (uploaderParams && typeof uploaderParams === 'object') {
+                options.uploader = {
+                    params: uploaderParams
+                };
+            }
+
+            const frame = wp.media(options);
+
+            if (key) {
+                activeMediaFrames.set(key, frame);
+                frame.on('close', () => {
+                    if (activeMediaFrames.get(key) === frame) {
+                        activeMediaFrames.delete(key);
+                    }
+                });
+                frame.on('open', () => {
+                    syncUploadedAttachmentInFrame(frame, uploadedAttachmentIds.get(key));
+                });
+            }
+
+            frame.on('select', () => {
+                const selectedAttachment = frame.state().get('selection').first();
+                onSelect(toAttachmentData(selectedAttachment));
+            });
+
+            frame.open();
+        };
         elementor.hooks.addAction('panel/open_editor/widget/pea_advanced_heading', function(panel, model, view) {
             var advancedHeadingPresetStyles = {
                 'preset-1': {
@@ -286,6 +411,280 @@
             panel.$el.on('change', '[data-setting="image_styles"]', function() {
                 view.model.renderRemoteServer();
             });
+        });
+        const setupAnimationWidgetEditor = (options) => {
+            const {
+                hook,
+                modalKey,
+                modalTitle,
+                modalButtonText,
+                uploaderParams,
+                mediaKey,
+                urlKey,
+                uploadUiSelector,
+                uploadButtonSelector,
+                uploadInputSelector,
+                changeButtonSelector,
+                placeholderSelector,
+                mediaPickerSelector,
+                mediaPickerIgnoreSelector,
+                validFileRegex,
+                uploadAcceptRegex,
+                uploadObjectFactory,
+                beforeApplySelection,
+                afterApplySelection,
+                syncHandlerKey,
+                mediaChangeHandlerKey
+            } = options;
+
+            elementor.hooks.addAction(hook, function(panel, model, view) {
+                if (!view || !view.$el) {
+                    return;
+                }
+
+                const settingsModel = model.get('settings');
+                const sidebarPickerCleanupKey = `${modalKey}SidebarPickerCleanup`;
+                bindGlobalUploadQueueSync();
+                const getMediaValue = () => settingsModel?.get(mediaKey) || model.getSetting(mediaKey) || {};
+                const getUrlValue = () => settingsModel?.get(urlKey) || model.getSetting(urlKey) || '';
+                const triggerDirectUpload = triggerEl => {
+                    const $scopedInput = triggerEl ? $(triggerEl).closest(uploadUiSelector).find(uploadInputSelector).first() : $();
+                    const $input = $scopedInput.length ? $scopedInput : panel.$el.find(uploadInputSelector).first();
+                    if (!$input.length) {
+                        return false;
+                    }
+                    $input.trigger('click');
+                    return true;
+                };
+
+                const syncActions = () => {
+                    const mediaValue = getMediaValue();
+                    const mediaUrl = getMediaUrl(mediaValue);
+                    const mediaId = Number(mediaValue?.id || mediaValue?.attributes?.id || 0);
+                    const hasMediaSelection = mediaId > 0 || !!mediaUrl;
+                    const rawUrlValue = getMediaUrl(getUrlValue());
+                    let normalizedUrlValue = rawUrlValue;
+
+                    if (!hasMediaSelection && rawUrlValue) {
+                        model.setSetting(urlKey, '');
+                        normalizedUrlValue = '';
+                    }
+
+                    const activeUrl = mediaUrl || normalizedUrlValue;
+                    panel.$el.find(uploadUiSelector).find(changeButtonSelector).toggle(!!activeUrl);
+                };
+
+                const applySelection = attachment => {
+                    const fileUrl = attachment?.url || '';
+                    if (!validFileRegex.test(fileUrl)) {
+                        return;
+                    }
+
+                    if (typeof beforeApplySelection === 'function') {
+                        beforeApplySelection({ model, attachment, fileUrl });
+                    }
+
+                    model.setSetting(mediaKey, uploadObjectFactory({ attachment, fileUrl }));
+                    model.setSetting(urlKey, fileUrl);
+
+                    if (typeof afterApplySelection === 'function') {
+                        afterApplySelection({ model, attachment, fileUrl });
+                    }
+
+                    model.renderRemoteServer();
+                    syncActions();
+                };
+
+                const openMediaLibrary = () => {
+                    openAnimationMediaLibrary({
+                        key: modalKey,
+                        title: modalTitle,
+                        buttonText: modalButtonText,
+                        uploaderParams,
+                        onSelect: applySelection
+                    });
+                };
+
+                syncActions();
+
+                if (settingsModel) {
+                    if (view[mediaChangeHandlerKey]) {
+                        settingsModel.off(`change:${mediaKey}`, view[mediaChangeHandlerKey]);
+                    }
+                    if (view[syncHandlerKey]) {
+                        settingsModel.off(`change:${urlKey}`, view[syncHandlerKey]);
+                    }
+
+                    view[mediaChangeHandlerKey] = syncActions;
+                    view[syncHandlerKey] = syncActions;
+                    settingsModel.on(`change:${mediaKey}`, view[mediaChangeHandlerKey]);
+                    settingsModel.on(`change:${urlKey}`, view[syncHandlerKey]);
+                }
+
+                panel.$el.off(`click.${modalKey}`, uploadButtonSelector);
+                panel.$el.on(`click.${modalKey}`, uploadButtonSelector, function(event) {
+                    event.preventDefault();
+                    triggerDirectUpload(this);
+                });
+
+                panel.$el.off(`change.${modalKey}`, uploadInputSelector);
+                panel.$el.on(`change.${modalKey}`, uploadInputSelector, function() {
+                    const input = this;
+                    const file = input.files && input.files[0] ? input.files[0] : null;
+                    if (!file) {
+                        return;
+                    }
+
+                    if (!uploadAcceptRegex.test(file.name) || !hasUploadContext()) {
+                        input.value = '';
+                        return;
+                    }
+
+                    uploadAnimationFile(file).done(function(response) {
+                        if (!response || !response.success || !response.data || !response.data.url) {
+                            return;
+                        }
+                        uploadedAttachmentIds.set(modalKey, response.data.id);
+                        syncUploadedAttachmentInFrame(activeMediaFrames.get(modalKey), response.data.id);
+                        applySelection({
+                            id: response.data.id || '',
+                            url: response.data.url,
+                            alt: ''
+                        });
+                    }).always(function() {
+                        input.value = '';
+                    });
+                });
+
+                panel.$el.off(`click.${modalKey}Change`, changeButtonSelector);
+                panel.$el.on(`click.${modalKey}Change`, changeButtonSelector, function(event) {
+                    event.preventDefault();
+                    openMediaLibrary();
+                });
+
+                if (mediaPickerSelector) {
+                    const panelEl = panel.$el.get(0);
+                    if (panelEl) {
+                        if (typeof view[sidebarPickerCleanupKey] === 'function') {
+                            view[sidebarPickerCleanupKey]();
+                        }
+
+                        const onSidebarPickerClickCapture = event => {
+                            if (!(event.target instanceof Element)) {
+                                return;
+                            }
+                            if (mediaPickerIgnoreSelector && event.target.closest(mediaPickerIgnoreSelector)) {
+                                return;
+                            }
+                            const target = event.target.closest(mediaPickerSelector);
+                            if (!target || !panelEl.contains(target)) {
+                                return;
+                            }
+
+                            event.preventDefault();
+                            event.stopPropagation();
+                            if (typeof event.stopImmediatePropagation === 'function') {
+                                event.stopImmediatePropagation();
+                            }
+                            openMediaLibrary();
+                        };
+
+                        panelEl.addEventListener('click', onSidebarPickerClickCapture, true);
+                        view[sidebarPickerCleanupKey] = () => {
+                            panelEl.removeEventListener('click', onSidebarPickerClickCapture, true);
+                        };
+                    }
+                }
+
+                const handlePlaceholderAction = function(event) {
+                    event.preventDefault();
+                    const action = this.dataset.action === 'upload' ? 'upload' : 'library';
+                    if (action === 'upload') {
+                        triggerDirectUpload(this);
+                        return;
+                    }
+                    openMediaLibrary();
+                };
+
+                const placeholderEventNamespace = `click.${modalKey}Placeholder`;
+                const $previewContents = elementor.$previewContents;
+                if ($previewContents && typeof $previewContents.off === 'function' && typeof $previewContents.on === 'function') {
+                    const previewSelector = `.elementor-element[data-id="${model.id}"] ${placeholderSelector}`;
+                    $previewContents.off(placeholderEventNamespace, previewSelector);
+                    $previewContents.on(placeholderEventNamespace, previewSelector, handlePlaceholderAction);
+                } else {
+                    view.$el.off(placeholderEventNamespace, placeholderSelector);
+                    view.$el.on(placeholderEventNamespace, placeholderSelector, handlePlaceholderAction);
+                }
+
+            });
+        };
+
+        setupAnimationWidgetEditor({
+            hook: 'panel/open_editor/widget/pea_rive_animation',
+            modalKey: 'peaRivePicker',
+            modalTitle: 'Choose Rive Animation File',
+            modalButtonText: 'Use this file',
+            mediaKey: 'rive_file',
+            urlKey: 'rive_file_url',
+            uploadUiSelector: '.pea-rive-url-upload',
+            uploadButtonSelector: '.pea-rive-upload-btn',
+            uploadInputSelector: '.pea-rive-upload-input',
+            changeButtonSelector: '.pea-rive-change-file',
+            placeholderSelector: '.pea-rive-placeholder-action',
+            mediaPickerSelector: '.elementor-control-rive_file .elementor-control-media, ' +
+                '.elementor-control-rive_file .elementor-control-media__preview, ' +
+                '.elementor-control-rive_file .elementor-control-media__upload-button, ' +
+                '.elementor-control-rive_file .elementor-control-media__replace, ' +
+                '.elementor-control-rive_file .elementor-control-media__content__upload-button',
+            mediaPickerIgnoreSelector: '.elementor-control-rive_file .elementor-control-media__remove, ' +
+                '.elementor-control-rive_file .elementor-control-media__content__remove',
+            validFileRegex: /\.riv($|[?#])/i,
+            uploadAcceptRegex: /\.riv$/i,
+            uploadObjectFactory: ({ attachment, fileUrl }) => ({
+                id: attachment?.id || '',
+                url: fileUrl,
+                alt: attachment?.alt || ''
+            }),
+            beforeApplySelection: ({ model }) => model.setSetting('rive_file_url', ''),
+            syncHandlerKey: '__peaRiveSyncHandler',
+            mediaChangeHandlerKey: '__peaRiveFileChangeHandler'
+        });
+
+        setupAnimationWidgetEditor({
+            hook: 'panel/open_editor/widget/pea_lottie_animation',
+            modalKey: 'peaLottiePicker',
+            modalTitle: 'Choose Lottie JSON File',
+            modalButtonText: 'Use this file',
+            uploaderParams: {
+                uploadTypeCaller: 'elementor-wp-media-upload'
+            },
+            mediaKey: 'lottie_file',
+            urlKey: 'lottie_file_url',
+            uploadUiSelector: '.pea-lottie-url-upload',
+            uploadButtonSelector: '.pea-lottie-json-upload-btn',
+            uploadInputSelector: '.pea-lottie-json-upload-input',
+            changeButtonSelector: '.pea-lottie-json-remove-btn',
+            placeholderSelector: '.pea-lottie-placeholder-action',
+            mediaPickerSelector: '.elementor-control-lottie_file .elementor-control-media, ' +
+                '.elementor-control-lottie_file .elementor-control-media__preview, ' +
+                '.elementor-control-lottie_file .elementor-control-media__upload-button, ' +
+                '.elementor-control-lottie_file .elementor-control-media__replace, ' +
+                '.elementor-control-lottie_file .elementor-control-media__content__upload-button',
+            mediaPickerIgnoreSelector: '.elementor-control-lottie_file .elementor-control-media__remove, ' +
+                '.elementor-control-lottie_file .elementor-control-media__content__remove',
+            validFileRegex: /\.json($|[?#])/i,
+            uploadAcceptRegex: /\.json$/i,
+            uploadObjectFactory: ({ attachment, fileUrl }) => ({
+                id: Number(attachment?.id) || 0,
+                url: fileUrl
+            }),
+            afterApplySelection: ({ model }) => {
+                model.setSetting('lottie_json_url', '');
+                model.setSetting('lottie_source_tabs', 'lottie_source_file_tab');
+            },
+            syncHandlerKey: '__peaLottieFileSyncHandler',
+            mediaChangeHandlerKey: '__peaLottieFileSyncHandler'
         });
         elementor.hooks.addAction('panel/open_editor/widget/pea_image_gallery', function(panel, model, view) {
             
@@ -7432,6 +7831,19 @@
                 setTimeout(() => {
                     view.render();
                 }, 100);
+            });
+
+        });
+
+        elementor.hooks.addAction('panel/open_editor/widget/pea_advanced_slider', function (panel, model, view) {
+
+            const settingsModel   = view.model.get('settings');
+            const itemsCollection = settingsModel.get('slide_items');
+            
+            panel.$el.on('sortstop', function () {
+                setTimeout(() => {
+                    view.render();
+                }, 300);
             });
 
         });

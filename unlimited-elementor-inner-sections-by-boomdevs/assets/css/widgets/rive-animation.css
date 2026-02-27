@@ -1,0 +1,119 @@
+.pea-rive-animation-wrapper {
+    width: 100%;
+}
+
+.pea-rive-align-left .pea-rive-animation-inner.pea-rive-has-source {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.pea-rive-align-center .pea-rive-animation-inner.pea-rive-has-source {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pea-rive-align-right .pea-rive-animation-inner.pea-rive-has-source {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.pea-rive-animation-inner {
+    position: relative;
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.pea-rive-animation-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.pea-rive-no-source .pea-rive-animation-canvas {
+    display: none;
+}
+
+.pea-rive-no-source .pea-rive-animation-placeholder,
+.pea-rive-no-source .pea-rive-animation-status {
+    position: relative;
+    inset: auto;
+}
+
+.pea-rive-animation-placeholder,
+.pea-rive-animation-error,
+.pea-rive-animation-note,
+.pea-rive-animation-status {
+    padding: 20px;
+    border: 1px solid #1d2327;
+    background: #fff;
+    color: #1f2937;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.pea-rive-animation-placeholder {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    overflow: auto;
+}
+
+.pea-rive-animation-placeholder h4 {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+}
+
+.pea-rive-animation-placeholder p {
+    margin: 0;
+}
+
+.pea-rive-animation-placeholder-actions {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.pea-rive-placeholder-action {
+    appearance: none;
+    border: 1px solid #2271b1;
+    background: #2271b1;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 3px;
+    font-size: 14px;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.pea-rive-placeholder-action:focus-visible {
+    outline: 2px solid #1d4ed8;
+    outline-offset: 2px;
+}
+
+.pea-rive-placeholder-action.is-secondary {
+    background: #fff;
+    color: #2271b1;
+}
+
+.pea-rive-animation-error {
+    border-color: #f8b4b4;
+    background: #fff5f5;
+    color: #b91c1c;
+}
+
+.pea-rive-animation-note {
+    border-color: #cce3f6;
+    background: #f0f7ff;
+    color: #1e3a5f;
+}
+
+.pea-rive-animation-status {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+}

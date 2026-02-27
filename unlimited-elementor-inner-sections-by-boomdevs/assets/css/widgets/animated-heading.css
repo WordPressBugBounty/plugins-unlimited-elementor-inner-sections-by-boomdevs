@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Swirl Animation Structure */
+.pea-animated-heading-swirl-main-wrapper {
+    perspective: 800px;
+}
+
+.pea-animated-heading-dynamic-text {
+    display: inline-block;
+    white-space: nowrap;
+    position: relative;
+}
+
+.pea-animated-heading-dynamic-letter {
+    display: inline-block;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    opacity: 0;
+    transform: translateZ(-20px) rotateX(90deg);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* Animation Classes */
+.pea-animated-heading-dynamic-letter.pea-animated-heading-animation-in {
+    animation: pea-swirl-in 0.4s forwards;
+}
+
+.pea-animated-heading-dynamic-letter.pea-animated-heading-animation-out {
+    animation: pea-swirl-out 0.4s forwards;
+}
+
+/* Keyframes */
+@keyframes pea-swirl-in {
+    0% {
+        opacity: 0;
+        transform: translateZ(-20px) rotateX(90deg);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateZ(-20px) rotateX(-10deg);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateZ(-20px) rotateX(0deg);
+    }
+}
+
+@keyframes pea-swirl-out {
+    0% {
+        opacity: 1;
+        transform: translateZ(-20px) rotateX(0);
+    }
+
+    60% {
+        opacity: 0;
+        transform: translateZ(-20px) rotateX(-100deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateZ(-20px) rotateX(-90deg);
+    }
+}
+
+/* Typing Cursor Animation */
+.pea-animated-heading-cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: pea-cursor-blink 0.7s infinite;
+}
+
+@keyframes pea-cursor-blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}

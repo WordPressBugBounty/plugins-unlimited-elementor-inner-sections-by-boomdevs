@@ -1,0 +1,33 @@
+.pea-breadcrumb-container .pea-breadcrumb-list {
+  list-style: none;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.pea-breadcrumb-container a {
+  color: #333;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.pea-breadcrumb-container a:hover {
+  color: #007bff;
+}
+.pea-breadcrumb-wrapper .pea-breadcrumb-separator {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  line-height: 1;
+}
+.pea-item-icon {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  line-height: 0;
+}
+.pea-breadcrumb-wrapper .pea-breadcrumb-item .pea-home-special-icon {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  line-height: 0;
+}

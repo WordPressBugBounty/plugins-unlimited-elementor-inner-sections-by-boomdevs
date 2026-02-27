@@ -115,11 +115,13 @@ class Admin {
                     <?php echo Helper::sanitize_svg($svg); // phpcs:ignore WordPress.Security.EscapeOutput ?>
                 </span>
                 by
-                <img
-                    src="<?php echo esc_url( PEA_PLUGIN_URL . 'assets/images/wp-messiah-logo.png' ); ?>"
-                    class="footer-logo"
-                    alt="Your Company"
-                />
+                <a href="<?php echo esc_url('https://wpmessiah.com'); ?>" target="_blank" class="wp-messiah-logo" >
+                    <img
+                        src="<?php echo esc_url( PEA_PLUGIN_URL . 'assets/images/wp-messiah-logo.png' ); ?>"
+                        class="footer-logo"
+                        alt="Your Company"
+                    />
+                </a>
             </span>
             <span class="footer-line"></span>
         </div>

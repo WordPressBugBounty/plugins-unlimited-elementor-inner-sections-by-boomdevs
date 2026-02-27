@@ -1339,13 +1339,14 @@ class AdvancedHeading extends Widget_Base {
         if($settings['heading_active_line_enable'] === 'yes'){
             $heading_classes[] = 'active-line';
         }
-        $this->add_render_attribute('heading', 'class', $heading_classes); ?>
+        $this->add_render_attribute('heading', 'class', $heading_classes); 
+        ?>
 
         <div <?php echo $this->get_render_attribute_string('wrapper'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> >
             <?php if ($settings['show_icon'] === 'yes') : ?>
                 <div class="pea-advanced-heading-icon-wrapper">
                     <div class="pea-advanced-heading-icon">
-                        <?php if($settings['enable_svg_code'] === 'no') : ?>
+                        <?php if($settings['enable_svg_code'] !== 'yes') : ?>
                             <?php \Elementor\Icons_Manager::render_icon( $heading_icon, [ 'aria-hidden' => 'true' ] ); ?>  
                         <?php elseif($settings['enable_svg_code'] === 'yes') : $svg_by_code = Helper::sanitize_svg($settings['svg_code_area']); ?>
                             <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

@@ -2,7 +2,9 @@
 
 namespace PrimeElementorAddons\Config;
 
-if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
+if (! defined('ABSPATH')) {
+    exit;
+} // Exit if accessed directly
 
 /**
  * Widget List Configuration
@@ -18,8 +20,9 @@ class WidgetList
 {
     private static $_instance = null;
 
-    public static function instance() {
-        if ( is_null( self::$_instance ) ) {
+    public static function instance()
+    {
+        if (is_null(self::$_instance)) {
             self::$_instance = new self();
         }
         return self::$_instance;
@@ -118,6 +121,48 @@ class WidgetList
                 'demo' => 'https://wpmessiah.com/',
                 'complete' => 'true',
                 'class' => 'AdvancedVideo',
+                'child' => 'false',
+            ],
+            'breadcrumb' => [
+                'slug' => 'breadcrumb',
+                'title' => 'Breadcrumb',
+                'package' => 'free',
+                'category' => 'media',
+                'badge' => 'freemium',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/breadcrumb.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'Breadcrumb',
+                'child' => 'false',
+            ],
+            'rive-animation' => [
+                'slug' => 'rive-animation',
+                'title' => 'Rive Animation',
+                'package' => 'free',
+                'category' => 'media',
+                'badge' => 'free',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/rive-animation.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'RiveAnimation',
+                'child' => 'false',
+            ],
+            'lottie-animation' => [
+                'slug' => 'lottie-animation',
+                'title' => 'Lottie Animation',
+                'package' => 'free',
+                'category' => 'media',
+                'badge' => 'free',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/lottie-animation.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'LottieAnimation',
                 'child' => 'false',
             ],
             'call-to-action' => [
@@ -372,6 +417,76 @@ class WidgetList
                 'class' => 'AdvancedTabs',
                 'child' => 'false',
             ],
+            'google-map' => [
+                'slug' => 'google-map',
+                'title' => 'Advanced Google Map',
+                'package' => 'free',
+                'category' => 'content',
+                'badge' => 'free',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/google-map.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'AdvancedGoogleMaps',
+                'child' => 'false',
+            ],
+            'advanced-paragraph' => [
+                'slug' => 'advanced-paragraph',
+                'title' => 'Advanced Paragraph',
+                'package' => 'free',
+                'category' => 'content',
+                'badge' => 'free',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/advanced-paragraph.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'AdvancedParagraph',
+                'child' => 'false',
+            ],
+            'animated-heading' => [
+                'slug' => 'animated-heading',
+                'title' => 'Animated Heading',
+                'package' => 'free',
+                'category' => 'content',
+                'badge' => 'free',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/animated-heading.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'AnimatedHeading',
+                'child' => 'false',
+            ],
+            'slider' => [
+                'slug' => 'slider',
+                'title' => 'Advanced Slider',
+                'package' => 'free',
+                'category' => 'content',
+                'badge' => 'free',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/advanced-slider.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'AdvancedSlider',
+                'child' => 'false',
+            ],
+            'business-hours' => [
+                'slug' => 'business-hours',
+                'title' => 'Business Hours',
+                'package' => 'free',
+                'category' => 'content',
+                'badge' => 'free',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/business-hours.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'BusinessHours',
+                'child' => 'false',
+            ]
         ];
         $this->widgets = apply_filters('prime_elementor_addons_widgets_list', $this->widgets);
     }

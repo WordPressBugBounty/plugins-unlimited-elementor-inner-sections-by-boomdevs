@@ -551,6 +551,33 @@ class CallToAction extends Widget_Base {
                 'selector' => '{{WRAPPER}} .pea-call-to-action-wrapper',
             ]
         );
+            
+        $this->add_control(
+            'cta_box_border_type_hover_color',
+            [
+                'label' => esc_html__('Border Hover Color', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'type' => Controls_Manager::COLOR,
+                'default' => '',
+                'selectors' => [
+                    '{{WRAPPER}} .pea-call-to-action-wrapper:hover' => 'border-color: {{VALUE}};',
+                ],
+                'conditions' => [
+                    'relation' => 'and',
+                    'terms'    => [
+                        [
+                            'name'     => 'cta_box_border_type_border',
+                            'operator' => '!==',
+                            'value'    => '',
+                        ],
+                        [
+                            'name'     => 'cta_box_border_type_border',
+                            'operator' => '!==',
+                            'value'    => 'none',
+                        ],
+                    ],
+                ],
+            ]
+        );
 
 		$this->add_responsive_control(
 			'cta_box_border_radius',

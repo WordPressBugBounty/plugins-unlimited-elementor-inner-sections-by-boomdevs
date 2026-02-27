@@ -3,7 +3,7 @@ Plugin Name: Prime Elementor Addons – Lightweight Elementor Widgets for Faster
 tags: elementor, elementor-addon, elementor-widgets, accordion, tabs, pricing, testimonials
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 Requires PHP: 7.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -289,6 +289,26 @@ It's very easy and straight forward to install this plugin. But before installin
 4.  Activate the plugin through the 'Plugins' screen form your WordPress website dashboard.
 
 == Changelog ==
+
+= 1.2.0 =
+* New: Added new powerful Elementor widgets:
+    * Advanced Slider
+    * Advanced Google Maps
+    * Advanced Paragraph
+    * Animated Heading
+    * Business Hours
+    * Breadcrumb
+    * Rive Animation
+    * Lottie Animation
+* Update: Overhauled "Advanced Accordion" for better performance and controls.
+* Update: Integrated Appsero SDK for insights and update notifications.
+* Update: Added Custom CSS control to all widgets.
+* Update: Replaced eicons with custom SVG icons in all widgets for better loading speed.
+* Fix: Addressed Business Hours holiday and weekend calculation issues.
+* Fix: Resolved Post Grid AJAX callback and styling issues.
+* Fix: Fixed Advanced Slider pagination and navigation styling controls.
+* Fix: Improved Rive and Lottie file upload and validation logic.
+
 = 1.1.0 =
 * New: Rebranded to "Prime Elementor Addons" – Lightweight Elementor Widgets for Faster Pages.
 * New: Added essential Elementor widgets to build complete sites:
