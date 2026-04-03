@@ -24,7 +24,7 @@ class AdvancedGoogleMaps extends Widget_Base
 
     public function get_title()
     {
-        return __('Advanced<br>Google Maps', 'unlimited-elementor-inner-sections-by-boomdevs');
+        return __('Advanced Google Map', 'unlimited-elementor-inner-sections-by-boomdevs');
     }
 
     public function get_categories()
@@ -62,7 +62,7 @@ class AdvancedGoogleMaps extends Widget_Base
                 'label' => __('Address', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'type' => Controls_Manager::TEXT,
                 'default' => __('Boomdevs', 'unlimited-elementor-inner-sections-by-boomdevs'),
-                'placeholder' => __('Enter your Address', 'prime-elementor-addons'),
+                'placeholder' => __('Enter your Address', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'label_block' => true,
             ]
         );

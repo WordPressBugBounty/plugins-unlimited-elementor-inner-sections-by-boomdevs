@@ -313,7 +313,7 @@ class AnimatedHeading extends Widget_Base
         $items = $settings['animated_heading_item'];
         $cursor = $settings['pea_animated_heading_cursor'];
         $alignment = isset($settings['pea_animated_heading_alinment']) ? $settings['pea_animated_heading_alinment'] : 'left';
-        ?>
+?>
 
         <div class="pea-animated-heading-wrapper" data-animation="<?php echo esc_attr($animationType); ?>"
             style=" text-align:<?php echo esc_attr($alignment); ?>;">
@@ -329,7 +329,7 @@ class AnimatedHeading extends Widget_Base
                     if (!empty($items)) {
                         foreach ($items as $index => $item) {
                             echo '<span class="pea-animated-heading-animation-item" 
-                            data-index="' . $index . '">'
+                            data-index="' . esc_attr($index) . '">'
                                 . esc_html($item['animated_heading_item_text']) .
                                 '</span>';
                         }
@@ -349,6 +349,6 @@ class AnimatedHeading extends Widget_Base
 
             </<?php echo esc_attr($htmlTag); ?>>
         </div>
-        <?php
+<?php
     }
 }

@@ -1,0 +1,60 @@
+.pea-marquee-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.pea-marquee-carousel-wrapper .pea-marquee-swiper {
+    overflow: visible;
+    position: relative;
+}
+
+.pea-marquee-carousel-wrapper .pea-marquee-swiper-wrapper {
+    height: auto !important;
+    align-items: stretch;
+}
+
+.pea-marquee-carousel-wrapper .pea-marquee-item {
+    height: auto;
+    box-sizing: border-box;
+    transition: background-color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+.pea-marquee-carousel-wrapper .swiper-wrapper {
+    cursor: default !important;
+    transition-timing-function: linear !important;
+}
+
+.pea-marquee-carousel-wrapper .pea-marquee-fade {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    z-index: 10;
+}
+
+.pea-marquee-carousel-wrapper .pea-marquee-fade-left {
+    left: 0;
+    background: linear-gradient(to right,
+            var(--pea-fade-color, #ffffff) 0%,
+            transparent 100%);
+}
+
+.pea-marquee-carousel-wrapper .pea-marquee-fade-right {
+    right: 0;
+    background: linear-gradient(to left,
+            var(--pea-fade-color, #ffffff) 0%,
+            transparent 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pea-marquee-carousel-wrapper .pea-marquee-swiper .swiper-wrapper {
+        animation: none !important;
+        transition: none !important;
+    }
+}

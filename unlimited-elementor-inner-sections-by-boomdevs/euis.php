@@ -16,7 +16,7 @@
  * Plugin Name:       Prime Elementor Addons – Lightweight Elementor Widgets for Faster Pages
  * Plugin URI:        https://wpmessiah.com/product-category/wordpress/wordpress-plugins/
  * Description:       Lightweight Elementor Addons plugin with essential Elementor widgets: Accordion, Tabs, CTA, Pricing Table, Testimonials, Post Grid, forms & more.
- * Version:           1.2.0
+ * Version:           1.2.1
  * Author:            WP Messiah
  * Author URI:        https://wpmessiah.com/
  * Elementor tested up to: 3.25.4

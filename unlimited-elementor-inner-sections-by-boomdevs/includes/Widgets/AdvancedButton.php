@@ -93,7 +93,7 @@ class AdvancedButton extends Widget_Base {
 							'icon'  => 'eicon-text-align-right',
 						],
 						'justify' => [
-							'title' => esc_html__( 'Right', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+							'title' => esc_html__( 'Justify', 'unlimited-elementor-inner-sections-by-boomdevs' ),
 							'icon'  => 'eicon-text-align-right',
 						],
 					],

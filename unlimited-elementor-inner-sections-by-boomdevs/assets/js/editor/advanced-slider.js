@@ -1,3 +1,6 @@
+/**
+ * Advanced Slider Editor Js
+ */
 (function () {
     "use strict";
 
@@ -15,11 +18,11 @@
         // Get Nested Elements module
         const nestedModule =
             ($e?.components?.get?.("nested-elements/nested-repeater") ||
-             $e?.components?.get?.("nested-elements"))?.exports || null;
+                $e?.components?.get?.("nested-elements"))?.exports || null;
 
         if (!nestedModule) return false;
 
-        const BaseView  = nestedModule.NestedViewBase || nestedModule.NestedView;
+        const BaseView = nestedModule.NestedViewBase || nestedModule.NestedView;
         const BaseModel = nestedModule.NestedRepeaterModel || nestedModule.NestedModelBase;
 
         /**
@@ -36,14 +39,14 @@
             }
 
             // CRITICAL: Tell Elementor where to render child elements
-            getChildViewContainer( compositeView, itemView ) {
+            getChildViewContainer(compositeView, itemView) {
                 // Find the correct slide wrapper for this child
-                if ( itemView ) {
+                if (itemView) {
                     const slideId = itemView.model?.get('id');
-                    if ( slideId ) {
-                        const el = this.$el.find( '.elementor-repeater-item-' + slideId + ' > .pea-advanced-slider-item' ).get(0)
-                                || this.$el.find( '.elementor-repeater-item-' + slideId ).get(0);
-                        if ( el ) return Backbone.$( el );
+                    if (slideId) {
+                        const el = this.$el.find('.elementor-repeater-item-' + slideId + ' > .pea-advanced-slider-item').get(0)
+                            || this.$el.find('.elementor-repeater-item-' + slideId).get(0);
+                        if (el) return Backbone.$(el);
                     }
                 }
                 return this.$el.find('.pea-swiper-wrapper');
@@ -132,7 +135,7 @@
             async function () {
                 try {
                     await elementor.modules.nestedElements;
-                } catch (e) {}
+                } catch (e) { }
                 registerAdvancedSlider();
             }
         );

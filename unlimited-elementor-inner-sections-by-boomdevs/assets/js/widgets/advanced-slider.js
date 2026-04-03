@@ -1,3 +1,6 @@
+/**
+ * Advanced Slider Frontend Js
+ */
 (function ($) {
     'use strict';
 
@@ -9,7 +12,7 @@
             return {
                 selectors: {
                     sliderContainer: '.pea-advanced-slider-wrapper',
-                    swiper: '.fb-swiper'
+                    swiper: '.pea-swiper'
                 }
             };
         },
@@ -124,7 +127,7 @@
                 this.swiperInstances.forEach(instance => {
                     try {
                         instance.destroy(true, true);
-                    } catch (e) {}
+                    } catch (e) { }
                 });
                 this.swiperInstances = [];
             }

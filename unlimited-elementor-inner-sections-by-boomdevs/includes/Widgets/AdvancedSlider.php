@@ -86,6 +86,7 @@ class AdvancedSlider extends Widget_Nested_Base {
                 'elType'   => 'container',
                 'id'       => \Elementor\Utils::generate_random_string(),
                 'settings' => [
+                    /* translators: %d: Slide Item number. */
                     '_title'                => sprintf( __( 'Slide Item #%d', 'unlimited-elementor-inner-sections-by-boomdevs' ), $num ),
                     'background_background' => 'classic',
                     'background_color'      => '#ffffff',
@@ -562,6 +563,7 @@ class AdvancedSlider extends Widget_Nested_Base {
 			$this->add_control(
 				'navigation_left_icon_or_img_choose',
 				[
+                    // phpcs:ignore WordPress.WP.I18n.NoEmptyStrings
 					'label' => esc_html__('', 'unlimited-elementor-inner-sections-by-boomdevs'),
 					'type' => Controls_Manager::CHOOSE,
 					'default' => 'icon',
@@ -602,6 +604,7 @@ class AdvancedSlider extends Widget_Nested_Base {
             $this->add_control(
                 'navigation_left_image',
                 [
+                    // phpcs:ignore WordPress.WP.I18n.NoEmptyStrings
                     'label' => esc_html__( '', 'unlimited-elementor-inner-sections-by-boomdevs' ),
                     'type' => \Elementor\Controls_Manager::MEDIA,
                     'skin' => 'inline',
@@ -630,6 +633,7 @@ class AdvancedSlider extends Widget_Nested_Base {
 			$this->add_control(
 				'navigation_right_icon_or_img_choose',
 				[
+                    // phpcs:ignore WordPress.WP.I18n.NoEmptyStrings
 					'label' => esc_html__('', 'unlimited-elementor-inner-sections-by-boomdevs'),
 					'type' => Controls_Manager::CHOOSE,
 					'default' => 'icon',
@@ -670,6 +674,7 @@ class AdvancedSlider extends Widget_Nested_Base {
             $this->add_control(
                 'navigation_right_image',
                 [
+                    // phpcs:ignore WordPress.WP.I18n.NoEmptyStrings
                     'label' => esc_html__( '', 'unlimited-elementor-inner-sections-by-boomdevs' ),
                     'type' => \Elementor\Controls_Manager::MEDIA,
                     'skin' => 'inline',
@@ -1751,7 +1756,7 @@ class AdvancedSlider extends Widget_Nested_Base {
             SlideCount = numOfSlides,
             slideItemKey = 'new-slide-' + elementUid + SlideCount;
 
-        var itemClass = 'wp-block-frontis-blocks-slider-item fb-slider-child-wrap swiper-slide fb-block- pea-advanced-slider-item elementor-repeater-item-' + data._id;
+        var itemClass = 'pea-slider-child-wrap swiper-slide pea-advanced-slider-item elementor-repeater-item-' + data._id;
 
         view.addRenderAttribute( slideItemKey, {
             'class': itemClass,
@@ -1875,8 +1880,8 @@ class AdvancedSlider extends Widget_Nested_Base {
             )
         );
         ?>
-        <div class="wp-block-frontis-blocks-slider  pea-advanced-slider-wrapper outside center pea-swiper-<?php echo esc_attr($widget_id); ?>"  data-swiper-settings='<?php echo esc_attr($data_settings); ?>'>
-            <div class="fb-slides fb-swiper swiper">
+        <div class="pea-advanced-slider-wrapper outside center pea-swiper-<?php echo esc_attr($widget_id); ?>"  data-swiper-settings='<?php echo esc_attr($data_settings); ?>'>
+            <div class="pea-slides pea-swiper swiper">
                 <div class="swiper-wrapper pea-swiper-wrapper" aria-live="polite">
                     <?php
                     foreach ( $slide_items as $index => $slide ) {
@@ -1885,7 +1890,7 @@ class AdvancedSlider extends Widget_Nested_Base {
                         $this->add_render_attribute(
                             $slide_item_key,
                             array(
-                                'class' => 'wp-block-frontis-blocks-slider-item fb-slider-child-wrap swiper-slide fb-block- pea-advanced-slider-item elementor-repeater-item-'.esc_attr( $slide['_id'] ),
+                                'class' => 'pea-slider-child-wrap swiper-slide pea-advanced-slider-item elementor-repeater-item-'.esc_attr( $slide['_id'] ),
                                 'slide-index' => $slide_count,
                                 'role' => 'group',
                             )
@@ -2105,7 +2110,7 @@ class AdvancedSlider extends Widget_Nested_Base {
 
             #>
             <div class=" pea-advanced-slider-wrapper outside center pea-swiper-{{{ widgetId }}}" data-swiper-settings="{{ JSON.stringify( swiperSettings ) }}">
-                <div class="fb-slides fb-swiper swiper">
+                <div class="pea-slides pea-swiper swiper">
                     <div class="swiper-wrapper pea-swiper-wrapper" aria-live="polite">
                         <# _.each( settings['slider_items'], function( slide, index ) {
                             const SlideCount = index + 1;
@@ -2113,7 +2118,7 @@ class AdvancedSlider extends Widget_Nested_Base {
                             const slideItemKey = 'slide-item-' + slideUid;
                                 
                             // Clear previous attributes for this key
-                            var itemClass = 'wp-block-frontis-blocks-slider-item fb-slider-child-wrap swiper-slide fb-block-  pea-advanced-slider-item elementor-repeater-item-' + slide._id;
+                            var itemClass = 'pea-slider-child-wrap swiper-slide  pea-advanced-slider-item elementor-repeater-item-' + slide._id;
 
                             view.addRenderAttribute( slideItemKey, {
                                 'class': itemClass,

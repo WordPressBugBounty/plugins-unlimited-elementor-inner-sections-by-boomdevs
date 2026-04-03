@@ -951,51 +951,6 @@
                     },
                     'lightbox_icon_enable': 'no',
                 },
-                'preset-5': {
-                    'image_styles': 'color_overlay',
-                    'overlay_style': 'overlay-from-left',
-                    'layouts': 'masonry-layout',
-                    'image_columns': {
-                        'unit': 'px',
-                        'size': 3,
-                        'sizes': [] // Required for responsive
-                    },
-                    'grid_height': {
-                        'unit': 'px',
-                        'size': 410,
-                        'sizes': [] // Required for responsive
-                    },
-                    'gallery_items': [
-                        {   
-                            'gallery_image_name': 'Image 1',
-                            'gallery_image_column_span': 'unset',
-                            'gallery_image_row_span': 'span 2',
-                        },
-                        {   
-                            'gallery_image_name': 'Image 2',
-                            'gallery_image_column_span': 'unset',
-                            'gallery_image_row_span': 'unset',
-                        },
-                        {   
-                            'gallery_image_name': 'Image 3',
-                            'gallery_image_column_span': 'unset',
-                            'gallery_image_row_span': 'span 2',
-                        },
-                        {   'gallery_image_name': 'Image 4',
-                            'gallery_image_column_span': 'unset',
-                            'gallery_image_row_span': 'unset',
-                        },
-                    ],
-                    'image_border_radius': {
-                        'top': '24',
-                        'right': '24',
-                        'bottom': '24',
-                        'left': '24',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'lightbox_icon_enable': 'no',
-                },
             };
                 
                 

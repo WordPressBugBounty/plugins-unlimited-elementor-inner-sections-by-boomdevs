@@ -714,7 +714,7 @@ class FeatureList extends Widget_Base {
 		// 		'type' => \Elementor\Controls_Manager::COLOR,
 		// 		'default' => '#6A65FF',
 		// 		'selectors' => [
-		// 			'{{WRAPPER}} .frontis-feature-list-line' => 'border-color: {{VALUE}}'
+		// 			'{{WRAPPER}} .pea-feature-list-line' => 'border-color: {{VALUE}}'
 		// 		],
 		// 	]
 		// );
@@ -736,7 +736,7 @@ class FeatureList extends Widget_Base {
 		// 			'size' => 2,
 		// 		],
 		// 		'selectors' => [
-		// 			'{{WRAPPER}} .frontis-feature-list-line' => 'border-left-width: {{SIZE}}{{UNIT}};',
+		// 			'{{WRAPPER}} .pea-feature-list-line' => 'border-left-width: {{SIZE}}{{UNIT}};',
 		// 		],
 		// 		'separator' => 'before'
 		// 	]
@@ -755,7 +755,7 @@ class FeatureList extends Widget_Base {
         //             'dotted' => esc_html__( 'Dotted', 'unlimited-elementor-inner-sections-by-boomdevs' ),
         //         ],
         //         'selectors'   => [
-        //             '{{WRAPPER}} .frontis-feature-list-line' => 'border-left-style: {{VALUE}};',
+        //             '{{WRAPPER}} .pea-feature-list-line' => 'border-left-style: {{VALUE}};',
         //         ]
         //     ]
         // );

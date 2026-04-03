@@ -1,9 +1,9 @@
 === Prime Elementor Addons – Lightweight Elementor Widgets for Faster Pages ===
 Plugin Name: Prime Elementor Addons – Lightweight Elementor Widgets for Faster Pages
-tags: elementor, elementor-addon, elementor-widgets, accordion, tabs, pricing, testimonials
+tags: elementor, elementor-addon, elementor-widgets, accordion, tabs
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 Requires PHP: 7.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -257,6 +257,11 @@ Instead of installing many small plugins, Prime gives you the common building bl
 *   WPML
 *   And More
 
+
+Don’t settle for basic Elementor widgets. Upgrade to the Pro version of “Prime Elementor Addons” today and take your website to the next level!
+
+[Get the Pro](https://primeelementoraddons.com/pricing/)
+
 == Documentation ==
 
 Start with the [Prime Elementor Addons documentation](https://docs.wpmessiah.com/) for quick setup, guides, and best practices. Clear steps, screenshots, and tips to help you build faster in the Gutenberg editor.
@@ -289,6 +294,20 @@ It's very easy and straight forward to install this plugin. But before installin
 4.  Activate the plugin through the 'Plugins' screen form your WordPress website dashboard.
 
 == Changelog ==
+
+= 1.2.1 – 03 April 2026 =
+* Added new widgets: Advanced Search, Image Comparison, Progress Bar, Advanced Switcher, and Marquee Carousel.
+* Improved the Advanced Search widget with live REST search, preset layout refinements, expand-mode UI improvements, Elementor icon support, dropdown state cleanup, and extended style/meta controls.
+* Reorganized and enhanced widget style controls, including new hover options and better control flow.
+* Added and updated Pro widget configurations, including Advanced Model Popup, Stacked Card, Content Table, Horizontal Timeline, and Woo Product Carousel.
+* Improved widget registration logic, including alphabetical ordering and Pro widget registration when Pro is active.
+* Updated widget icons for Mega Menu, Content Table, Horizontal Timeline, Post Ticker, and Stacked Cards.
+* Improved Post Grid featured image fallback logic.
+* Fixed Advanced Slider CSS conflict and removed leftover conflict markers.
+* Updated plugin menu links for Settings and Go Pro.
+* Added SureCart license system support.
+* Resolved plugin check (PCP) warnings and applied general code cleanup, fixes, and final release preparation updates.
+* Commented unused widget config for cleaner final release code.
 
 = 1.2.0 =
 * New: Added new powerful Elementor widgets:

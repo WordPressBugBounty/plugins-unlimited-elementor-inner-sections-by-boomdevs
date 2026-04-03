@@ -103,7 +103,7 @@ class WidgetCustomCss {
         $element->start_controls_section(
             'pea_custom_css_section',
             [
-                'label' => __( 'Custom CSS (PEA)', 'prime-elementor-addons' ),
+                'label' => __( 'Custom CSS (PEA)', 'unlimited-elementor-inner-sections-by-boomdevs' ),
                 'tab'   => Controls_Manager::TAB_ADVANCED,
             ]
         );
@@ -111,7 +111,8 @@ class WidgetCustomCss {
         $element->add_control(
             'pea_custom_css',
             [
-                'label'       => __( '', 'prime-elementor-addons' ),
+                // phpcs:ignore WordPress.WP.I18n.NoEmptyStrings
+                'label'       => __( '', 'unlimited-elementor-inner-sections-by-boomdevs' ),
                 'type'        => Controls_Manager::CODE,
                 'language'    => 'css',
                 'rows'        => 20,

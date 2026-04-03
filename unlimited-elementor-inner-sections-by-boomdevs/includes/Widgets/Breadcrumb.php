@@ -610,6 +610,7 @@ class Breadcrumb extends Widget_Base {
             } else {
                 $separator_html = esc_html( $settings['separator_text'] );
             }
+            // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             echo '<span class="pea-breadcrumb-separator">' . $separator_html . '</span>';
 
             // Current Page Item
@@ -619,7 +620,7 @@ class Breadcrumb extends Widget_Base {
                 Icons_Manager::render_icon( $settings['item_icon'], [ 'aria-hidden' => 'true' ] );
                 echo '</span>';
             }
-            echo '<span class="pea-breadcrumb-text">' . get_the_title() . '</span>';
+            echo '<span class="pea-breadcrumb-text">' . wp_kses_post(get_the_title()) . '</span>';
             echo '</span>';
         }
 

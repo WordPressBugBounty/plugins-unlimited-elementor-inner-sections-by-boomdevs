@@ -102,6 +102,35 @@ class PostGrid extends Widget_Base {
             );
             
             $this->add_control(
+                'show_default_dummy_featured_image',
+                [
+                    'label' => esc_html__('Show Default Placeholder Image', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'type' => Controls_Manager::SWITCHER,
+                    'label_on' => esc_html__('Yes', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'label_off' => esc_html__('No', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'return_value' => 'yes',
+                    'default' => 'yes',
+                    'condition' => [
+                        'show_featured_image' => 'yes',
+                    ],
+                ]
+            );
+
+            $this->add_control(
+                'custom_dummy_featured_image',
+                [
+                    'label'   => esc_html__( 'Custom Fallback Featured Image', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'type'    => Controls_Manager::MEDIA,
+                    'default' => [
+                        'url' => \PrimeElementorAddons\Utils\Helper::pea_get_image_url(),
+                    ],
+                    'condition' => [
+                        'show_default_dummy_featured_image!' => 'yes',
+                    ],
+                ]
+            );
+            
+            $this->add_control(
                 'show_title',
                 [
                     'label' => esc_html__('Show Title', 'unlimited-elementor-inner-sections-by-boomdevs'),
@@ -4192,6 +4221,7 @@ class PostGrid extends Widget_Base {
         return [
             // Visual toggles
             'show_featured_image' => $settings['show_featured_image'] ?? 'yes',
+            'show_default_dummy_featured_image' => $settings['show_default_dummy_featured_image'] ?? 'yes',
             'show_title' => $settings['show_title'] ?? 'yes',
             'show_author' => $settings['show_author'] ?? 'yes',
             'show_author_image' => $settings['show_author_image'] ?? 'yes',
@@ -4384,6 +4414,7 @@ class PostGrid extends Widget_Base {
                     $merged_settings = array_merge($display_settings, [
                         'excerpt_length' => ['size' => $display_settings['excerpt_length']],
                         'read_more_media_icon' => $settings['read_more_media_icon'] ?? [],
+                        'custom_dummy_featured_image' => $settings['custom_dummy_featured_image'] ?? [],
                     ]);
 
                     while ($query->have_posts()) {

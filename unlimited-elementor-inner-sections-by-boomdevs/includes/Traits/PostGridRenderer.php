@@ -25,6 +25,7 @@ trait PostGridRenderer {
         // Extract individual settings
         $preset_styles = $settings['preset_styles'] ?? 'default';
         $show_featured_image = $settings['show_featured_image'] ?? 'yes';
+        $show_dummy_featured_image = $settings['show_dummy_featured_image'] ?? 'yes';
         $show_title = $settings['show_title'] ?? 'yes';
         $title_link = $settings['title_link'] ?? 'yes';
         $title_tag = $settings['title_tag'] ?? 'h2';
@@ -353,9 +354,13 @@ trait PostGridRenderer {
      */
     private function get_post_image($post_id, $settings) {
         $thumbnail_id = get_post_thumbnail_id($post_id);
-        
-        if (!$thumbnail_id) {
-            return plugin_dir_url(__FILE__) . 'assets/images/preset-bg.jpg';
+        $show_default_dummy_featured_image = $settings['show_default_dummy_featured_image'] ?? 'yes';
+
+        if (!$thumbnail_id && $show_default_dummy_featured_image === 'yes' ) {
+            return PEA_PLUGIN_URL . 'assets/images/preset-bg.jpg';
+        }else if (!$thumbnail_id && $show_default_dummy_featured_image !== 'yes' ){
+            $custom_featured_image_url = !empty($settings['custom_dummy_featured_image']['url']) ? $settings['custom_dummy_featured_image']['url'] : '';
+            return $custom_featured_image_url;
         }
         
         // Get thumbnail size from settings
@@ -377,8 +382,11 @@ trait PostGridRenderer {
         }
         
         // Fallback to default image
-        if (!$image_src) {
-            $image_src = plugin_dir_url(__FILE__) . 'assets/images/preset-bg.jpg';
+        if (!$image_src && $show_default_dummy_featured_image === 'yes') {
+            $image_src = PEA_PLUGIN_URL . 'assets/images/preset-bg.jpg';
+        }else  if (!$image_src && $show_default_dummy_featured_image !== 'yes') {
+            $image_src = !empty($settings['custom_dummy_featured_image']['url']) ? $settings['custom_dummy_featured_image']['url'] : '';
+            return $image_src;
         }
         
         return $image_src;

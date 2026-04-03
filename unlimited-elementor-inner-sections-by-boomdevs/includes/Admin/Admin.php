@@ -53,6 +53,8 @@ class Admin {
         $this->initial_activated_widgets();
         add_action( 'admin_menu', [ $this, 'add_admin_menu' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+        add_action( 'plugin_action_links', [$this, 'pea_menu_action_links'], 10, 2);
+
         add_action( 'rest_api_init', [ $this, 'register_settings' ] );
         add_action( 'wp_ajax_pea_save_widgets', [ $this, 'pea_save_widgets' ] );
         add_action( 'wp_ajax_pea_get_plugin_changelog', [ $this, 'get_plugin_changelog' ] );
@@ -230,6 +232,32 @@ class Admin {
             'PrimeElementorAddonsAdmin',
             $localizeArray
         );
+    }
+
+    /**
+     * Menu Action Links
+     *
+     * @since 1.2.1
+     */
+    public function pea_menu_action_links($links, $file)
+    {
+        if ($file === PEA_PLUGIN_BASENAME) {
+            $settings_links = sprintf(
+                '<a href="%1$s">Settings</a>',
+                admin_url('admin.php?page=prime-elementor-addons')
+            );
+            array_unshift($links, $settings_links);
+
+            if (!class_exists('PrimeElementorAddonsPro\Plugin')) {
+                $go_pro_link = sprintf(
+                    '<a target="_blank" href="%1$s"><strong style="color:#5e2eff;display: inline-block;">Go Pro</strong></a>',
+                    PEA_UPGRADE_PRO_URL
+                );
+                array_push($links, $go_pro_link);
+            }
+        }
+
+        return $links;
     }
     
     /**

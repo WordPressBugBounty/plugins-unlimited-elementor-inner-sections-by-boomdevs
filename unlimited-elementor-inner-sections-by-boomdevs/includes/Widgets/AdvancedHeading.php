@@ -39,6 +39,23 @@ class AdvancedHeading extends Widget_Base {
     public function get_style_depends() {
         return ['prime-elementor-addons--advanced-heading'];
     }
+
+    public function get_custom_help_url() {
+        if(PEA_IS_PRO_ACTIVE !== true){
+            return 'https://primeelementoraddons.com/pricing';
+        }
+    }
+
+    protected function get_upsale_data() {
+        if(PEA_IS_PRO_ACTIVE !== true){
+            return [
+                'condition' => true,
+                'title' => __('Upgrade to Pro', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'description' => __('Unlock Advanced features.', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'upgrade_url' => 'https://primeelementoraddons.com/pricing'
+            ];
+        }
+    }
     
     protected function register_controls() {
         
