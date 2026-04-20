@@ -2,8 +2,8 @@
 Plugin Name: Prime Elementor Addons – Lightweight Elementor Widgets for Faster Pages
 tags: elementor, elementor-addon, elementor-widgets, accordion, tabs
 Requires at least: 6.0
-Tested up to: 6.9
-Stable tag: 1.2.1
+Tested up to: 7.0
+Stable tag: 1.2.2
 Requires PHP: 7.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -294,6 +294,19 @@ It's very easy and straight forward to install this plugin. But before installin
 4.  Activate the plugin through the 'Plugins' screen form your WordPress website dashboard.
 
 == Changelog ==
+
+= 1.2.2 – 20 April 2026 =
+* New: Added **News Ticker** widget – display scrolling news headlines and announcements with full style controls and JS-powered animation.
+* New: Added **Post Category** widget – show post categories in a styled grid/list layout with advanced query and design options.
+* New: Added **Back to Top** widget – a customizable scroll-to-top button with smooth animation, icon controls, and visibility settings.
+* Improvement: Refactored `PostGrid.php` with major performance and styling improvements.
+* Improvement: Updated `WidgetList.php` to register the three new widgets with proper icon and category config.
+* Improvement: Enhanced `Plugin.php` with updated asset loading, script/style enqueue logic for new widgets, and Singleton trait integration.
+* Improvement: Updated `Admin.php` to support new widget toggle controls in the admin dashboard.
+* Improvement: Added `Singleton.php` trait for consistent single-instance pattern across widget classes.
+* Improvement: Updated `FeaturesManager.php` and `Helper.php` for compatibility with new widgets.
+* Improvement: Updated `WidgetCustomCss.php` to cover new widget contexts.
+* Fix: Minor CSS update in `editor.css` for new widget panel icons.
 
 = 1.2.1 – 03 April 2026 =
 * Added new widgets: Advanced Search, Image Comparison, Progress Bar, Advanced Switcher, and Marquee Carousel.

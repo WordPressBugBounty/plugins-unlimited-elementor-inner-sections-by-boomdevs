@@ -19,7 +19,7 @@ final class Plugin
      *
      * @var string
      */
-    const VERSION = '1.2.1';
+    const VERSION = '1.2.2';
 
     /**
      * Plugin slug
@@ -182,6 +182,7 @@ final class Plugin
         add_action('wp_ajax_get_author_by_post_type', [$this, 'get_author_by_post_type']);
         add_action('wp_ajax_get_category_by_post_type', [$this, 'get_category_by_post_type']);
         add_action('wp_ajax_get_tag_by_post_type', [$this, 'get_tag_by_post_type']);
+        add_action('wp_ajax_pea_get_terms_by_taxonomy', [$this, 'get_terms_by_taxonomy']);
         add_action('wp_ajax_pea_upload_animation_file', [$this, 'upload_animation_file']);
         add_action('wp_ajax_pea_rive_wasm', [$this, 'serve_rive_wasm']);
         add_action('wp_ajax_nopriv_pea_rive_wasm', [$this, 'serve_rive_wasm']);
@@ -198,7 +199,7 @@ final class Plugin
 
     public function pea_add_features_manager()
     {
-        \PrimeElementorAddons\Utils\FeaturesManager::instance();
+        \PrimeElementorAddons\Utils\FeaturesManager::get_instance();
     }
 
     /**
@@ -464,7 +465,7 @@ final class Plugin
     {
         // Only initialize in admin area
         if (is_admin()) {
-            \PrimeElementorAddons\Admin\Admin::instance();
+            \PrimeElementorAddons\Admin\Admin::get_instance();
         }
     }
 
@@ -562,7 +563,6 @@ final class Plugin
             );
 
             $button_text = esc_html__('Activate Elementor', 'unlimited-elementor-inner-sections-by-boomdevs');
-
         } else {
 
             // Install Elementor
@@ -640,7 +640,7 @@ final class Plugin
         $widgets = WidgetSettings::get_active_widgets();
         ksort($widgets);
 
-        $allwidgets = \PrimeElementorAddons\Config\WidgetList::instance()->get_widgets();
+        $allwidgets = \PrimeElementorAddons\Config\WidgetList::get_instance()->get_widgets();
 
         foreach ($widgets as $widgetkey => $widget) {
 
@@ -659,7 +659,6 @@ final class Plugin
                 if (class_exists($class)) {
                     $widgets_manager->register(new $class());
                 }
-
             } elseif ($widget == true && $widgetType == 'pro' && PEA_IS_PRO_ACTIVE == true && defined('PEA_PRO_LICENSE_ACTIVE') && PEA_PRO_LICENSE_ACTIVE == true) {
 
                 $class_name = $allwidgets[$widgetkey]['class'];
@@ -736,6 +735,8 @@ final class Plugin
             'business-hours',
             'advanced-slider',
             'marquee-carousel',
+            'news-ticker',
+            'back-to-top',
             // add all your widgets here
         ];
 
@@ -796,6 +797,8 @@ final class Plugin
             'business-hours',
             'advanced-slider',
             'marquee-carousel',
+            'news-ticker',
+            'back-to-top',
             // add all your widgets here
         ];
 
@@ -956,6 +959,31 @@ final class Plugin
                 'elementor-common',
                 'wp-element',
                 'jquery',
+            ],
+            PEA_VERSION,
+            true
+        );
+
+        wp_enqueue_script(
+            'prime-elementor-addons-editor-news-ticker',
+            PEA_PLUGIN_URL . 'assets/js/editor/news-ticker.js',
+            [
+                'nested-elements',
+                'elementor-editor',
+                'elementor-common',
+                'wp-element',
+                'jquery',
+            ],
+            PEA_VERSION,
+            true
+        );
+
+        wp_enqueue_script(
+            'prime-elementor-addons-editor-post-category',
+            PEA_PLUGIN_URL . 'assets/js/editor/post-category.js',
+            [
+                'jquery',
+                'elementor-editor',
             ],
             PEA_VERSION,
             true
@@ -1249,6 +1277,53 @@ final class Plugin
         wp_send_json_success($options);
     }
 
+    public function get_terms_by_taxonomy()
+    {
+        if (!check_ajax_referer('pea_editor_only_nonce', 'pea_editor_nonce_check', false)) {
+            wp_send_json_error(['message' => 'Invalid nonce'], 403);
+            return;
+        }
+
+        if (!current_user_can('edit_posts')) {
+            wp_send_json_error(['message' => esc_html__('Unauthorized', 'unlimited-elementor-inner-sections-by-boomdevs')], 403);
+            return;
+        }
+
+        $taxonomy = isset($_POST['taxonomy'])
+            ? sanitize_key(wp_unslash($_POST['taxonomy']))
+            : '';
+
+        if ($taxonomy === '' || !taxonomy_exists($taxonomy)) {
+            wp_send_json_error(['message' => esc_html__('Invalid taxonomy', 'unlimited-elementor-inner-sections-by-boomdevs')], 400);
+            return;
+        }
+
+        $terms = get_terms([
+            'taxonomy' => $taxonomy,
+            'hide_empty' => false,
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'number' => 0,
+        ]);
+
+        if (is_wp_error($terms)) {
+            wp_send_json_error(['message' => esc_html__('Unable to load terms', 'unlimited-elementor-inner-sections-by-boomdevs')], 500);
+            return;
+        }
+
+        $options = [];
+
+        foreach ($terms as $term) {
+            $options[$term->term_id] = sprintf(
+                '%s (ID: %d)',
+                $term->name,
+                $term->term_id
+            );
+        }
+
+        wp_send_json_success($options);
+    }
+
     public function promote_pro_elements($config)
     {
 
@@ -1308,7 +1383,7 @@ final class Plugin
             [
                 'name' => 'pea_multicolumn_pricing_table',
                 'title' => __('Multicolumn Pricing Table', 'unlimited-elementor-inner-sections-by-boomdevs'),
-                'icon' => 'eicon-price-table',
+                'icon' => 'pea_multicolumn_pricing_table_icon',
                 'categories' => '["prime-elementor-addons"]',
             ],
         ]);

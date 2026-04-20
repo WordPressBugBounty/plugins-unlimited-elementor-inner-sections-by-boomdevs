@@ -10,6 +10,7 @@ namespace PrimeElementorAddons\Admin;
 use PrimeElementorAddons\Config\WidgetList;
 use PrimeElementorAddons\Utils\Helper;
 use PrimeElementorAddons\Admin\WidgetSettings;
+use PrimeElementorAddons\Traits\Singleton;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,6 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class Admin {
+
+    use Singleton;
     
     /**
      * Page slug
@@ -24,23 +27,6 @@ class Admin {
      * @var string
      */
     private $page_slug = 'prime-elementor-addons';
-    
-    /**
-     * Instance
-     *
-     * @var Admin
-     */
-    private static $_instance = null;
-    
-    /**
-     * Get Instance
-     */
-    public static function instance() {
-        if ( is_null( self::$_instance ) ) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
-    }
     
     /**
      * Constructor
@@ -160,10 +146,10 @@ class Admin {
         }
 
         
-		$widgets = WidgetList::instance()->get_widgets();
+		$widgets = WidgetList::get_instance()->get_widgets();
 		$localizeArray = array(
 			'widgets' => $widgets,
-			'defaultWidgets' => WidgetList::instance()->get_default_widgets(),
+			'defaultWidgets' => WidgetList::get_instance()->get_default_widgets(),
             'completedWidgets' => Helper::get_completed_widgets(),
 			'widgetsInfo' => Helper::get_widgets_info(),
 			'nonce' => wp_create_nonce('pea_settings_nonce'),
@@ -237,7 +223,7 @@ class Admin {
     /**
      * Menu Action Links
      *
-     * @since 1.2.1
+     * @since 1.2.2
      */
     public function pea_menu_action_links($links, $file)
     {
@@ -324,7 +310,7 @@ class Admin {
     }
 
     public function initial_activated_widgets() {
-        $widgets = WidgetList::instance()->get_widgets();
+        $widgets = WidgetList::get_instance()->get_widgets();
         
         if ( empty( $widgets ) || ! is_array( $widgets ) ) {
             return; // No widgets to activate

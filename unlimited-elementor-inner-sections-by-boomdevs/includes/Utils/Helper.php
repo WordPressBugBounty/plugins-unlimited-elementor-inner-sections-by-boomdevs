@@ -353,7 +353,7 @@ class Helper {
     public static function get_completed_widgets()
     {
         // 1. Get the master list of all widgets (slug => data)
-        $allWidgets = WidgetList::instance()->get_widgets();
+        $allWidgets = WidgetList::get_instance()->get_widgets();
 
         // 2. Get the saved active blocks (array of slugs that are enabled)
         $activeBlocks = WidgetSettings::get_active_widgets();

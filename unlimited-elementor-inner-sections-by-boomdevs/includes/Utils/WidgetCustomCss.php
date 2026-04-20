@@ -3,6 +3,7 @@
 namespace PrimeElementorAddons\Utils;
 
 use Elementor\Controls_Manager;
+use PrimeElementorAddons\Traits\Singleton;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -20,14 +21,7 @@ if (!defined('ABSPATH')) {
 
 class WidgetCustomCss {
 
-    private static $instance = null;
-
-    public static function instance() {
-        if (is_null(self::$instance)) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
+    use Singleton;
 
     public function __construct() {
 

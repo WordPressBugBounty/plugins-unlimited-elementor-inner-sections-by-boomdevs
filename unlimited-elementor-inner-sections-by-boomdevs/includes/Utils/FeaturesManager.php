@@ -2,6 +2,8 @@
 
 namespace PrimeElementorAddons\Utils;
 
+use PrimeElementorAddons\Traits\Singleton;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -18,16 +20,9 @@ if (!defined('ABSPATH')) {
 
 class FeaturesManager {
 
-    private static $instance = null;
+    use Singleton;
 
     private $features = [];
-
-    public static function instance() {
-        if (is_null(self::$instance)) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
 
     public function __construct() {
 
@@ -70,7 +65,7 @@ class FeaturesManager {
                 }
 
                 if (class_exists($feature['class'])) {
-                    $feature['class']::instance();
+                    $feature['class']::get_instance();
                 }
             }
         }

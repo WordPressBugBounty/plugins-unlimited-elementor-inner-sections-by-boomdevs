@@ -181,7 +181,7 @@
     --pea-icon: url('../../assets/icons/breadcrumb.svg');
 }
 
-.elementor-panel .pea_pricing_table_icon {
+.elementor-panel .pea_pricing_table_icon, .elementor-panel .pea_multicolumn_pricing_table_icon {
     --pea-icon: url('../../assets/icons/pricing-table.svg');
 }
 
@@ -195,6 +195,10 @@
 
 .elementor-panel .pea_advanced_slider_icon {
     --pea-icon: url('../../assets/icons/advanced-slider.svg');
+}
+
+.elementor-panel .pea_back_to_top_icon {
+    --pea-icon: url('../../assets/icons/back-to-top.svg');
 }
 
 /* ---------- Pro Widget Icons ---------- */

@@ -1965,7 +1965,6 @@ class AdvancedSlider extends Widget_Nested_Base {
                             } elseif ( ! empty( $settings['navigation_left_image']['url'] ) ) {
                                 echo '<img src="' . esc_url( $settings['navigation_left_image']['url'] ) . '" alt="">';
                             }
-
                         }
                         ?>
                     </div>

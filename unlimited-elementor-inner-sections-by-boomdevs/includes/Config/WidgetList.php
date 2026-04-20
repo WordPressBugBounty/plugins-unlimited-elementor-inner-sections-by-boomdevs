@@ -2,6 +2,8 @@
 
 namespace PrimeElementorAddons\Config;
 
+use PrimeElementorAddons\Traits\Singleton;
+
 if (!defined('ABSPATH')) {
     exit;
 } // Exit if accessed directly
@@ -18,15 +20,8 @@ if (!defined('ABSPATH')) {
 
 class WidgetList
 {
-    private static $_instance = null;
 
-    public static function instance()
-    {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new self();
-        }
-        return self::$_instance;
-    }
+    use Singleton;
 
     private $widgets = [];
 
@@ -79,6 +74,20 @@ class WidgetList
                 'demo' => 'https://wpmessiah.com/',
                 'complete' => 'true',
                 'class' => 'AdvancedHeading',
+                'child' => 'false',
+            ],
+            'back-to-top' => [
+                'slug' => 'back-to-top',
+                'title' => 'Back To Top',
+                'package' => 'free',
+                'category' => 'content',
+                'badge' => 'freemium',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/back-to-top.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'BackToTop',
                 'child' => 'false',
             ],
             'advanced-image' => [
@@ -233,6 +242,34 @@ class WidgetList
                 'demo' => 'https://wpmessiah.com/',
                 'complete' => 'true',
                 'class' => 'AdvancedCountdown',
+                'child' => 'false',
+            ],
+            'advanced-model-popup' => [
+                'slug' => 'advanced-model-popup',
+                'title' => 'Advanced Model Popup',
+                'package' => 'pro',
+                'category' => 'content',
+                'badge' => 'pro',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/advanced-model-popup.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'AdvancedModelPopup',
+                'child' => 'false',
+            ],
+            'advanced-multi-cart' => [
+                'slug' => 'advanced-multi-cart',
+                'title' => 'Advanced Multi Chart',
+                'package' => 'pro',
+                'category' => 'content',
+                'badge' => 'pro',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/testimonial.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'AdvancedMultichart',
                 'child' => 'false',
             ],
             'breadcrumb' => [
@@ -403,6 +440,34 @@ class WidgetList
                 'class' => 'HorizontalTimelines',
                 'child' => 'false',
             ],
+            'post-timeline' => [
+                'slug' => 'post-timeline',
+                'title' => 'Post Timeline',
+                'package' => 'pro',
+                'category' => 'content',
+                'badge' => 'pro',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/horizontal-timeline.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'PostTimeline',
+                'child' => 'false',
+            ],
+            'circle-menu' => [
+                'slug' => 'circle-menu',
+                'title' => 'Circle Menu',
+                'package' => 'pro',
+                'category' => 'content',
+                'badge' => 'pro',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/horizontal-timeline.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'CircleMenu',
+                'child' => 'false',
+            ],
             'icon-box' => [
                 'slug' => 'icon-box',
                 'title' => 'Icon Box',
@@ -443,6 +508,20 @@ class WidgetList
                 'demo' => 'https://wpmessiah.com/',
                 'complete' => 'true',
                 'class' => 'InfoBox',
+                'child' => 'false',
+            ],
+            'image-hotspot' => [
+                'slug' => 'image-hotspot',
+                'title' => 'Image Hotspot',
+                'package' => 'pro',
+                'category' => 'media',
+                'badge' => 'pro',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/image-hotspot.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'ImageHotspot',
                 'child' => 'false',
             ],
             'lottie-animation' => [
@@ -501,20 +580,34 @@ class WidgetList
                 'class' => 'PostGrid',
                 'child' => 'false',
             ],
-            // 'post-category' => [
-            //     'slug' => 'post-category',
-            //     'title' => 'Post Category',
-            //     'package' => 'free',
-            //     'category' => 'post',
-            //     'badge' => 'free',
-            //     'status' => 'true',
-            //     'icon' => PEA_PLUGIN_URL . 'assets/icons/post-grid.svg',
-            //     'doc' => 'https://wpmessiah.com/',
-            //     'demo' => 'https://wpmessiah.com/',
-            //     'complete' => 'true',
-            //     'class' => 'PostCategory',
-            //     'child' => 'false',
-            // ],
+            'pie-chart' => [
+                'slug' => 'pie-chart',
+                'title' => 'Pie Chart',
+                'package' => 'pro',
+                'category' => 'post',
+                'badge' => 'pro',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/post-grid.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'PieChart',
+                'child' => 'false',
+            ],
+            'post-category' => [
+                'slug' => 'post-category',
+                'title' => 'Post Category',
+                'package' => 'free',
+                'category' => 'post',
+                'badge' => 'free',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/post-grid.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'PostCategory',
+                'child' => 'false',
+            ],
             'post-ticker' => [
                 'slug' => 'post-ticker',
                 'title' => 'Post Ticker',
@@ -655,6 +748,20 @@ class WidgetList
                 'class' => 'Testimonial',
                 'child' => 'false',
             ],
+            'news-ticker' => [
+                'slug' => 'news-ticker',
+                'title' => 'News Ticker',
+                'package' => 'free',
+                'category' => 'content',
+                'badge' => 'free',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/post-ticker.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'NewsTicker',
+                'child' => 'false',
+            ],
             'woo-product-carousel' => [
                 'slug' => 'woo-product-carousel',
                 'title' => 'Woo Product Carousel',
@@ -709,6 +816,20 @@ class WidgetList
                 'demo' => 'https://wpmessiah.com/',
                 'complete' => 'true',
                 'class' => 'PageProgressBar',
+                'child' => 'false',
+            ],
+            'post-carousel' => [
+                'slug' => 'post-carousel',
+                'title' => 'Post Carousel',
+                'package' => 'pro',
+                'category' => 'post',
+                'badge' => 'pro',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/testimonial.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'PostCarousel',
                 'child' => 'false',
             ],
         ];

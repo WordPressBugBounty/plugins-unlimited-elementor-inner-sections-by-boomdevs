@@ -11,7 +11,7 @@
     // ================================
     const SETTINGS = {
         widgetPrefix: 'pea_', // your widget icon prefix
-        upgradeUrl: 'https://wpmessiah.com/products',
+        upgradeUrl: 'https://primeelementoraddons.com/pricing',
         buttonText: 'Upgrade Prime Elementor Addons',
         customClass: 'pea-upgrade-btn'
     };
