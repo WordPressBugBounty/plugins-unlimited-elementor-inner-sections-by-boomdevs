@@ -75,6 +75,24 @@ class Admin {
             30
         );
 
+        // //  THIS replaces the duplicate submenu
+        // add_submenu_page(
+        //     'prime-elementor-addons',
+        //     'Dashboard',
+        //     'Dashboard',
+        //     'manage_options',
+        //     'prime-elementor-addons',
+        // );
+
+        // // Your CPT as submenu
+        // add_submenu_page(
+        //     'prime-elementor-addons',
+        //     'Site Builder',
+        //     'Site Builder',
+        //     'manage_options',
+        //     'edit.php?post_type=pea-site-builder'
+        // );
+
         
         add_action( "load-$hook", [ $this, 'prime_elementor_addons_admin_hooks' ] );
     }
@@ -183,6 +201,8 @@ class Admin {
                 ),
             ],
             'redirectNonce' => wp_create_nonce( 'pea_redirect' ),
+            'siteBuilderRestUrl' => esc_url_raw(rest_url()),
+            'siteBuilderNonce'   => wp_create_nonce('wp_rest')
 		);
         
         $asset_file = PEA_PLUGIN_PATH . 'build/dashboard.asset.php';
@@ -223,7 +243,7 @@ class Admin {
     /**
      * Menu Action Links
      *
-     * @since 1.2.2
+     * @since 1.2.1
      */
     public function pea_menu_action_links($links, $file)
     {

@@ -38,7 +38,7 @@ class MarqueeCarousel extends Widget_Nested_Base
 
     public function get_icon()
     {
-        return 'eicon-slider-push';
+        return 'pea_marquee_carousel_icon';
     }
 
     public function get_keywords()

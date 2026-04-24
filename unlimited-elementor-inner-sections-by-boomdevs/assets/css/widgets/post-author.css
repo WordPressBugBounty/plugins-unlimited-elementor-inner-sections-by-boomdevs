@@ -1,0 +1,26 @@
+.pea-single-post-author-box {
+    display: flex;
+    background: #fff;
+    border-radius: 5px;
+    padding: 20px;
+}
+.pea-single-post-author-box .pea-single-post-author-pic img {
+    margin: 0;
+    border-radius: 50%;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    width: 80px;
+    height: auto;
+    max-width: unset !important;
+}
+.pea-single-post-author-box .author-title {
+    font-size: 29px;
+    text-align: center;
+    font-weight: 800;
+    color: #212121;
+}
+.pea-single-post-author-box .author-title a {
+    color: #212121;
+}
+.pea-single-post-author-box .author-title a:hover {
+    color: #3991FF;
+}

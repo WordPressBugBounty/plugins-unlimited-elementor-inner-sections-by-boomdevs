@@ -31,17 +31,15 @@
 
     const ensureWasmUrl = () => {
         const loader = window.rive?.RuntimeLoader;
-        if (!loader?.setWasmUrl || loader.__peaLocalWasmConfigured) return;
-        const localizedWasmUrl = window.PeaRiveRuntime?.wasmUrl;
-        if (localizedWasmUrl) {
-            loader.setWasmUrl(localizedWasmUrl);
-            loader.__peaLocalWasmConfigured = true;
-            return;
-        }
-        const runtimeSrc = document.querySelector('script[src*="assets/js/vendor/rive.min.js"]')?.src;
-        if (!runtimeSrc) return;
-        loader.setWasmUrl(runtimeSrc.split('?')[0].replace(/[^/]+$/, 'rive.wasm'));
-        loader.__peaLocalWasmConfigured = true;
+        if (!loader?.setWasmUrl) return '';
+        const wasmUrl = window.PeaRiveRuntime?.wasmUrl || '';
+
+        if (!wasmUrl) return '';
+        if (loader.__peaConfiguredWasmUrl === wasmUrl) return wasmUrl;
+
+        loader.setWasmUrl(wasmUrl);
+        loader.__peaConfiguredWasmUrl = wasmUrl;
+        return wasmUrl;
     };
 
     const destroy = el => {
@@ -58,7 +56,6 @@
         if (!RIVE_FILE_RE.test(src)) return setStatus(el, 'Invalid file type.');
         if (!window.rive?.Rive) return setStatus(el, 'Rive runtime unavailable.');
 
-        ensureWasmUrl();
         setStatus(el, '');
 
         const { Rive, Layout, Fit, Alignment, LoopType } = window.rive;
@@ -158,6 +155,8 @@
         };
 
         const init = () => {
+            ensureWasmUrl();
+
             rive = new Rive({
                 src,
                 canvas,

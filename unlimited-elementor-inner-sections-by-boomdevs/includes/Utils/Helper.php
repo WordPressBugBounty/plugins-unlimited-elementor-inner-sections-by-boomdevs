@@ -348,6 +348,35 @@ class Helper {
         return wp_trim_words( $source, absint( $length ), '&hellip;' );
     }
 
+    public static function get_title( $length = 0, $post = null ) {
+
+        // Handle different input types: null, int (ID), or WP_Post object
+        if ( $post === null ) {
+            $post_obj = get_post();
+        } elseif ( is_numeric( $post ) ) {
+            $post_obj = get_post( absint( $post ) );
+        } elseif ( $post instanceof \WP_Post ) {
+            $post_obj = $post;
+        } else {
+            // Invalid input type
+            return null;
+        }
+
+        // Validate post object
+        if ( ! $post_obj || is_wp_error( $post_obj ) ) {
+            return null;
+        }
+
+        $title = $post_obj->post_title;
+
+        // Return full title when length is 0 or less
+        if ( $length <= 0 ) {
+            return $title;
+        }
+
+        // Trim to word limit with ellipsis
+        return wp_trim_words( $title, absint( $length ), '' );
+    }
     
 
     public static function get_completed_widgets()
@@ -489,5 +518,129 @@ class Helper {
 
         return isset($installed_plugins[$basename]);
     }
+	public static function demo_post_title_select() {
+		$args = array(
+			'post_type' => 'post',
+			'post_status' => 'publish',
+			'posts_per_page' => 10,
+		);
+
+		$posts = new \WP_Query($args);
+
+		$post_list = [];
+
+		if ($posts->have_posts()) {
+			while ($posts->have_posts()) {
+				$posts->the_post();
+				$post_list[get_the_ID()] = get_the_title();
+			}
+			wp_reset_postdata();
+		}
+
+		return $post_list;
+	}
+
+    public static function get_categories( $demo = 0 ) {
+        $categories = get_categories([
+            "hide_empty" => 0,
+            "type"      => "post",
+            "orderby"   => "name",
+            "order"     => "ASC"
+            ]
+        );
+
+        $cat = [];
+        if($demo == 0){
+            foreach( $categories as $category ) {
+                $cat[$category->term_id] = $category->name;
+            }
+        }else {
+            foreach( $categories as $category ) {
+                $cat[$category->slug] = $category->name;
+            }
+        }
+
+        return $cat;
+    }
+
+    public static function get_tags( $demo = 0 ) {
+        $all_tags = get_tags(array(
+            'hide_empty' => false
+        ));
+
+        $tags = [];
+
+        if($demo == 0){
+            foreach( $all_tags as $tag ) {
+                $tags[$tag->term_id] = $tag->name;
+            }
+        }else {
+            foreach( $all_tags as $tag ) {
+                $tags[$tag->slug] = $tag->name;
+            }
+        }
+
+        return $tags;
+    }
+
+    public static function get_all_authors( $demo = 0 ) {
+        $args = array(
+            'role__in'     => array('author', 'administrator', 'subscriber'),
+            'orderby'      => 'display_name',
+            'order'        => 'ASC',
+            'number'       => null,
+            'fields'       => 'all',
+        );
+        $authors = get_users( $args );
+        $author_list = array();
+
+        if($demo == 0){
+            foreach ( $authors as $author ) {
+                $author_list[$author->ID] = $author->display_name;
+            }
+        }else{
+            foreach ( $authors as $author ) {
+                $author_list[$author->display_name] = $author->display_name;
+            }
+        }
+
+        return $author_list;
+    }
+
+    public static function get_post_years() {
+        $years = [];
+
+        $posts = get_posts([
+            'posts_per_page' => -1,  // Retrieve all posts
+            'post_type'      => 'post',
+            'orderby'        => 'date',
+            'order'          => 'ASC',
+            'fields'         => 'ids',  // Retrieve only post IDs to optimize performance
+        ]);
+
+        foreach ($posts as $post_id) {
+            $post_date = get_post_field('post_date', $post_id);
+            $year = date('Y', strtotime($post_date));
+
+            if (!in_array($year, $years)) {
+                $years[$year] = $year;
+            }
+        }
+
+        return $years;
+    }
+
+    
+	public static function get_all_post_types() {
+		$post_types = get_post_types(['public' => true], 'objects');
+
+		$filtered_post_types = [];
+
+		foreach ($post_types as $post_type => $details) {
+			$filtered_post_types[$post_type] = $details->label;
+		}
+
+		return $filtered_post_types;
+	}
 
 }

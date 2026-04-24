@@ -3,7 +3,6 @@
 
     const instances = new Map();
     const HOVER_ACTIONS = new Set(['pause', 'play', 'reverse']);
-    const RENDER_TYPES = new Set(['canvas', 'svg']);
     const JSON_FILE_RE = /\.json($|[?#])/i;
     const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
@@ -99,8 +98,6 @@
         const hoverAction = (el.dataset.hoverAction || '').toLowerCase();
         const shouldAutoplay = autoplay && hoverAction !== 'play';
         const direction = el.dataset.reverse === 'true' ? -1 : 1;
-        const renderType = (el.dataset.renderType || 'canvas').toLowerCase();
-        const renderer = RENDER_TYPES.has(renderType) ? renderType : 'canvas';
         let resizeRafId = 0;
         let ro;
         let io;
@@ -120,7 +117,7 @@
 
         const loadOptions = {
             container,
-            renderer,
+            renderer: 'canvas',
             loop: el.dataset.loop === 'true',
             autoplay: shouldAutoplay,
             path,
@@ -153,13 +150,6 @@
         };
         const onDataFailed = () => setStatus(el, 'Failed to load.');
         const onDomLoaded = () => {
-            if (renderType === 'svg') {
-                const svg = container.querySelector('svg');
-                if (svg) {
-                    svg.style.width = '100%';
-                    svg.style.height = '100%';
-                }
-            }
             if (hoverAction === 'play') {
                 const firstFrame = direction === -1
                     ? Math.max(0, (animation.totalFrames || 1) - 1)

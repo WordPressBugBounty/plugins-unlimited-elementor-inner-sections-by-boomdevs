@@ -19,7 +19,7 @@ final class Plugin
      *
      * @var string
      */
-    const VERSION = '1.2.2';
+    const VERSION = '1.3.0';
 
     /**
      * Plugin slug
@@ -65,6 +65,7 @@ final class Plugin
         $this->define_constants();
         add_action('plugins_loaded', [$this, 'i18n']);
         add_action('plugins_loaded', [$this, 'run_ueis'], 5);
+        add_action('plugins_loaded', [$this, 'init_site_builder'], 10);
         add_action('plugins_loaded', [$this, 'init_prime_elementor_addons'], 10);
         add_action('elementor/init', [$this, 'pea_add_features_manager'], 0);
 
@@ -114,6 +115,9 @@ final class Plugin
         if (!defined('PEA_PLUGIN_URL')) {
             define('PEA_PLUGIN_URL', plugin_dir_url(PEA_PLUGIN_FILE));
         }
+        if (!defined('PEA_CONTROLS_URL')) {
+            define('PEA_CONTROLS_URL', PEA_PLUGIN_URL . 'includes/Controls/');
+        }
         if (!defined('PEA_PLUGIN_BASENAME')) {
             define('PEA_PLUGIN_BASENAME', plugin_basename(PEA_PLUGIN_FILE));
         }
@@ -159,6 +163,11 @@ final class Plugin
 
     }
 
+    public function init_site_builder()
+    {
+        \PrimeElementorAddons\SiteBuilder\SiteBuilder::get_instance();
+    }
+
     /**
      * Initialize the plugin
      */
@@ -170,12 +179,15 @@ final class Plugin
         add_action('wp_enqueue_scripts', [$this, 'stabilize_elementor_modules_namespace'], 101);
         add_filter('script_loader_tag', [$this, 'normalize_elementor_script_tag'], 9999, 3);
         add_action('elementor/widgets/register', [$this, 'register_widgets']);
+        
+        add_action('elementor/controls/register', [$this, 'register_custom_controls']);
         add_action('elementor/elements/categories_registered', [$this, 'register_prime_elementor_addons_category']);
-        add_action('elementor/frontend/after_enqueue_styles', [$this, 'enqueue_widget_styles'], 999);
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_widget_styles'], 998);
         add_action('elementor/frontend/after_register_scripts', [$this, 'enqueue_widget_scripts'], 999);
         add_action('wp_enqueue_scripts', [$this, 'localize_widget_scripts'], 999);
         add_action('rest_api_init', ['\PrimeElementorAddons\RestApi\AdvancedSearchRoute', 'register_routes']);
 
+        add_action('elementor/documents/register_controls', array( $this, 'select_testing_content'), 10);
         add_action('elementor/editor/after_enqueue_scripts', [$this, 'enqueue_editor_scripts'], 5);
         add_action('elementor/editor/after_enqueue_styles', [$this, 'enqueue_editor_style']);
         add_filter('elementor/editor/localize_settings', [$this, 'promote_pro_elements']);
@@ -195,6 +207,32 @@ final class Plugin
         add_filter('wp_check_filetype_and_ext', [$this, 'fix_rive_filetype'], PHP_INT_MAX, 5);
         add_filter('site_option_upload_filetypes', [$this, 'allow_rive_multisite_filetypes'], PHP_INT_MAX);
         add_filter('elementor/files/allow_unfiltered_upload', [$this, 'allow_elementor_unfiltered_upload'], PHP_INT_MAX);
+
+        // ─────────────────────────────────────────────────────────────────────────────
+          // 3. AJAX: SEARCH TEMPLATES
+          // Called by the editor when the user types in the Choose Template search box.
+          // Returns up to 20 matching Elementor templates as JSON.
+          // ─────────────────────────────────────────────────────────────────────────────
+          add_action(
+              'wp_ajax_pea_search_templates',
+              [ '\PrimeElementorAddonsPro\Widgets\Template', 'ajax_search_templates' ]
+          );
+
+         
+          // ─────────────────────────────────────────────────────────────────────────────
+          // When a template is rendered inside the Template Widget, Elementor needs
+          // to know to enqueue the inner widgets' assets too.
+          // ─────────────────────────────────────────────────────────────────────────────
+          add_action( 'elementor/frontend/widget/before_render', function ( $element ) {
+              if ( 'pea_template' !== $element->get_name() ) return;
+           
+              $template_id = (int) $element->get_settings( 'template_id' );
+              if ( ! $template_id ) return;
+           
+              // Tell Elementor this template's content is being displayed
+              // so it registers the necessary scripts/styles for its inner widgets.
+              \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $template_id );
+          } );
     }
 
     public function pea_add_features_manager()
@@ -563,6 +601,7 @@ final class Plugin
             );
 
             $button_text = esc_html__('Activate Elementor', 'unlimited-elementor-inner-sections-by-boomdevs');
+
         } else {
 
             // Install Elementor
@@ -659,6 +698,7 @@ final class Plugin
                 if (class_exists($class)) {
                     $widgets_manager->register(new $class());
                 }
+
             } elseif ($widget == true && $widgetType == 'pro' && PEA_IS_PRO_ACTIVE == true && defined('PEA_PRO_LICENSE_ACTIVE') && PEA_PRO_LICENSE_ACTIVE == true) {
 
                 $class_name = $allwidgets[$widgetkey]['class'];
@@ -670,6 +710,12 @@ final class Plugin
             }
         }
     }
+    
+    public function register_custom_controls($controls_manager)
+    {
+        $controls_manager->register(new \PrimeElementorAddons\Controls\SortableMultiSelectControl());
+    }
+
     /**
      * Register Widget Categories
      */
@@ -737,6 +783,13 @@ final class Plugin
             'marquee-carousel',
             'news-ticker',
             'back-to-top',
+            'post-share-icons',
+            'post-navigation',
+            'post-meta',
+            'post-author',
+            'post-comment',
+            'template',
+
             // add all your widgets here
         ];
 
@@ -799,6 +852,7 @@ final class Plugin
             'marquee-carousel',
             'news-ticker',
             'back-to-top',
+            'template',
             // add all your widgets here
         ];
 
@@ -880,18 +934,147 @@ final class Plugin
             PEA_VERSION,
             true
         );
+
+        wp_localize_script(
+            'prime-elementor-addons--template',
+            'peaTemplateData',
+            [
+                'adminUrl' => admin_url(),
+                'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
+                'nonce'    => wp_create_nonce( 'pea_template_nonce' ),
+            ]
+        );
     }
 
     // method for widget script localization
-    public function localize_widget_scripts()
-    {
-        if (wp_script_is('prime-elementor-addons--post-grid', 'enqueued')) {
-            wp_localize_script('prime-elementor-addons--post-grid', 'PeaAjax', [
-                'ajax_url' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('prime_elementor_addons_nonce')
-            ]);
+    public function localize_widget_scripts() {
+        wp_localize_script('prime-elementor-addons--post-grid', 'PeaAjax', [
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('prime_elementor_addons_nonce')
+        ]);
+    }
+
+	function select_testing_content($element) {
+        $post_type = get_post_type();
+        if ($post_type == 'pea-site-builder') {
+            $element->start_controls_section(
+                'pea_demo_post_section',
+                [
+                    'label' => __('Demo Post Section', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'tab' => \Elementor\Controls_Manager::TAB_SETTINGS,
+                ]
+            );
+
+            $element->add_control(
+                'pea_demo_post_id', 
+                [
+                    'label' => __('Choose Post for Demo', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'type' => \Elementor\Controls_Manager::SELECT,
+                    'label_block' => true,
+                    'multiple' => false,
+                    'options' => Helper::demo_post_title_select(),
+                ]
+            );
+
+            $element->end_controls_section();
+ 
+            $element->start_controls_section(
+                'pea_demo_archive_post_section',
+                [
+                    'label' => __('Demo Archive Section', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'tab' => \Elementor\Controls_Manager::TAB_SETTINGS,
+                ]
+            );
+
+            $element->add_control(
+                'pea_demo_archive_select', 
+                [
+                    'label' => __('Choose Archive Type for Demo', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'type' => \Elementor\Controls_Manager::SELECT,
+                    'label_block' => true,
+                    'multiple' => false,
+                    'options' => [
+                        'category' => esc_html__( 'Category', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                        'tag' => esc_html__( 'Tag', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                        'author'  => esc_html__( 'Author', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                        'date'  => esc_html__( 'Date', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                        'search'  => esc_html__( 'Search Result', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    ],
+                ]
+            );
+
+            $element->add_control(
+                'pea_demo_cat_archive_select', 
+                [
+                    'label' => __('Choose Category for Archive Post Demo', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'type' => \Elementor\Controls_Manager::SELECT,
+                    'label_block' => true,
+                    'multiple' => false,
+                    'options' => Helper::get_categories( $demo = 1 ),
+                    'condition' =>[
+                        'pea_demo_archive_select' => 'category', 
+                    ],
+                ]
+            );
+
+            $element->add_control(
+                'pea_demo_tag_archive_select', 
+                [
+                    'label' => __('Choose Tag for Archive Post Demo', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'type' => \Elementor\Controls_Manager::SELECT,
+                    'label_block' => true,
+                    'multiple' => false,
+                    'options' => Helper::get_tags( $demo = 1 ),
+                    'condition' =>[
+                        'pea_demo_archive_select' => 'tag', 
+                    ],
+                ]
+            );
+
+            $element->add_control(
+                'pea_demo_author_archive_select', 
+                [
+                    'label' => __('Choose Author for Archive Post Demo', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'type' => \Elementor\Controls_Manager::SELECT,
+                    'label_block' => true,
+                    'multiple' => false,
+                    'options' => Helper::get_all_authors( $demo = 0 ),
+                    'condition' =>[
+                        'pea_demo_archive_select' => 'author', 
+                    ],
+                ]
+            );
+
+            $element->add_control(
+                'pea_demo_date_year_archive_select', 
+                [
+                    'label' => __('Choose Category for Archive Post Demo', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'type' => \Elementor\Controls_Manager::SELECT,
+                    'label_block' => true,
+                    'multiple' => false,
+                    'options' => Helper::get_post_years(),
+                    'condition' =>[
+                        'pea_demo_archive_select' => 'date', 
+                    ],
+                ]
+            );
+
+            $element->add_control(
+                'pea_demo_search_result_archive_select', [
+                    'label' => __( 'Demo Search', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'default' => __( 'Hello' , 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'label_block' => true,
+                    'condition' =>[
+                        'pea_demo_archive_select' => 'search', 
+                    ],
+                ]
+            );
+
+            $element->end_controls_section();
         }
     }
+
     /**
      * Enqueue Editor Scripts
      */
@@ -1012,6 +1195,8 @@ final class Plugin
             PEA_VERSION,
             true
         );
+			
+        wp_enqueue_script('demo-testing', PEA_PLUGIN_URL .'assets/js/editor/demo-testing.js', array('jquery'), '1.0', true);
 
         wp_localize_script('prime-elementor-addons-editor', 'peaEditor', [
             'pluginUrl' => PEA_PLUGIN_URL,
@@ -1151,15 +1336,6 @@ final class Plugin
         if (is_wp_error($attachment_id) || !$attachment_id) {
             wp_send_json_error(['message' => esc_html__('Upload completed but attachment creation failed.', 'unlimited-elementor-inner-sections-by-boomdevs')], 500);
             return;
-        }
-
-        if (!function_exists('wp_generate_attachment_metadata')) {
-            require_once ABSPATH . 'wp-admin/includes/image.php';
-        }
-
-        $metadata = wp_generate_attachment_metadata($attachment_id, $uploaded['file']);
-        if (!is_wp_error($metadata) && is_array($metadata)) {
-            wp_update_attachment_metadata($attachment_id, $metadata);
         }
 
         wp_send_json_success(
@@ -1384,6 +1560,78 @@ final class Plugin
                 'name' => 'pea_multicolumn_pricing_table',
                 'title' => __('Multicolumn Pricing Table', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'icon' => 'pea_multicolumn_pricing_table_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_advanced_model_popup',
+                'title' => __('Advanced Model Popup', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_advanced_model_popup_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_advanced_multichart',
+                'title' => __('Advanced Multichart', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_advanced_multichart_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_circle_menu',
+                'title' => __('Circle Menu', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_circle_menu_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_pie_chart',
+                'title' => __('Pie Chart', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_pie_chart_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_image_hotspot',
+                'title' => __('Image Hotspot', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_image_hotspot_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_post_timeline',
+                'title' => __('Post Timeline', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_post_timeline_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_woo_product_carousel',
+                'title' => __('Woo Product Carousel', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_marquee_carousel_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_advanced_switcher',
+                'title' => __('Advanced Switcher', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_advanced_switcher_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_image_comparison',
+                'title' => __('Image Comparison', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_image_comparison_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_image_accordion',
+                'title' => __('Image Accordion', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_advanced_accordion_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_page_progress_bar',
+                'title' => __('Page Progress Bar', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_page_progress_bar_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_post_carousel',
+                'title' => __('Post Carousel', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_post_carousel_icon',
                 'categories' => '["prime-elementor-addons"]',
             ],
         ]);

@@ -1,0 +1,247 @@
+/* ═══════════════════════════════════════════════════════════════
+   Sortable Multi-Select Control  –  Elementor panel native style
+   ═══════════════════════════════════════════════════════════════ */
+
+.elementor-control-field{
+    gap: 17px
+}
+
+/* ── Outer wrapper ─────────────────────────────────────────────── */
+.sms-wrap {
+    position: relative;
+    width: 100%;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* ── Clickable field (shows tags + arrow) ──────────────────────── */
+.sms-field {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    min-height: 29px;
+    padding: 3px 28px 3px 4px; /* right pad for arrow */
+    background: #1f2124;
+    border: 1px solid #333438;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    transition: border-color 0.15s;
+    box-sizing: border-box;
+}
+
+.sms-field:hover,
+.sms-field.sms-open,
+.sms-field:focus {
+    border-color: #3f444b;
+}
+
+/* ── Tags container (flex-wrap so tags wrap naturally) ─────────── */
+.sms-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    flex: 1;
+    min-width: 0;
+    padding: 1px 0;
+    /* IMPORTANT: must NOT have overflow:hidden or it clips the sortable helper */
+}
+
+/* ── Placeholder text ──────────────────────────────────────────── */
+.sms-ph {
+    color: #ababab;
+    font-size: 11px;
+    line-height: 22px;
+    padding: 0 2px;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ── Individual tag ────────────────────────────────────────────── */
+.sms-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    height: 22px;
+    max-width: 100%;
+    background: #515962;   /* Elementor green accent */
+    color: #fff;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,.12);
+    transition: box-shadow 0.1s, opacity 0.1s;
+}
+
+.sms-tag:active {
+    cursor: grabbing;
+}
+
+/* Drag clone – jQuery UI appends to $wrap so it floats freely */
+.ui-sortable-helper.sms-tag {
+    cursor: grabbing !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,.22) !important;
+    opacity: 0.92 !important;
+    z-index: 99999;
+}
+
+/* Drop placeholder while dragging */
+.sms-ph-sort {
+    background: #1f2124 !important;
+    border: 1px dashed #6d7882 !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    color: transparent !important;
+    height: 22px;
+}
+
+.sms-tag-label {
+    padding: 0 5px 0 7px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+}
+
+.sms-tag-x {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 20px;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    border-left: 1px solid rgba(255,255,255,.35);
+    color: rgba(255,255,255,.8);
+    font-size: 9px;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    transition: background 0.1s, color 0.1s;
+}
+
+.sms-tag-x:hover {
+    background: rgba(0,0,0,.18);
+    color: #fff;
+}
+
+/* ── Dropdown arrow ────────────────────────────────────────────── */
+.sms-arrow {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 6px;
+    pointer-events: none;
+    color: #6d7882;
+    transition: transform 0.15s;
+}
+
+.sms-field.sms-open .sms-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.sms-arrow svg {
+    width: 10px;
+    height: 6px;
+    fill: currentColor;
+    display: block;
+}
+
+/* ── Dropdown panel ────────────────────────────────────────────── */
+.sms-drop {
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    right: 0;
+    background: #1f2124;
+    border: 1px solid #3f444b;
+    border-radius: 3px;
+    z-index: 99999;
+    overflow: hidden;
+}
+
+/* ── Search input ──────────────────────────────────────────────── */
+.sms-search {
+    display: block;
+    width: 100%;
+    padding: 7px 10px;
+    border: none;
+    border-bottom: 1px solid #e6e9ed;
+    border-radius: 0;
+    outline: none;
+    font-size: 11px;
+    font-family: inherit;
+    background: #1f2124;
+    color: #d5d8dc;
+    box-sizing: border-box;
+}
+
+.sms-search:focus {
+    background: #1f2124;
+    color: #d5d8dc;
+    border-bottom-color: #6d7882;
+}
+
+.sms-search::placeholder {
+    color: #ababab;
+}
+
+/* ── Options list ──────────────────────────────────────────────── */
+.sms-list {
+    list-style: none;
+    margin: 0;
+    padding: 4px 0;
+    max-height: 175px;
+    overflow-y: auto;
+    /* Custom scrollbar to match Elementor */
+    scrollbar-width: thin;
+    scrollbar-color: #d5d8dc transparent;
+}
+
+.sms-list::-webkit-scrollbar {
+    width: 4px;
+}
+.sms-list::-webkit-scrollbar-thumb {
+    background: #d5d8dc;
+    border-radius: 2px;
+}
+
+.sms-item {
+    display: flex;
+    align-items: center;
+    height: 24px;
+    padding: 6px;
+    font-size: 12px;
+    background: #1f2124;
+    color: #d5d8dc;
+    cursor: pointer;
+    transition: background 0.1s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sms-item:hover {
+    background: #2b2c31;
+    color: #9da5ae;
+}
+
+.sms-empty {
+    color: #ababab;
+    font-style: italic;
+    cursor: default;
+}
+
+.sms-empty:hover {
+    background: none;
+    color: #ababab;
+}

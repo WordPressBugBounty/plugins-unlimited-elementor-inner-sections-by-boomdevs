@@ -59,12 +59,16 @@ class PostGridAjaxHandler {
         }
         
         $paged = isset($_POST['paged']) ? absint($_POST['paged']) : 1;
+        $isArchive = isset($_POST['isArchive']) ? $_POST['isArchive'] : 1;
         
         // Create instance to access trait methods
         $handler = new self();
-        
         // Build query
-        $args = $handler->build_query_args($query_settings, $paged);
+        if($isArchive === 'true'){
+            $args = $handler->build_archive_query_args($query_settings, $paged);
+        } else {
+            $args = $handler->build_query_args($query_settings, $paged);
+        }
         $query = new \WP_Query($args);
         
         ob_start();

@@ -1,0 +1,166 @@
+.pea-single-post-comments-wrapper {
+    background: #fff;
+    color: #718096;
+    box-shadow: none;
+    border-radius: 4px;
+    padding: 0;
+}
+[data-widget_type="pea_post_comment.default"] .pea-single-post-comments-wrapper.comments-area::before {
+    background: unset;
+}
+
+.pea-single-post-comments-wrapper .comment-metadata a {
+    text-decoration: none;
+}
+
+.pea-single-post-comments-wrapper #respond {
+    border: 0;
+}
+
+.pea-single-post-comments-wrapper .comment-meta .comment-author.vcard {
+    margin: unset;
+}
+
+.pea-single-post-comments-wrapper .comment-body .comment-content p {
+    border: none;
+}
+.pea-single-post-comments-wrapper .pea-heading-bor-bt {
+    display: flex;
+}
+.pea-heading-bor-bt h5, .pea-single-post-comments-wrapper #reply-title{
+    font-weight: 800;
+    font-size: 20px;
+    color: #212121;
+    letter-spacing: 0;
+    text-size-adjust: 100%;
+    text-rendering: optimizeSpeed;
+    margin-bottom: 8px;
+}
+.pea-single-post-comments-wrapper #reply-title{
+    font-size: 28px;
+    line-height: 1.3;
+}
+.pea-single-post-comments-wrapper#comments ol.comment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: unset;
+}
+.comment-list .children {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    margin-left: 3rem;
+    z-index: 0;
+    list-style: none;
+}
+.pea-single-post-comments-wrapper.comments-area .comment-body {
+    position: relative;
+    padding: 25px 25px 25px 70px;
+    min-height: 120px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    border-radius: 3px;
+    z-index: 0;
+    margin-bottom: 0px;
+    border-bottom: 1px solid rgba(225,225,225,0.9);
+}
+.pea-single-post-comments-wrapper.comments-area .comment-meta {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: flex-start;
+    align-items: flex-start;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    align-items: center;
+}
+.pea-single-post-comments-wrapper.comments-area img.avatar {
+    border-radius: 60%;
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: 28px;
+    width: 60px;
+    height: auto;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    border-width: 3px;
+    border-style: solid;
+}
+.pea-single-post-comments-wrapper.comments-area a {
+    color: #212121;
+}
+.pea-single-post-comments-wrapper .comment-meta .comment-metadata {
+    margin: 0 0 0 5px;
+}
+.pea-single-post-comments-wrapper .comment-content {
+    border: none;
+    margin-top: unset;
+    position: relative;
+    z-index: 0;
+    padding: 16px 40px 16px 0;
+}
+.pea-single-post-comments-wrapper .comment-body .reply {
+    text-align: right;
+}
+.pea-single-post-comments-wrapper.comments-area .reply a {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0;
+    color: #2271b1;
+    background: transparent;
+    border-color: transparent;
+    text-decoration: none;
+    transition: 0.3s ease-in-out 0s;
+}
+.pea-single-post-comments-wrapper.comments-area .reply a:hover {
+    background: #135e96;
+    border-color: #135e96;
+}
+.pea-single-post-comments-wrapper form p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+.pea-single-post-comments-wrapper b, strong {
+    font-weight: bolder;
+}
+.pea-single-post-comments-wrapper .form-submit input[type="button"], .pea-single-post-comments-wrapper .form-submit input[type="submit"] {
+    background: #2271b1;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.pea-single-post-comments-wrapper .form-submit input[type="button"]:hover, .pea-single-post-comments-wrapper .form-submit input[type="submit"]:hover {
+    background: #135e96;
+    border-color: #135e96;
+    /* color: #fff; */
+}
+.comment-form-cookies-consent{
+    display: flex;
+    gap: 10px;
+}
+.pea-single-post-comments-wrapper .comment-respond{
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    border: none;   
+}
+
+.pea-single-post-comments-wrapper#comments .comment-list > .comment .comment-body {
+    padding-inline-start: 75px;
+}
+
+.pea-single-post-comments-wrapper#comments .comment-list > .comment:last-child .comment-body {
+    border-block-end: none;
+}
+
+#commentform > p.comment-form-comment > label, #commentform > p.comment-form-author > label, #commentform > p.comment-form-email > label, #commentform > p.comment-form-url > label {
+    margin-bottom: 10px;
+}

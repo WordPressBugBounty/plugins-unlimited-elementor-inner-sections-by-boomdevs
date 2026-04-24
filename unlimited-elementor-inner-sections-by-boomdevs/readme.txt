@@ -3,7 +3,7 @@ Plugin Name: Prime Elementor Addons – Lightweight Elementor Widgets for Faster
 tags: elementor, elementor-addon, elementor-widgets, accordion, tabs
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 1.2.2
+Stable tag: 1.3.0
 Requires PHP: 7.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -18,12 +18,13 @@ It includes the widgets most websites actually need - like **Advanced Accordion*
 
 Everything works inside the Elementor editor with simple controls. Add a widget, write your content, style it, and publish - no extra setup, no complicated steps, and no coding required.
 
-If you’re looking for **addons for Elementor** that are easy to use and built for real layouts, **Prime Elementor Addons** is a smart choice. It helps you create clean sections, keep your design consistent, and build WordPress sites quicker.
+If you’re looking for **addons for Elementor** that are easy to use and built for real layouts, **Prime Elementor Addons** is a smart choice. With its powerful **Full Site Builder**, you can design headers, footers, and templates without needing a Pro theme. It helps you create clean sections, keep your design consistent, and build WordPress sites quicker.
 
 **Build full-page sections with ready widgets (not just “decorations”)**
 
 Instead of installing many small plugins, Prime gives you the common building blocks most websites need:
 
+*   **Full Site Builder** (Header, Footer, Single, Archive, Search, 404)
 *   **Content sections** (Accordion, Tabs, Navigation)
 *   **Conversion sections** (CTA, Buttons, Pricing)
 *   **Social proof** (Testimonials, Team)
@@ -35,6 +36,7 @@ Instead of installing many small plugins, Prime gives you the common building bl
 
 **Key features (what you can build)**
 
+*   **Full Site Builder** to design custom Header, Footer, and Templates
 *   **FAQ and collapsible content** using Accordion
 *   **Tabbed content sections** for neat layouts
 *   **Strong headings and content blocks** for modern sections
@@ -294,6 +296,16 @@ It's very easy and straight forward to install this plugin. But before installin
 4.  Activate the plugin through the 'Plugins' screen form your WordPress website dashboard.
 
 == Changelog ==
+
+= 1.3.0 – 24 April 2026 =
+* New: **Full Site Builder** – Design and manage every part of your website. Create custom templates for Header, Footer, Single Post, Post Archive, Search Results, and 404 Error pages.
+* New: **Header & Footer Builder** – Create fully customizable headers and footers using dedicated dynamic widgets.
+* New: **Single Post Template Builder** – Design dynamic single blog post layouts with 12+ new dynamic widgets:
+    * Post Title, Post Description, Post Featured Image, Post Categories, Post Tags, Post Meta, Post Navigation, Post Share Icons, Related Posts, Post Comments, Post Author Box, and Template Widget.
+* New: **Archive Post Template Builder** – Design beautiful blog archive and category pages dynamically.
+* New: **Search & 404 Templates** – Take control of your search results and 404 "Not Found" pages with custom templates.
+* New: **Archive Widgets** – Added **Archive Title** and **Archive Posts** widgets for dynamic content display.
+* Improvement: Major core architecture update to support template injection and display conditions.
 
 = 1.2.2 – 20 April 2026 =
 * New: Added **News Ticker** widget – display scrolling news headlines and announcements with full style controls and JS-powered animation.

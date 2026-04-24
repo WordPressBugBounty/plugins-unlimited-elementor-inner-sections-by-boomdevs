@@ -15,12 +15,14 @@
   grid-template-columns: repeat(var(--pea-grid-columns, 2), minmax(0, 1fr));
 }
 
-.pea-post-category-widget.pea-layout-grid .pea-post-category-list > .pea-post-category-item:only-child {
+/* .pea-post-category-widget.pea-layout-grid .pea-post-category-list > .pea-post-category-item:only-child {
   grid-column: 1 / -1;
-}
+} */
 
 .pea-post-category-widget.pea-layout-list .pea-post-category-list {
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pea-column-gap, 15px);
 }
 
 .pea-post-category-item {

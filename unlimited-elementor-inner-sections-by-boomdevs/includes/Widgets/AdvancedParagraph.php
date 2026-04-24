@@ -7,7 +7,7 @@ use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
-use PrimeElementorAddons\Utils\TextStrokeControl;
+use PrimeElementorAddons\Controls\TextStrokeControl;
 
 if (!defined('ABSPATH')) {
     exit;

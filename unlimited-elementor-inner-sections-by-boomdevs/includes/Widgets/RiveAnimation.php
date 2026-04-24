@@ -150,6 +150,7 @@ class RiveAnimation extends Widget_Base {
                 'toggle' => true,
                 'prefix_class' => 'pea-rive-align-',
                 'frontend_available' => true,
+                'description' => 'Alignment works when width is less than 100% or container',
             ]
         );
 
@@ -218,6 +219,84 @@ class RiveAnimation extends Widget_Base {
                 ],
             ]
         );
+
+        $this->add_control(
+            'rive_opacity_heading',
+            [
+                'label' => esc_html__( 'Opacity', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                'type' => Controls_Manager::HEADING,
+                'separator' => 'before',
+            ]
+        );
+
+        $this->start_controls_tabs( 'rive_opacity_tabs' );
+
+        $this->start_controls_tab(
+            'rive_opacity_normal_tab',
+            [
+                'label' => esc_html__( 'Normal', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+            ]
+        );
+
+        $this->add_control(
+            'rive_opacity_normal',
+            [
+                'label' => esc_html__( 'Opacity', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => [ 'x' ],
+                'range' => [
+                    'x' => [
+                        'min' => 0.1,
+                        'max' => 1,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'x',
+                    'size' => 1,
+                ],
+                'show_label' => false,
+                'selectors' => [
+                    '{{WRAPPER}} .pea-rive-animation-canvas' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        $this->start_controls_tab(
+            'rive_opacity_hover_tab',
+            [
+                'label' => esc_html__( 'Hover', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+            ]
+        );
+
+        $this->add_control(
+            'rive_opacity_hover',
+            [
+                'label' => esc_html__( 'Opacity', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => [ 'x' ],
+                'range' => [
+                    'x' => [
+                        'min' => 0.1,
+                        'max' => 1,
+                        'step' => 0.1,
+                    ],
+                ],
+                'default' => [
+                    'unit' => 'x',
+                    'size' => 1,
+                ],
+                'show_label' => false,
+                'selectors' => [
+                    '{{WRAPPER}} .pea-rive-animation-inner:hover .pea-rive-animation-canvas' => 'opacity: {{SIZE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+        $this->end_controls_tabs();
 
         $this->end_controls_section();
     }

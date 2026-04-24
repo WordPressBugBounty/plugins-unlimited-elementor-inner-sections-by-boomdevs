@@ -15,7 +15,6 @@ if (!defined('ABSPATH')) {
 
 class PostCategory extends Widget_Base
 {
-    /* ==================== Widget Identity ==================== */
     public function get_name()
     {
         return 'pea_post_category';
@@ -28,7 +27,7 @@ class PostCategory extends Widget_Base
 
     public function get_icon()
     {
-        return 'eicon-post-list';
+        return 'pea_post_category_icon';
     }
 
     public function get_categories()
@@ -158,6 +157,7 @@ class PostCategory extends Widget_Base
                 'label' => esc_html__('Fallback Image URL', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'type' => Controls_Manager::TEXT,
                 'default' => defined('PEA_PLUGIN_URL') ? PEA_PLUGIN_URL . 'assets/images/preset-bg.jpg' : '',
+                'label_block' => true,
                 'condition' => [
                     'show_image!' => 'no',
                 ],
@@ -216,6 +216,10 @@ class PostCategory extends Widget_Base
                         'step' => 1,
                     ],
                 ],
+                'selectors' => [
+                    '{{WRAPPER}} .pea-post-category-widget' => '--pea-grid-columns: {{SIZE}};',
+                ],
+                'render_type' => 'ui',
                 'condition' => [
                     'layout' => 'grid',
                 ],
@@ -239,6 +243,10 @@ class PostCategory extends Widget_Base
                         'step' => 1,
                     ],
                 ],
+                'selectors' => [
+                    '{{WRAPPER}} .pea-post-category-widget' => '--pea-row-gap: {{SIZE}}{{UNIT}};',
+                ],
+                'render_type' => 'ui',
                 'condition' => [
                     'layout' => 'grid',
                 ],
@@ -262,6 +270,10 @@ class PostCategory extends Widget_Base
                         'step' => 1,
                     ],
                 ],
+                'selectors' => [
+                    '{{WRAPPER}} .pea-post-category-widget' => '--pea-column-gap: {{SIZE}}{{UNIT}};',
+                ],
+                'render_type' => 'ui',
                 'condition' => [
                     'layout' => 'grid',
                 ],
@@ -269,9 +281,9 @@ class PostCategory extends Widget_Base
         );
 
         $this->add_control(
-            'list_column_gap',
+            'list_gap',
             [
-                'label' => esc_html__('List Column Gap', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'label' => esc_html__('List Gap', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'type' => Controls_Manager::SLIDER,
                 'size_units' => ['px'],
                 'default' => [
@@ -285,6 +297,10 @@ class PostCategory extends Widget_Base
                         'step' => 1,
                     ],
                 ],
+                'selectors' => [
+                    '{{WRAPPER}} .pea-post-category-widget.pea-layout-list .pea-post-category-list' => 'gap: {{SIZE}}{{UNIT}};',
+                ],
+                'render_type' => 'ui',
                 'condition' => [
                     'layout' => 'list',
                 ],
@@ -1678,7 +1694,7 @@ class PostCategory extends Widget_Base
         $this->start_controls_tabs('read_more_icon_color_tabs');
 
         $this->start_controls_tab(
-            'read_more_icon_color_normal',
+            'read_more_icon_color_normal_tab',
             [
                 'label' => esc_html__('Normal', 'unlimited-elementor-inner-sections-by-boomdevs'),
             ]
@@ -1936,9 +1952,8 @@ class PostCategory extends Widget_Base
         $layout = ($settings['layout'] ?? 'grid') === 'list' ? 'list' : 'grid';
         $preset = $this->get_active_preset($settings);
         $grid_columns = $this->get_grid_columns($settings);
-        $wrapper_style = $this->get_grid_wrapper_style($settings, $layout);
 
-        echo '<div class="pea-post-category-widget pea-layout-' . esc_attr($layout) . ' pea-' . esc_attr($preset) . ' pea-grid-cols-' . esc_attr((string) $grid_columns) . '"' . $wrapper_style . '>';
+        echo '<div class="pea-post-category-widget pea-layout-' . esc_attr($layout) . ' pea-' . esc_attr($preset) . ' pea-grid-cols-' . esc_attr((string) $grid_columns) . '">';
 
         if ($layout === 'list' && $show_children) {
             echo $this->render_hierarchy_list($terms, 0, $settings, $taxonomy); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -1969,20 +1984,6 @@ class PostCategory extends Widget_Base
         }
 
         return 'preset-1';
-    }
-
-    private function get_grid_wrapper_style($settings, $layout)
-    {
-        $grid_columns = $this->get_grid_columns($settings);
-        $row_gap = max(0, absint($settings['row_gap']['size'] ?? 15));
-        $column_gap = max(0, absint($settings['column_gap']['size'] ?? 15));
-        $list_column_gap = max(0, absint($settings['list_column_gap']['size'] ?? 15));
-
-        if ($layout !== 'grid') {
-            return ' style="--pea-row-gap: ' . esc_attr((string) $row_gap) . 'px; --pea-column-gap: ' . esc_attr((string) $list_column_gap) . 'px;"';
-        }
-
-        return ' style="--pea-grid-columns: ' . esc_attr((string) $grid_columns) . '; --pea-row-gap: ' . esc_attr((string) $row_gap) . 'px; --pea-column-gap: ' . esc_attr((string) $column_gap) . 'px;"';
     }
 
     private function get_grid_columns($settings)

@@ -40,16 +40,6 @@
     transition: all 0.3s ease;
 }
 
-.pea-lottie-animation-inner[data-render-type="svg"] .pea-lottie-animation-player,
-.pea-lottie-animation-inner[data-render-type="svg"] .pea-lottie-animation-player svg,
-.pea-lottie-animation-inner[data-render-type="svg"] .pea-lottie-animation-player canvas {
-    transform: translateZ(0);
-    will-change: transform;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
-
-.pea-lottie-animation-player > svg,
 .pea-lottie-animation-player > canvas {
     width: 100% !important;
     height: 100% !important;
@@ -93,6 +83,8 @@
 }
 
 .pea-lottie-animation-placeholder {
+    width: 100%;
+    box-sizing: border-box;
     padding: 20px;
     border: 1px solid #1d2327;
     background: #fff;

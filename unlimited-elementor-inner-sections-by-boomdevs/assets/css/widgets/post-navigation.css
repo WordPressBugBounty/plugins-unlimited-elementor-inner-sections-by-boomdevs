@@ -1,0 +1,33 @@
+.pea-single-post-navigation-wrapper .nav-links {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.pea-single-post-navigation-wrapper.only-next .nav-links {
+  justify-content: end !important;
+}
+.pea-single-post-navigation-wrapper .post-navigation {
+    padding: 2rem;
+    border-radius: 4px;
+    background: #e2e8f0;
+    margin: 0;
+}
+.pea-single-post-navigation-wrapper .post-navigation .nav-previous { 
+    text-align: start;
+    margin-right: 10px;
+}
+.pea-single-post-navigation-wrapper .post-navigation .nav-next { 
+    text-align: end;
+    margin-left: 10px;
+}
+.pea-single-post-navigation-wrapper .nav-links a, .pea-single-post-navigation-wrapper .pea-single-nav-links a {
+    color: #212121;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -.02em;
+    line-height: 1.2;
+    width: 100%;
+}
+.pea-single-post-navigation-wrapper .nav-links a:hover, .pea-single-post-navigation-wrapper .pea-single-nav-links a:hover {
+    color: #0036FF;
+}

@@ -475,4 +475,87 @@ trait PostGridRenderer {
 
         return $args;
     }
+
+    
+
+    // =========================================================================
+    // BUILD WP_QUERY ARGS FROM ARCHIVE QUERY SETTINGS
+    // =========================================================================
+
+    /**
+     * Converts an archive_query_settings array (+ page number) into a full
+     * WP_Query $args array.  This is called both from render() and from the
+     * AJAX handler, so pagination always produces identical results.
+     */
+     private function build_archive_query_args( $query_settings, $paged = 1 ) {
+        $archive_type   = $query_settings['archive_type'] ?? 'home';
+        $posts_per_page = $query_settings['posts_per_page'] ?? 9;
+        $orderby        = $query_settings['orderby'] ?? 'date';
+        $order          = $query_settings['order'] ?? 'DESC';
+
+        // Base args shared by every archive type
+        $args = [
+            'post_status'    => 'publish',
+            'posts_per_page' => $posts_per_page,
+            'orderby'        => $orderby,
+            'order'          => $order,
+            'paged'          => $paged,
+            'no_found_rows'  => false, // Required for total-page calculation
+        ];
+
+        switch ( $archive_type ) {
+
+            case 'related':
+
+                $args = $query_settings;
+
+                $args['paged'] = $paged;
+                $args['post_status']   = 'publish';
+                $args['no_found_rows'] = false;
+
+                return $args; 
+                break;
+
+            case 'category':
+                $args['post_type']    = 'post';
+                $args['category__in'] = [ absint( $query_settings['category__in'] ) ];
+                break;
+
+            case 'tag':
+                $args['post_type'] = 'post';
+                $args['tag__in']   = [ absint( $query_settings['tag__in'] ) ];
+                break;
+
+            case 'tax':
+                $args['post_type'] = 'any';
+                $args['tax_query'] = [[
+                    'taxonomy' => sanitize_key( $query_settings['taxonomy'] ),
+                    'field'    => 'id',
+                    'terms'    => [ absint( $query_settings['term_id'] ) ],
+                ]];
+                break;
+
+            case 'author':
+                $args['post_type']   = 'post';
+                $args['author__in']  = [ absint( $query_settings['author_id'] ) ];
+                break;
+
+            case 'date':
+                $args['post_type']   = 'post';
+                $args['date_query']  = [ $query_settings['date_query'] ?? [] ];
+                break;
+
+            case 'search':
+                $args['s']         = sanitize_text_field( $query_settings['search_query'] ?? '' );
+                $args['post_type'] = array_map( 'sanitize_key', (array) ( $query_settings['post_type'] ?? ['post'] ) );
+                break;
+
+            case 'home':
+            default:
+                $args['post_type'] = array_map( 'sanitize_key', (array) ( $query_settings['post_type'] ?? ['post'] ) );
+                break;
+        }
+
+        return $args;
+    }
 }

@@ -2,8 +2,6 @@
 
 namespace PrimeElementorAddons\Widgets;
 
-use PrimeElementorAddons\Utils\GradientTextControl;
-use PrimeElementorAddons\Utils\TextStrokeControl;
 use PrimeElementorAddons\Utils\Helper;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Text_Shadow;
@@ -116,8 +114,8 @@ class SocialIcons extends Widget_Base {
                             'label' => esc_html__( 'Icon', 'unlimited-elementor-inner-sections-by-boomdevs' ),
                             'type' => Controls_Manager::ICONS,
                             'default' => [
-                                'value' => 'fas fa-star',
-                                'library' => 'fa-solid',
+                                'value' => 'fab fa-facebook',
+                                'library' => 'fa-brands',
                             ],
                             'label_block' => true,
                             'skin' => 'inline',

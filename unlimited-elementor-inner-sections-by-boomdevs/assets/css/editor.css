@@ -178,57 +178,100 @@
 }
 
 .elementor-panel .pea_breadcrumb_icon {
-    --pea-icon: url('../../assets/icons/breadcrumb.svg');
+  --pea-icon: url('../../assets/icons/breadcrumb.svg');
 }
 
 .elementor-panel .pea_pricing_table_icon, .elementor-panel .pea_multicolumn_pricing_table_icon {
-    --pea-icon: url('../../assets/icons/pricing-table.svg');
+  --pea-icon: url('../../assets/icons/pricing-table.svg');
 }
 
 .elementor-panel .pea_rive_animation_icon {
-    --pea-icon: url('../../assets/icons/rive-animation.svg');
+  --pea-icon: url('../../assets/icons/rive-animation.svg');
 }
 
 .elementor-panel .pea_lottie_animation_icon {
-    --pea-icon: url('../../assets/icons/lottie-animation.svg');
+  --pea-icon: url('../../assets/icons/lottie-animation.svg');
 }
 
-.elementor-panel .pea_advanced_slider_icon {
-    --pea-icon: url('../../assets/icons/advanced-slider.svg');
+.elementor-panel .pea_lottie_animation_icon {
+  --pea-icon: url('../../assets/icons/lottie-animation.svg');
 }
 
 .elementor-panel .pea_back_to_top_icon {
-    --pea-icon: url('../../assets/icons/back-to-top.svg');
+  --pea-icon: url('../../assets/icons/back-to-top.svg');
+}
+
+.elementor-panel .pea_advanced_slider_icon {
+  --pea-icon: url('../../assets/icons/advanced-slider.svg');
+}
+
+.elementor-panel .pea_template_icon {
+  --pea-icon: url('../../assets/icons/template-widget.svg');
+}
+
+.elementor-panel .pea_post_category_icon {
+  --pea-icon: url('../../assets/icons/post-category.svg');
+}
+
+.elementor-panel .pea_marquee_carousel_icon {
+  --pea-icon: url('../../assets/icons/marquee-carousel.svg');
 }
 
 /* ---------- Pro Widget Icons ---------- */
 .elementor-panel .pea_advanced_mega_menu_icon {
-    --pea-icon: url('../../assets/icons/advanced-mega-menu.svg');
+  --pea-icon: url('../../assets/icons/advanced-mega-menu.svg');
 }
 .elementor-panel .pea_advanced_off_canvas_icon {
-    --pea-icon: url('../../assets/icons/advanced-off-canvas.svg');
+  --pea-icon: url('../../assets/icons/advanced-off-canvas.svg');
 }
 .elementor-panel .pea_horizontal_timeline_icon {
-    --pea-icon: url('../../assets/icons/horizontal-timeline.svg');
+  --pea-icon: url('../../assets/icons/horizontal-timeline.svg');
 }
 .elementor-panel .pea_content_table_icon {
-    --pea-icon: url('../../assets/icons/content-table.svg');
+  --pea-icon: url('../../assets/icons/content-table.svg');
 }
 .elementor-panel .pea_stacked_card_icon {
-    --pea-icon: url('../../assets/icons/stacked-card.svg');
+  --pea-icon: url('../../assets/icons/stacked-card.svg');
 }
 .elementor-panel .pea_post_ticker_icon {
-    --pea-icon: url('../../assets/icons/post-ticker.svg');
+  --pea-icon: url('../../assets/icons/post-ticker.svg');
 }
 .elementor-panel .pea_advanced_model_popup_icon {
-    --pea-icon: url('../../assets/icons/advanced-model-popup.svg');
+  --pea-icon: url('../../assets/icons/advanced-model-popup.svg');
+}
+.elementor-panel .pea_advanced_multichart_icon {
+  --pea-icon: url('../../assets/icons/multi-chart.svg');
+}
+.elementor-panel .pea_circle_menu_icon {
+  --pea-icon: url('../../assets/icons/circle-menu.svg');
+}
+.elementor-panel .pea_pie_chart_icon {
+  --pea-icon: url('../../assets/icons/pie-chart.svg');
+}
+.elementor-panel .pea_image_hotspot_icon {
+  --pea-icon: url('../../assets/icons/image-hotspot.svg');
+}
+.elementor-panel .pea_post_timeline_icon {
+  --pea-icon: url('../../assets/icons/post-timeline.svg');
+}
+.elementor-panel .pea_advanced_switcher_icon {
+  --pea-icon: url('../../assets/icons/advanced-switcher.svg');
+}
+.elementor-panel .pea_image_comparison_icon {
+  --pea-icon: url('../../assets/icons/image-compare.svg');
+}
+.elementor-panel .pea_page_progress_bar_icon {
+  --pea-icon: url('../../assets/icons/page-progressbar.svg');
+}
+.elementor-panel .pea_post_carousel_icon {
+  --pea-icon: url('../../assets/icons/post-carousel.svg');
 }
 
 .pea-upgrade-btn {
-   display: block;
-   text-align: center;
+  display: block;
+  text-align: center;
 }
 
 .pea-upgrade-btn:not([style="display: none;"]) + button, .pea-upgrade-btn:not([style="display: none;"]) + button + button {
-   display: none;
+  display: none;
 }

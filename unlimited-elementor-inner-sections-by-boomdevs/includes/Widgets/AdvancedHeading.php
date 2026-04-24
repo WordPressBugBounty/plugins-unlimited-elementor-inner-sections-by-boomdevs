@@ -2,8 +2,8 @@
 
 namespace PrimeElementorAddons\Widgets;
 
-use PrimeElementorAddons\Utils\GradientTextControl;
-use PrimeElementorAddons\Utils\TextStrokeControl;
+use PrimeElementorAddons\Controls\GradientTextControl;
+use PrimeElementorAddons\Controls\TextStrokeControl;
 use PrimeElementorAddons\Utils\Helper;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Text_Shadow;

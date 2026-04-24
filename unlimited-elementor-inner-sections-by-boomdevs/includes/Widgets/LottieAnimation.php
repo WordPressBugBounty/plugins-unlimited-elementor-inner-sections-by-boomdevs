@@ -125,19 +125,6 @@ class LottieAnimation extends Widget_Base {
             ]
         );
 
-        // $this->add_control(
-        //     'render_type',
-        //     [
-        //         'label' => esc_html__( 'Render Type', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-        //         'type' => Controls_Manager::SELECT,
-        //         'default' => 'canvas',
-        //         'options' => [
-        //             'canvas' => esc_html__( 'Canvas', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-        //             'svg' => esc_html__( 'SVG', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-        //         ],
-        //     ]
-        // );
-
         $this->add_control(
             'autoplay',
             [
@@ -245,6 +232,7 @@ class LottieAnimation extends Widget_Base {
                 'toggle' => true,
                 'prefix_class' => 'pea-lottie-align-',
                 'frontend_available' => true,
+                'description' => 'Alignment works when width is less than 100% or container',
             ]
         );
 
@@ -429,15 +417,9 @@ class LottieAnimation extends Widget_Base {
             $hover_action = '';
         }
 
-        $render_type = isset( $settings['render_type'] ) ? sanitize_key( (string) $settings['render_type'] ) : 'canvas';
-        if ( ! in_array( $render_type, [ 'canvas', 'svg' ], true ) ) {
-            $render_type = 'canvas';
-        }
-
         return [
             'source'             => $has_invalid_source || '' === $raw_source ? '' : esc_url_raw( $raw_source ),
             'has_invalid_source' => $has_invalid_source,
-            'render_type'        => $render_type,
             'autoplay'           => ( isset( $settings['autoplay'] ) && 'yes' === $settings['autoplay'] ) ? 'true' : 'false',
             'loop'               => ( isset( $settings['loop'] ) && 'yes' === $settings['loop'] ) ? 'true' : 'false',
             'reverse'            => ( isset( $settings['reverse'] ) && 'yes' === $settings['reverse'] ) ? 'true' : 'false',
@@ -474,7 +456,6 @@ class LottieAnimation extends Widget_Base {
         $this->add_render_attribute( 'lottie_inner', 'data-reverse', $config['reverse'] );
         $this->add_render_attribute( 'lottie_inner', 'data-speed', $config['speed'] );
         $this->add_render_attribute( 'lottie_inner', 'data-hover-action', $config['hover_action'] );
-        $this->add_render_attribute( 'lottie_inner', 'data-render-type', $config['render_type'] );
 
         if ( $has_source ) {
             $this->add_render_attribute( 'lottie_inner', 'data-lottie-src', $config['source'] );
