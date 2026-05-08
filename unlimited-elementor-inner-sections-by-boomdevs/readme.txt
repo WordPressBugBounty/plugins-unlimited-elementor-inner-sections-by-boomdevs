@@ -3,7 +3,7 @@ Plugin Name: Prime Elementor Addons – Lightweight Elementor Widgets for Faster
 tags: elementor, elementor-addon, elementor-widgets, accordion, tabs
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 Requires PHP: 7.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -297,6 +297,23 @@ It's very easy and straight forward to install this plugin. But before installin
 
 == Changelog ==
 
+= 1.3.1 – 08 May 2026 =
+**Nested Container** – Unlock advanced layout possibilities with the ability to nest containers within containers for complex and flexible designs.
+**Extensions Manager** – A centralized, modern management panel to easily enable or disable features, optimizing site performance.
+**Extensions** – Added 4 powerful core extensions to enhance your design workflow:
+**Sticky Section** – Create professional sticky headers, sidebars, or floating elements with advanced offset and device controls.
+**Page Scrollbar Styler** – Customize the browser scrollbar's color, width, and behavior to match your brand identity.
+**Custom JS** – Add custom JavaScript snippets directly to any page or section via the Elementor editor.
+**Custom CSS** – Apply custom CSS styles globally or to specific widgets with a dedicated code editor.
+
+**Widgets** – Expanded the widget library with 5 essential site-building tools:
+**Site Title** – Dynamically display and style your website’s title with full typography controls.
+**Site Tagline** – Showcase your site’s mission or slogan with dynamic data integration.
+**Site Logo** – Add your brand logo with responsive sizing, alignment, and linking options.
+**Table of Content** – Automatically generate a structured, clickable navigation menu based on your page headings.
+**Product Grid** – Display your WooCommerce products in stunning, fully customizable grid layouts with advanced query filtering.
+* Improvement: Enhanced core architecture and extension loading system for superior speed and scalability.
+
 = 1.3.0 – 24 April 2026 =
 * New: **Full Site Builder** – Design and manage every part of your website. Create custom templates for Header, Footer, Single Post, Post Archive, Search Results, and 404 Error pages.
 * New: **Header & Footer Builder** – Create fully customizable headers and footers using dedicated dynamic widgets.
@@ -316,8 +333,8 @@ It's very easy and straight forward to install this plugin. But before installin
 * Improvement: Enhanced `Plugin.php` with updated asset loading, script/style enqueue logic for new widgets, and Singleton trait integration.
 * Improvement: Updated `Admin.php` to support new widget toggle controls in the admin dashboard.
 * Improvement: Added `Singleton.php` trait for consistent single-instance pattern across widget classes.
-* Improvement: Updated `FeaturesManager.php` and `Helper.php` for compatibility with new widgets.
-* Improvement: Updated `WidgetCustomCss.php` to cover new widget contexts.
+* Improvement: Updated `ExtensionsManager.php` and `Helper.php` for compatibility with new widgets.
+* Improvement: Updated `CustomCss.php` to cover new widget contexts.
 * Fix: Minor CSS update in `editor.css` for new widget panel icons.
 
 = 1.2.1 – 03 April 2026 =

@@ -24,7 +24,7 @@ class PostNavigation extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-post-navigation';
+		return 'pea_post_navigation_icon';
 	}
 
 	public function get_categories() {

@@ -39,7 +39,7 @@ class AdvancedGoogleMaps extends Widget_Base
 
     public function get_keywords()
     {
-        return array('google', 'map', 'location', 'address');
+        return array('google', 'map', 'location', 'address', 'google map');
     }
 
     public function get_style_depends()

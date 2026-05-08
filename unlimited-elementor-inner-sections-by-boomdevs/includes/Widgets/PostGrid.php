@@ -37,7 +37,7 @@ class PostGrid extends Widget_Base {
     }
     
     public function get_keywords() {
-        return ['heading', 'title', 'text', 'advanced', 'gradient', 'stroke'];
+        return ['post', 'grid', 'post grid', 'list', 'post list'];
     }
     
     public function get_style_depends() {

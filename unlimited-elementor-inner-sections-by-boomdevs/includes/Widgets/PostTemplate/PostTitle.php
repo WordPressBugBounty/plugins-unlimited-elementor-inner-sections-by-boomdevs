@@ -25,7 +25,7 @@ class PostTitle extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-post-title';
+		return 'pea_post_title_icon';
 	}
 
 	public function get_categories() {

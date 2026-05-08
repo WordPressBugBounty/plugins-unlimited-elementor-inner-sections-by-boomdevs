@@ -1,0 +1,116 @@
+body.admin-bar .pea-sticky-element.pea-is-sticky {
+  top: 32px !important;
+}
+/* ---------------------------------------------------------------
+   ACTIVE STICKY STATE
+   Applied via JS when the element becomes sticky
+--------------------------------------------------------------- */
+.pea-is-sticky {
+  position: fixed !important;
+  z-index: 9999 !important;
+  will-change: transform;
+}
+
+/* Smooth transition when bg/shadow changes */
+.pea-is-sticky,
+.pea-sticky-element {
+  transition-property: background-color, box-shadow;
+  transition-timing-function: ease;
+}
+
+/* ---------------------------------------------------------------
+   PLACEHOLDER
+   Invisible block that reserves vertical space so layout
+   doesn't jump when the element lifts out of document flow
+--------------------------------------------------------------- */
+.pea-sticky-placeholder {
+  display: none;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* ---------------------------------------------------------------
+   ENTRANCE ANIMATIONS
+   Classes added/removed by JS on each sticky activation
+--------------------------------------------------------------- */
+
+/* Fade In */
+@keyframes pea-sticky-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.pea-sticky-anim-fade {
+  animation-name: pea-sticky-fade;
+  animation-fill-mode: both;
+  animation-timing-function: ease;
+}
+
+/* Slide Down — enters from above */
+@keyframes pea-sticky-slide-down {
+  from {
+    transform: translateY(-100%);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.pea-sticky-anim-slide-down {
+  animation-name: pea-sticky-slide-down;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Slide Up — enters from below */
+@keyframes pea-sticky-slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.pea-sticky-anim-slide-up {
+  animation-name: pea-sticky-slide-up;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ---------------------------------------------------------------
+   COLUMN STICKY MODE
+   Uses CSS position:sticky — no JS required after initial setup
+--------------------------------------------------------------- */
+.pea-sticky-element[style*="position: sticky"],
+.pea-sticky-element[style*="position:sticky"] {
+  align-self: flex-start; /* Required for sticky inside flex containers */
+}
+
+/* ---------------------------------------------------------------
+   ELEMENTOR EDITOR — visual indicator
+   Shows a sticky icon in the top-right of the element overlay
+   so the user knows sticky is enabled
+--------------------------------------------------------------- */
+.elementor-editor-active
+  .pea-sticky-element
+  > .elementor-element-overlay::after {
+  content: "\e8b6"; /* eicon-pin */
+  font-family: eicons;
+  position: absolute;
+  top: 4px;
+  right: 32px;
+  font-size: 13px;
+  color: #d72e2e;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 10;
+}

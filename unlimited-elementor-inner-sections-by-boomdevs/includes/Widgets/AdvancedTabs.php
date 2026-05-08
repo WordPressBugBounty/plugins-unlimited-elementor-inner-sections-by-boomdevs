@@ -29,7 +29,7 @@ class AdvancedTabs extends Widget_Nested_Base {
 	}
 
 	public function get_categories() {
-		return array( 'prime-elementor-addons' );
+		return [ 'prime-elementor-addons' ];
 	}
 
 	public function get_icon() {
@@ -37,7 +37,7 @@ class AdvancedTabs extends Widget_Nested_Base {
 	}
 
 	public function get_keywords() {
-		return array( 'Tabs', 'Nested', 'Toggle', 'Content' );
+		return ['advanced', 'advanced tabs', 'Tabs', 'Nested', 'Toggle', 'Content' ];
 	}
 
 	// TODO: Replace this check with `is_active_feature` on 3.28.0 to support is_active_feature second parameter.

@@ -41,7 +41,7 @@ class AdvancedMenu extends Widget_Base {
     }
 
     public function get_keywords() {
-        return [ 'advanced menu', 'nav menus','menus','navigation',];
+        return [ 'advanced menu', 'advanced navigation', 'nav menus','menus','navigation',];
     }
     
     public function get_style_depends() {

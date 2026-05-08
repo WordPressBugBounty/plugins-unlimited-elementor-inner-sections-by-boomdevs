@@ -26,7 +26,7 @@ class ArchiveTitle extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-archive-title';
+		return 'pea_post_title_icon';
 	}
 
 	public function get_categories() {

@@ -33,7 +33,7 @@ class AdvancedHeading extends Widget_Base {
     }
     
     public function get_keywords() {
-        return ['heading', 'title', 'text', 'advanced', 'gradient', 'stroke'];
+        return [ 'advanced', 'heading', 'advanced heading' , 'title', 'text'];
     }
     
     public function get_style_depends() {

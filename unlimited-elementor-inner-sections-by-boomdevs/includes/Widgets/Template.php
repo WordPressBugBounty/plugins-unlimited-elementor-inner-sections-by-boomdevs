@@ -35,6 +35,10 @@ class Template extends Widget_Base {
         return [ 'prime-elementor-addons--template' ];
     }
 
+    public function get_keywords() {
+        return [ 'template', 'widget', 'template widget', 'sidebar', 'sidebar widget', 'sidebar template' ];
+    }
+
     protected function register_controls() {
  
         $this->start_controls_section( 'section_template', [

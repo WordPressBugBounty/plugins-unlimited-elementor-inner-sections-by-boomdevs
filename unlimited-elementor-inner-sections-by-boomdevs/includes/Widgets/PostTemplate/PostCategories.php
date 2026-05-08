@@ -22,7 +22,7 @@ class PostCategories extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-sitemap';
+		return 'pea_post_categories_icon';
 	}
 
 	public function get_categories() {

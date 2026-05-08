@@ -2370,7 +2370,7 @@ class PostCategory extends Widget_Base
             return '';
         }
 
-        $term_image = get_term_meta($term->term_id, 'fb_taxonomy_image', true);
+        $term_image = get_term_meta($term->term_id, 'pea_taxonomy_image', true);
         $fallback_image = esc_url_raw((string) ($settings['image_fallback_url'] ?? ''));
 
         return !empty($term_image) ? esc_url_raw((string) $term_image) : $fallback_image;

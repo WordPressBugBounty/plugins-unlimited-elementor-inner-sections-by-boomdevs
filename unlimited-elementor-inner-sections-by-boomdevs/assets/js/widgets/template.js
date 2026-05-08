@@ -1,6 +1,4 @@
 /**
- * Prime Elementor Addons Pro — Template Widget JS
- *
  * Editor behaviour:
  *  1. Watches the template_id SELECT2 control for changes
  *  2. When a template is selected:

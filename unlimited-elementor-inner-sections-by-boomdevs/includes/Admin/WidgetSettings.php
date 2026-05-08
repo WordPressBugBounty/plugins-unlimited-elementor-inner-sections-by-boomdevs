@@ -9,6 +9,14 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  * Provides cached access to widget configuration
  */
 class WidgetSettings {
+    /**
+     * Legacy widget key migrations.
+     *
+     * @var array<string, string>
+     */
+    private static $legacy_widget_keys = [
+        'top-table-of-contents' => 'table-of-contents',
+    ];
     
     /**
      * Cached active widgets
@@ -40,6 +48,8 @@ class WidgetSettings {
         if ( ! is_array( $widgets ) ) {
             $widgets = [];
         }
+
+        $widgets = self::migrate_legacy_widget_keys( $widgets );
         
         // Cache for this request
         self::$active_widgets = $widgets;
@@ -102,6 +112,35 @@ class WidgetSettings {
     public static function clear_cache() {
         self::$active_widgets = null;
         self::$cache_initialized = false;
+    }
+
+    /**
+     * Migrate legacy widget keys to their current slugs.
+     *
+     * @param array $widgets Active widget settings.
+     * @return array
+     */
+    private static function migrate_legacy_widget_keys( $widgets ) {
+        $did_migrate = false;
+
+        foreach ( self::$legacy_widget_keys as $legacy_key => $new_key ) {
+            if ( ! array_key_exists( $legacy_key, $widgets ) ) {
+                continue;
+            }
+
+            if ( ! array_key_exists( $new_key, $widgets ) ) {
+                $widgets[ $new_key ] = $widgets[ $legacy_key ];
+            }
+
+            unset( $widgets[ $legacy_key ] );
+            $did_migrate = true;
+        }
+
+        if ( $did_migrate ) {
+            update_option( 'pea_active_widgets', $widgets );
+        }
+
+        return $widgets;
     }
     
     /**

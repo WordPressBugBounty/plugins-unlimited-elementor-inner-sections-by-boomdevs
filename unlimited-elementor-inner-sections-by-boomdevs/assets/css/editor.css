@@ -169,6 +169,10 @@
   --pea-icon: url("../../assets/icons/advanced-paragraph.svg");
 }
 
+.elementor-panel .pea_advanced_search_icon {
+  --pea-icon: url("../../assets/icons/advanced-search.svg");
+}
+
 .elementor-panel .pea_animated_heading_icon {
   --pea-icon: url("../../assets/icons/animated-heading.svg");
 }
@@ -215,6 +219,52 @@
 
 .elementor-panel .pea_marquee_carousel_icon {
   --pea-icon: url('../../assets/icons/marquee-carousel.svg');
+}
+
+.elementor-panel .pea_site_title_icon {
+  --pea-icon: url('../../assets/icons/site-title.svg');
+}
+
+.elementor-panel .pea_site_tagline_icon {
+  --pea-icon: url('../../assets/icons/site-tagline.svg');
+}
+
+.elementor-panel .pea_site_logo_icon {
+  --pea-icon: url('../../assets/icons/site-logo.svg');
+}
+
+.elementor-panel .pea_table_of_contents_icon {
+  --pea-icon: url('../../assets/icons/table-of-contents.svg');
+}
+
+/* ---------- Single Post Widget Icons ---------- */
+
+.elementor-panel .pea_post_title_icon {
+  --pea-icon: url('../../assets/icons/post-title.svg');
+}
+.elementor-panel .pea_post_content_icon {
+  --pea-icon: url('../../assets/icons/post-content.svg');
+}
+.elementor-panel .pea_post_categories_icon {
+  --pea-icon: url('../../assets/icons/post-categories.svg');
+}
+.elementor-panel .pea_post_featured_image_icon {
+  --pea-icon: url('../../assets/icons/post-featured-image.svg');
+}
+.elementor-panel .pea_post_share_icons_icon {
+  --pea-icon: url('../../assets/icons/post-share-icons.svg');
+}
+.elementor-panel .pea_post_navigation_icon {
+  --pea-icon: url('../../assets/icons/post-navigation.svg');
+}
+.elementor-panel .pea_post_meta_icon {
+  --pea-icon: url('../../assets/icons/post-meta.svg');
+}
+.elementor-panel .pea_post_author_icon {
+  --pea-icon: url('../../assets/icons/post-author.svg');
+}
+.elementor-panel .pea_post_comment_icon {
+  --pea-icon: url('../../assets/icons/post-comment.svg');
 }
 
 /* ---------- Pro Widget Icons ---------- */
@@ -265,6 +315,29 @@
 }
 .elementor-panel .pea_post_carousel_icon {
   --pea-icon: url('../../assets/icons/post-carousel.svg');
+}
+.elementor-panel .pea_price_menu_icon {
+  --pea-icon: url('../../assets/icons/price-menu.svg');
+}
+.elementor-panel .pea_price_list_icon {
+  --pea-icon: url('../../assets/icons/price-list.svg');
+}
+
+/* ---------- Extensions Icons ---------- */
+.elementor-panel .elementor-panel-menu-item-icon:has( > i[class^="pea_"][class$="_icon"]) {
+  display: flex;
+  justify-content: center;
+}
+.elementor-panel .elementor-panel-menu-item-icon:has( > i[class^="pea_"][class$="_icon"]) i {
+  background-color: #fff;
+  font-size: 19px;
+  width: 19px;
+  height: 19px;
+}
+.elementor-panel .pea_page_scrollbar_icon {
+  --pea-icon: url('../../assets/icons/extensions/page-scrollbar.svg');
+  height: 20px !important;
+  width: 20px !important;
 }
 
 .pea-upgrade-btn {

@@ -34,7 +34,7 @@ class AdvancedSearch extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-search';
+		return 'pea_advanced_search_icon';
 	}
 
 	public function get_keywords() {

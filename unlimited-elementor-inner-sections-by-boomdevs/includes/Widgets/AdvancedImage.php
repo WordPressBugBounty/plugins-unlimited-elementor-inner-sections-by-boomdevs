@@ -30,7 +30,7 @@ class AdvancedImage extends Widget_Base {
     }
     
     public function get_keywords() {
-        return ['heading', 'title', 'text', 'advanced', 'gradient', 'stroke'];
+        return ['advanced', 'image', 'advanced image', 'photo', 'gallery', 'image gallery'];
     }
     
     public function get_style_depends() {

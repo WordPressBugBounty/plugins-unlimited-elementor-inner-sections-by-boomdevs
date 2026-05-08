@@ -23,7 +23,7 @@ class PostShareIcons extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-social-icons';
+		return 'pea_post_share_icons_icon';
 	}
 
 	public function get_categories() {

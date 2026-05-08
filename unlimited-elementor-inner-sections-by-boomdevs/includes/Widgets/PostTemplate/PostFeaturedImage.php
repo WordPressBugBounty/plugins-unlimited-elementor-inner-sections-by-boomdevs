@@ -23,7 +23,7 @@ class PostFeaturedImage extends \Elementor\Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-featured-image';
+		return 'pea_post_featured_image_icon';
 	}
 
 	public function get_categories() {

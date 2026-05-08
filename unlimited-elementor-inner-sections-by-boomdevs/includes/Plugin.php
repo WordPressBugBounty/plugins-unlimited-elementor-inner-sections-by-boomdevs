@@ -10,7 +10,10 @@ use PrimeElementorAddons\Ueis\UnlimitedElementorInnerSections;
 use PrimeElementorAddons\Admin\WidgetSettings;
 use PrimeElementorAddons\Config\WidgetList;
 use PrimeElementorAddons\Utils\Helper;
-
+use PrimeElementorAddons\Extensions\ExtensionsManager;
+use PrimeElementorAddons\Core\AnimationFileSupport;
+use PrimeElementorAddons\Core\SupportSvg;
+use PrimeElementorAddons\Core\TaxImageSupport;
 final class Plugin
 {
 
@@ -19,7 +22,7 @@ final class Plugin
      *
      * @var string
      */
-    const VERSION = '1.3.0';
+    const VERSION = '1.3.1';
 
     /**
      * Plugin slug
@@ -67,7 +70,7 @@ final class Plugin
         add_action('plugins_loaded', [$this, 'run_ueis'], 5);
         add_action('plugins_loaded', [$this, 'init_site_builder'], 10);
         add_action('plugins_loaded', [$this, 'init_prime_elementor_addons'], 10);
-        add_action('elementor/init', [$this, 'pea_add_features_manager'], 0);
+        add_action('plugins_loaded', [$this, 'extensions_manager'], 0);
 
         // Initialize Admin
         $this->init_admin();
@@ -195,19 +198,15 @@ final class Plugin
         add_action('wp_ajax_get_category_by_post_type', [$this, 'get_category_by_post_type']);
         add_action('wp_ajax_get_tag_by_post_type', [$this, 'get_tag_by_post_type']);
         add_action('wp_ajax_pea_get_terms_by_taxonomy', [$this, 'get_terms_by_taxonomy']);
-        add_action('wp_ajax_pea_upload_animation_file', [$this, 'upload_animation_file']);
-        add_action('wp_ajax_pea_rive_wasm', [$this, 'serve_rive_wasm']);
-        add_action('wp_ajax_nopriv_pea_rive_wasm', [$this, 'serve_rive_wasm']);
         add_action('wp_ajax_pea_load_posts', ['\PrimeElementorAddons\Ajax\PostGridAjaxHandler', 'handle_load_posts']);
         add_action('wp_ajax_nopriv_pea_load_posts', ['\PrimeElementorAddons\Ajax\PostGridAjaxHandler', 'handle_load_posts']);
-        add_filter('mime_types', [$this, 'allow_rive_mime_types'], PHP_INT_MAX);
-        add_filter('upload_mimes', [$this, 'allow_rive_upload_mime'], PHP_INT_MAX, 2);
-        add_filter('wp_handle_upload_overrides', [$this, 'allow_animation_upload_overrides'], PHP_INT_MAX, 2);
-        add_filter('wp_handle_upload', [$this, 'normalize_animation_uploaded_type'], PHP_INT_MAX);
-        add_filter('wp_check_filetype_and_ext', [$this, 'fix_rive_filetype'], PHP_INT_MAX, 5);
-        add_filter('site_option_upload_filetypes', [$this, 'allow_rive_multisite_filetypes'], PHP_INT_MAX);
-        add_filter('elementor/files/allow_unfiltered_upload', [$this, 'allow_elementor_unfiltered_upload'], PHP_INT_MAX);
-
+		$this->rive_and_lottie_support();
+		$this->svg_support();
+		$this->taxonomy_image_support();
+        
+        add_action('wp_ajax_pea_product_quick_view', [$this, 'product_quick_view']);
+        add_action('wp_ajax_nopriv_pea_product_quick_view', [$this, 'product_quick_view']);
+        
         // ─────────────────────────────────────────────────────────────────────────────
           // 3. AJAX: SEARCH TEMPLATES
           // Called by the editor when the user types in the Choose Template search box.
@@ -235,9 +234,9 @@ final class Plugin
           } );
     }
 
-    public function pea_add_features_manager()
+    public function extensions_manager()
     {
-        \PrimeElementorAddons\Utils\FeaturesManager::get_instance();
+        ExtensionsManager::get_instance();
     }
 
     /**
@@ -313,187 +312,6 @@ final class Plugin
         $tag = preg_replace('/\s+defer(\s|>)/i', '$1', $tag);
 
         return $tag;
-    }
-
-    /**
-     * Serve local Rive wasm with a strict MIME type.
-     *
-     * @return void
-     */
-    public function serve_rive_wasm()
-    {
-        $wasm_path = PEA_PLUGIN_PATH . 'assets/js/vendor/rive.wasm';
-        if (!file_exists($wasm_path) || !is_readable($wasm_path)) {
-            status_header(404);
-            exit;
-        }
-
-        if (function_exists('nocache_headers')) {
-            nocache_headers();
-        }
-
-        $size = filesize($wasm_path);
-        header('Content-Type: application/wasm');
-        if (false !== $size) {
-            header('Content-Length: ' . (string) $size);
-        }
-        readfile($wasm_path);
-        exit;
-    }
-
-    /**
-     * Allow Rive files in Media Library upload.
-     *
-     * @param array $mimes Allowed mimes.
-     * @return array
-     */
-    public function allow_rive_upload_mime($mimes, $_user = null)
-    {
-        if (!is_array($mimes)) {
-            return $mimes;
-        }
-
-        $mimes['riv'] = 'application/octet-stream';
-        $mimes['json'] = 'application/json';
-        return $mimes;
-    }
-
-    /**
-     * Ensure extension-to-mime map includes Rive/Lottie types for media uploader pre-checks.
-     *
-     * @param array $mimes Core extension-to-mime map.
-     * @return array
-     */
-    public function allow_rive_mime_types($mimes)
-    {
-        if (!is_array($mimes)) {
-            return $mimes;
-        }
-
-        $mimes['riv'] = 'application/octet-stream';
-        $mimes['json'] = 'application/json';
-
-        return $mimes;
-    }
-
-    /**
-     * Apply strict upload overrides only for animation source files.
-     *
-     * @param array $overrides Upload overrides.
-     * @param array $file Uploaded file array.
-     * @return array
-     */
-    public function allow_animation_upload_overrides($overrides, $file)
-    {
-        if (!current_user_can('upload_files')) {
-            return $overrides;
-        }
-
-        $filename = isset($file['name']) ? (string) $file['name'] : '';
-        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-
-        if ('json' !== $extension && 'riv' !== $extension) {
-            return $overrides;
-        }
-
-        if (!isset($overrides['mimes']) || !is_array($overrides['mimes'])) {
-            $overrides['mimes'] = [];
-        }
-
-        $overrides['mimes']['json'] = 'application/json';
-        $overrides['mimes']['riv'] = 'application/octet-stream';
-        $overrides['test_type'] = false;
-
-        return $overrides;
-    }
-
-    /**
-     * Normalize uploaded MIME for animation files in WP media upload flow.
-     *
-     * @param array $upload Uploaded file result.
-     * @return array
-     */
-    public function normalize_animation_uploaded_type($upload)
-    {
-        if (!is_array($upload) || empty($upload['file'])) {
-            return $upload;
-        }
-
-        $extension = strtolower(pathinfo((string) $upload['file'], PATHINFO_EXTENSION));
-        if ('json' === $extension) {
-            $upload['type'] = 'application/json';
-        } elseif ('riv' === $extension) {
-            $upload['type'] = 'application/octet-stream';
-        }
-
-        return $upload;
-    }
-
-    /**
-     * Ensure Rive/Lottie extensions stay allowed in multisite upload filetype settings.
-     *
-     * @param string $filetypes Space separated extension list.
-     * @return string
-     */
-    public function allow_rive_multisite_filetypes($filetypes)
-    {
-        $filetypes = is_string($filetypes) ? trim($filetypes) : '';
-        $types = '' === $filetypes ? [] : preg_split('/\s+/', $filetypes);
-
-        if (!in_array('riv', $types, true)) {
-            $types[] = 'riv';
-        }
-
-        if (!in_array('json', $types, true)) {
-            $types[] = 'json';
-        }
-
-        return implode(' ', $types);
-    }
-
-    /**
-     * Allow Elementor unfiltered upload gate for users who can upload files.
-     *
-     * @param bool $enabled Elementor unfiltered upload status.
-     * @return bool
-     */
-    public function allow_elementor_unfiltered_upload($enabled)
-    {
-        return current_user_can('upload_files') || (bool) $enabled;
-    }
-
-    /**
-     * Normalize Rive filetype detection across environments.
-     *
-     * @param array       $types         Values for extension, mime, and corrected filename.
-     * @param string      $file          Full path to file.
-     * @param string      $filename      The name of the file.
-     * @param string[]    $mimes         Key is the file extension with value as the mime type.
-     * @param string|bool $real_mime     The actual mime type or false if unavailable.
-     * @return array
-     */
-    public function fix_rive_filetype($types, $file, $filename, $mimes, $real_mime)
-    {
-        $extension = strtolower(pathinfo((string) $filename, PATHINFO_EXTENSION));
-
-        if ('riv' !== $extension && 'json' !== $extension) {
-            return $types;
-        }
-
-        if ('json' === $extension) {
-            $types['ext'] = 'json';
-            $types['type'] = 'application/json';
-            $types['proper_filename'] = $filename;
-            return $types;
-        }
-
-        $types['ext'] = 'riv';
-        $types['type'] = in_array($real_mime, ['application/json', 'text/plain'], true)
-            ? 'application/json'
-            : 'application/octet-stream';
-        $types['proper_filename'] = $filename;
-
-        return $types;
     }
 
     /**
@@ -764,6 +582,7 @@ final class Plugin
             'contact-form-7',
             'post-grid',
             'post-category',
+            'product-grid',
             'advanced-video',
             'breadcrumb',
             'rive-animation',
@@ -775,6 +594,7 @@ final class Plugin
             'advanced-menu',
             'breadcrumb',
             'advanced-google-maps',
+            'table-of-contents',
             'advanced-paragraph',
             'advanced-search',
             'animated-heading',
@@ -837,6 +657,7 @@ final class Plugin
             'counter',
             'count-down',
             'post-grid',
+            'product-grid',
             'advanced-search',
             'advanced-video',
             'rive-animation',
@@ -845,6 +666,7 @@ final class Plugin
             'advanced-accordion',
             'advanced-tabs',
             'advanced-menu',
+            'table-of-contents',
             'post-category',
             'animated-heading',
             'business-hours',
@@ -895,6 +717,9 @@ final class Plugin
 
         foreach ($widgets as $widget) {
             $dependencies = ['jquery', 'elementor-frontend'];
+            if ('product-grid' === $widget && wp_script_is('wc-add-to-cart', 'registered')) {
+                $dependencies[] = 'wc-add-to-cart';
+            }
             if ('rive-animation' === $widget && $rive_runtime_registered) {
                 $dependencies[] = 'prime-elementor-addons-rive-runtime';
             }
@@ -952,6 +777,89 @@ final class Plugin
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('prime_elementor_addons_nonce')
         ]);
+
+        wp_localize_script('prime-elementor-addons--product-grid', 'PeaProductGrid', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('pea_product_grid_nonce'),
+            'i18n' => [
+                'loading' => esc_html__('Loading...', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'adding' => esc_html__('Processing', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'added' => esc_html__('Added', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'error' => esc_html__('Error', 'unlimited-elementor-inner-sections-by-boomdevs'),
+            ],
+        ]);
+    }
+
+    public function product_quick_view()
+    {
+        if (!check_ajax_referer('pea_product_grid_nonce', 'nonce', false)) {
+            wp_send_json_error(['message' => esc_html__('Invalid request.', 'unlimited-elementor-inner-sections-by-boomdevs')]);
+        }
+
+        $product_id = absint($_POST['product_id'] ?? 0);
+        $product = function_exists('wc_get_product') ? wc_get_product($product_id) : false;
+
+        if (!$product) {
+            wp_send_json_error(['message' => esc_html__('Product not found.', 'unlimited-elementor-inner-sections-by-boomdevs')]);
+        }
+
+        $categories = wc_get_product_category_list($product_id);
+        $average_rating = (float) $product->get_average_rating();
+        $rating_count = (int) $product->get_rating_count();
+        $rating_width = max(0, min(100, ($average_rating / 5) * 100));
+        $description = $product->get_short_description();
+        $button_classes = [
+            'button',
+            'pea-product-grid-cart-button',
+            'pea-quick-view-modal__add-to-cart',
+            'product_type_' . $product->get_type(),
+        ];
+
+        if ($product->supports('ajax_add_to_cart') && $product->is_purchasable() && $product->is_in_stock()) {
+            $button_classes[] = 'add_to_cart_button';
+            $button_classes[] = 'ajax_add_to_cart';
+        }
+
+        ob_start();
+        ?>
+        <div class="pea-quick-view-modal__image">
+            <?php echo wp_kses_post($product->get_image('woocommerce_single')); ?>
+        </div>
+        <div class="pea-quick-view-modal__info">
+            <?php if ($categories !== '') : ?>
+                <div class="pea-quick-view-modal__category"><?php echo wp_kses_post($categories); ?></div>
+            <?php endif; ?>
+            <h3 class="pea-quick-view-modal__title"><?php echo esc_html($product->get_name()); ?></h3>
+            <?php if ($description !== '') : ?>
+                <div class="pea-quick-view-modal__description"><?php echo wp_kses_post(wpautop($description)); ?></div>
+            <?php endif; ?>
+            <div class="pea-quick-view-modal__price"><?php echo wp_kses_post($product->get_price_html()); ?></div>
+            <div class="pea-quick-view-modal__rating">
+                <span class="pea-quick-view-modal__rating-stars" aria-hidden="true">
+                    <span class="pea-quick-view-modal__rating-stars-base">★★★★★</span>
+                    <span class="pea-quick-view-modal__rating-stars-fill" style="width: <?php echo esc_attr((string) $rating_width); ?>%;">★★★★★</span>
+                </span>
+                <span class="pea-quick-view-modal__rating-count"><?php echo esc_html(sprintf(_n('%s review', '%s reviews', $rating_count, 'unlimited-elementor-inner-sections-by-boomdevs'), number_format_i18n($rating_count))); ?></span>
+            </div>
+            <div class="pea-quick-view-modal__actions">
+                <a
+                    href="<?php echo esc_url($product->add_to_cart_url()); ?>"
+                    class="<?php echo esc_attr(implode(' ', array_map('sanitize_html_class', $button_classes))); ?>"
+                    data-quantity="1"
+                    data-product_id="<?php echo esc_attr((string) $product_id); ?>"
+                    data-product_sku="<?php echo esc_attr((string) $product->get_sku()); ?>"
+                    data-pea-default-text="<?php echo esc_attr($product->add_to_cart_text()); ?>"
+                    data-pea-processing-text="<?php echo esc_attr__('Processing', 'unlimited-elementor-inner-sections-by-boomdevs'); ?>"
+                    data-pea-added-text="<?php echo esc_attr__('Added', 'unlimited-elementor-inner-sections-by-boomdevs'); ?>"
+                    aria-label="<?php echo esc_attr(wp_strip_all_tags($product->add_to_cart_description())); ?>"
+                    rel="nofollow"
+                ><?php echo esc_html($product->add_to_cart_text()); ?></a>
+                <?php echo wp_kses_post(sprintf('<a class="pea-quick-view-modal__view-product" href="%1$s">%2$s</a>', esc_url(get_permalink($product_id)), esc_html__('View Product', 'unlimited-elementor-inner-sections-by-boomdevs'))); ?>
+            </div>
+        </div>
+        <?php
+
+        wp_send_json_success(['html' => ob_get_clean()]);
     }
 
 	function select_testing_content($element) {
@@ -1267,85 +1175,6 @@ final class Plugin
         wp_send_json_success($authors);
     }
 
-    /**
-     * Upload animation source file and create attachment.
-     *
-     * @return void
-     */
-    public function upload_animation_file()
-    {
-        if (!check_ajax_referer('pea_editor_only_nonce', 'pea_editor_nonce_check', false)) {
-            wp_send_json_error(['message' => 'Invalid nonce'], 403);
-            return;
-        }
-
-        if (!current_user_can('upload_files')) {
-            wp_send_json_error(['message' => esc_html__('Unauthorized', 'unlimited-elementor-inner-sections-by-boomdevs')], 403);
-            return;
-        }
-
-        if (empty($_FILES['animation_file']['name'])) {
-            wp_send_json_error(['message' => esc_html__('No file received.', 'unlimited-elementor-inner-sections-by-boomdevs')], 400);
-            return;
-        }
-
-        $filename = sanitize_file_name((string) $_FILES['animation_file']['name']);
-        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-
-        if (!in_array($extension, ['json', 'riv'], true)) {
-            wp_send_json_error(['message' => esc_html__('Invalid file type.', 'unlimited-elementor-inner-sections-by-boomdevs')], 400);
-            return;
-        }
-
-        if (!function_exists('wp_handle_upload')) {
-            require_once ABSPATH . 'wp-admin/includes/file.php';
-        }
-
-        $overrides = [
-            'test_form' => false,
-            'test_type' => false,
-            'mimes' => [
-                $extension => ('json' === $extension) ? 'application/json' : 'application/octet-stream',
-            ],
-        ];
-
-        $uploaded = wp_handle_upload($_FILES['animation_file'], $overrides);
-
-        if (isset($uploaded['error'])) {
-            wp_send_json_error(['message' => sanitize_text_field((string) $uploaded['error'])], 400);
-            return;
-        }
-
-        $attachment_mime = isset($uploaded['type']) ? (string) $uploaded['type'] : '';
-        if ('json' === $extension) {
-            $attachment_mime = 'application/json';
-        } elseif ('riv' === $extension) {
-            $attachment_mime = 'application/octet-stream';
-        }
-
-        $attachment_id = wp_insert_attachment(
-            [
-                'post_mime_type' => $attachment_mime,
-                'post_title' => sanitize_text_field(pathinfo($filename, PATHINFO_FILENAME)),
-                'post_content' => '',
-                'post_status' => 'inherit',
-            ],
-            $uploaded['file']
-        );
-
-        if (is_wp_error($attachment_id) || !$attachment_id) {
-            wp_send_json_error(['message' => esc_html__('Upload completed but attachment creation failed.', 'unlimited-elementor-inner-sections-by-boomdevs')], 500);
-            return;
-        }
-
-        wp_send_json_success(
-            [
-                'id' => (int) $attachment_id,
-                'url' => esc_url_raw((string) $uploaded['url']),
-            ]
-        );
-    }
-
     public function get_category_by_post_type()
     {
         if (!check_ajax_referer('pea_editor_only_nonce', 'pea_editor_nonce_check', false)) {
@@ -1639,5 +1468,19 @@ final class Plugin
         $config['promotionWidgets'] = $combine_array;
 
         return $config;
+    }
+
+    public function rive_and_lottie_support(){
+		AnimationFileSupport::get_instance();
+    }
+
+    public function svg_support(){
+		SupportSvg::get_instance();
+    }
+
+
+
+    public function taxonomy_image_support(){
+		TaxImageSupport::get_instance();
     }
 }

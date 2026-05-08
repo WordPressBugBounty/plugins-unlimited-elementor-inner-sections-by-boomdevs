@@ -30,7 +30,7 @@ class AdvancedSlider extends Widget_Nested_Base {
 	}
 
     public function get_categories() {
-        return array( 'prime-elementor-addons' );
+        return [ 'prime-elementor-addons' ];
     }
 
 	public function get_icon() {
@@ -38,7 +38,7 @@ class AdvancedSlider extends Widget_Nested_Base {
 	}
 
 	public function get_keywords() {
-		return array(  'Slider', 'Nested', 'Advanced Slider', 'Carousel', 'Advanced Carousel' );
+		return [ 'Slider', 'Nested', 'Advanced Slider', 'Carousel', 'Advanced Carousel' ];
 	}
 
 	// TODO: Replace this check with `is_active_feature` on 3.28.0 to support is_active_feature second parameter.
@@ -133,48 +133,47 @@ class AdvancedSlider extends Widget_Nested_Base {
         // Slide Item Section
 		$this->start_controls_section(
 			'slide_items_section',
-			array(
+			[
 				'label' => esc_html__( 'Slide Items', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-			)
+			]
 		);
             $repeater = new Repeater();
             $repeater->add_control(
                 'slide_title',
-                array(
+                [
                     'label'       => esc_html__( 'Title', 'unlimited-elementor-inner-sections-by-boomdevs' ),
                     'type'        => Controls_Manager::TEXT,
                     'default'     => esc_html__( 'Slider Item Title', 'unlimited-elementor-inner-sections-by-boomdevs' ),
                     'placeholder' => esc_html__( 'Slider Item Title', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                    'dynamic'     => array(
+                    'dynamic'     => [
                         'active' => true,
-                    ),
-                    
+                    ],
                     'label_block' => true,
-                )
+                ]
             );
             $this->add_control(
                 'slider_items',
-                array(
+                [
                     'label'              => esc_html__( 'Slider Items', 'unlimited-elementor-inner-sections-by-boomdevs' ),
                     'type'               => Control_Nested_Repeater::CONTROL_TYPE,
                     'fields'             => $repeater->get_controls(),
-                    'default'            => array(
-                        array(
+                    'default'            => [
+                        [
                             'slide_title' => esc_html__( 'Slide Item 1', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                        ),
-                        array(
+                        ],
+                        [
                             'slide_title' => esc_html__( 'Slide Item 2', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                        ),
-                        array(
+                        ],
+                        [
                             'slide_title' => esc_html__( 'Slide Item 3', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                        ),
-                        array(
+                        ],
+                        [
                             'slide_title' => esc_html__( 'Slide Item 4', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                        ),
-                    ),
+                        ],
+                    ],
                     'frontend_available' => true,
                     'title_field'        => '{{{ slide_title }}}',
-                )
+                ]
             );
 		$this->end_controls_section();
 

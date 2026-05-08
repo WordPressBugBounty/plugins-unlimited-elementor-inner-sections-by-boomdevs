@@ -24,7 +24,7 @@ class PostAuthor extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-person';
+		return 'pea_post_author_icon';
 	}
 
 	public function get_categories() {

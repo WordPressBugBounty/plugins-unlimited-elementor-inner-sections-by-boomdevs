@@ -23,7 +23,7 @@ class PostContent extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-post-content';
+		return 'pea_post_content_icon';
 	}
 
 	public function get_categories() {

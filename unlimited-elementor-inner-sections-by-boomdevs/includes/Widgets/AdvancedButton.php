@@ -32,7 +32,7 @@ class AdvancedButton extends Widget_Base {
 	}
     
     public function get_keywords() {
-        return ['heading', 'title', 'text', 'advanced', 'gradient', 'stroke'];
+        return ['advanced', 'button', 'advanced button'];
     }
     
     public function get_style_depends() {

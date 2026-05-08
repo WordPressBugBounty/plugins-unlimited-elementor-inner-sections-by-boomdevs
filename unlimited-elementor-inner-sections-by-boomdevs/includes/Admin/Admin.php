@@ -7,9 +7,11 @@
 
 namespace PrimeElementorAddons\Admin;
 
-use PrimeElementorAddons\Config\WidgetList;
 use PrimeElementorAddons\Utils\Helper;
+use PrimeElementorAddons\Config\WidgetList;
 use PrimeElementorAddons\Admin\WidgetSettings;
+use PrimeElementorAddons\Config\ExtensionList;
+use PrimeElementorAddons\Admin\ExtensionSettings;
 use PrimeElementorAddons\Traits\Singleton;
 
 // Exit if accessed directly
@@ -37,12 +39,14 @@ class Admin {
             return;
         }
         $this->initial_activated_widgets();
+        $this->initial_activated_extensions();
         add_action( 'admin_menu', [ $this, 'add_admin_menu' ] );
         add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
         add_action( 'plugin_action_links', [$this, 'pea_menu_action_links'], 10, 2);
 
         add_action( 'rest_api_init', [ $this, 'register_settings' ] );
         add_action( 'wp_ajax_pea_save_widgets', [ $this, 'pea_save_widgets' ] );
+        add_action( 'wp_ajax_pea_save_extensions', [$this, 'pea_save_extensions']);
         add_action( 'wp_ajax_pea_get_plugin_changelog', [ $this, 'get_plugin_changelog' ] );
         add_filter( 'wp_redirect', function ( $location ) {
             if (
@@ -170,6 +174,10 @@ class Admin {
 			'defaultWidgets' => WidgetList::get_instance()->get_default_widgets(),
             'completedWidgets' => Helper::get_completed_widgets(),
 			'widgetsInfo' => Helper::get_widgets_info(),
+            'extensions'         => ExtensionList::get_instance()->get_extensions(),
+            'defaultExtensions'  => ExtensionList::get_instance()->get_default_extensions(),
+            'activeExtensions'   => ExtensionSettings::get_active_extensions(),
+            'completedExtensions' => Helper::get_completed_extensions(), // we'll add this next
 			'nonce' => wp_create_nonce('pea_settings_nonce'),
 			'adminUrl' => admin_url(),
 			'ajaxUrl' => admin_url('admin-ajax.php'),
@@ -405,6 +413,41 @@ class Admin {
 		}
 	}
 
+    public function pea_save_extensions() {
+        if (!check_ajax_referer('pea_settings_nonce', 'security', false)) {
+            wp_send_json_error(['message' => 'Invalid nonce'], 400);
+            return;
+        }
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'Insufficient permissions'], 403);
+            return;
+        }
+
+        $extensions = [];
+
+        if (isset($_POST['extensions'])) {
+            $decoded = json_decode(wp_unslash($_POST['extensions']), true);
+            if (is_array($decoded)) {
+                $extensions = Helper::pea_recursive_sanitize_array($decoded);
+            }
+        }
+
+        $active = ExtensionSettings::get_active_extensions();
+
+        foreach ($extensions as $key => $value) {
+            $active[$key] = ($value === true);
+        }
+
+        $updated = ExtensionSettings::update_active_extensions($active);
+
+        if ($updated) {
+            wp_send_json_success(['message' => 'Extensions updated successfully']);
+        } else {
+            wp_send_json_error(['message' => 'Failed to update extensions']);
+        }
+    }
+
     
 	public function get_plugin_changelog()
 	{
@@ -475,4 +518,25 @@ class Admin {
 
 		return '<div class="plugin-changelog">' . trim($changelog) . '</div>';
 	}
+
+    public function initial_activated_extensions() {
+        $extensions = ExtensionList::get_instance()->get_extensions();
+
+        if (empty($extensions) || !is_array($extensions)) {
+            return;
+        }
+
+        $already_activated = ExtensionSettings::get_active_extensions();
+
+        if (!empty($already_activated)) {
+            return; // Already configured, don't override
+        }
+
+        $initial = [];
+        foreach ($extensions as $key => $extension) {
+            $initial[$key] = true;
+        }
+
+        ExtensionSettings::update_active_extensions($initial);
+    }
 }

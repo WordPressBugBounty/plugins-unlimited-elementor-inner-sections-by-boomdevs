@@ -24,7 +24,7 @@ class PostComment extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-comments';
+		return 'pea_post_comment_icon';
 	}
 
 	public function get_categories() {

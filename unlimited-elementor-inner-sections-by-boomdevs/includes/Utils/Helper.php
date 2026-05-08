@@ -414,6 +414,24 @@ class Helper {
         return $output;
     }
 
+    public static function get_completed_extensions() {
+        $extensions    = \PrimeElementorAddons\Config\ExtensionList::get_instance()->get_extensions();
+        $active        = \PrimeElementorAddons\Admin\ExtensionSettings::get_active_extensions();
+        $completed     = [];
+
+        foreach ( $extensions as $slug => $ext ) {
+            if ( $ext['complete'] !== 'true' ) {
+                continue;
+            }
+            $completed[] = array_merge( $ext, [
+                'slug'    => $slug,
+                'status'  => isset( $active[ $slug ] ) && $active[ $slug ] === true ? '1' : '0',
+            ]);
+        }
+
+        return $completed;
+    }
+
     public static function get_widgets_info()
     {
         return WidgetSettings::get_active_widgets();
@@ -435,6 +453,36 @@ class Helper {
                 'status' => version_compare(get_bloginfo('version'), '5.8', '>=') ? 'good' : 'warning',
             ],
             [
+                'label' => __('Memory Limit', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'value' => ini_get('memory_limit'),
+                'status' => (intval(ini_get('memory_limit')) >= 256) ? 'good' : 'warning',
+            ],
+            [
+                'label' => __('Max Execution Time', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'value' => ini_get('max_execution_time') . 's',
+                'status' => (ini_get('max_execution_time') >= 30) ? 'good' : 'warning',
+            ],
+            // [
+            //     'label' => __('Prime Elementor Addons Version', 'unlimited-elementor-inner-sections-by-boomdevs'),
+            //     'value' => PEA_VERSION,
+            //     'status' => version_compare(PEA_VERSION, '1.0.0', '>=') ? 'good' : 'warning',
+            // ],
+            [
+                'label' => __('Upload max filesize', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'value' => ini_get('upload_max_filesize'),
+                'status' => (intval(ini_get('upload_max_filesize')) >= 256) ? 'good' : 'warning',
+            ],
+            [
+                'label' => __('Post max size', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'value' => ini_get('post_max_size'),
+                'status' => (intval(ini_get('post_max_size')) >= 256) ? 'good' : 'warning',
+            ],
+            [
+                'label' => __('Max input vars', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'value' => ini_get('max_input_vars'),
+                'status' => (intval(ini_get('max_input_vars')) >= 1000) ? 'good' : 'warning',
+            ],
+            [
                 'label' => __('Server SSL', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'value' => is_ssl() ? __('Yes', 'unlimited-elementor-inner-sections-by-boomdevs') : __('No', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'status' => is_ssl() ? 'good' : 'error',
@@ -444,36 +492,6 @@ class Helper {
                 'value' => (defined('WP_DEBUG') && WP_DEBUG ? __('Enabled', 'unlimited-elementor-inner-sections-by-boomdevs') : __('Disabled', 'unlimited-elementor-inner-sections-by-boomdevs')),
                 'status' => (defined('WP_DEBUG') && WP_DEBUG) ? 'warning' : 'good',
             ],
-            [
-                'label' => __('Memory Limit', 'unlimited-elementor-inner-sections-by-boomdevs'),
-                'value' => ini_get('memory_limit'),
-                'status' => (intval(ini_get('memory_limit')) >= 256) ? 'good' : 'warning',
-            ],
-            // [
-            //     'label' => __('Max Execution Time', 'unlimited-elementor-inner-sections-by-boomdevs'),
-            //     'value' => ini_get('max_execution_time') . 's',
-            //     'status' => (ini_get('max_execution_time') >= 30) ? 'good' : 'warning',
-            // ],
-            // [
-            //     'label' => __('Prime Elementor Addons Version', 'unlimited-elementor-inner-sections-by-boomdevs'),
-            //     'value' => PEA_VERSION,
-            //     'status' => version_compare(PEA_VERSION, '1.0.0', '>=') ? 'good' : 'warning',
-            // ],
-            // [
-            //     'label' => __('Upload max filesize', 'unlimited-elementor-inner-sections-by-boomdevs'),
-            //     'value' => ini_get('upload_max_filesize'),
-            //     'status' => (intval(ini_get('upload_max_filesize')) >= 256) ? 'good' : 'warning',
-            // ],
-            // [
-            //     'label' => __('Post max size', 'unlimited-elementor-inner-sections-by-boomdevs'),
-            //     'value' => ini_get('post_max_size'),
-            //     'status' => (intval(ini_get('post_max_size')) >= 256) ? 'good' : 'warning',
-            // ],
-            // [
-            //     'label' => __('Max input vars', 'unlimited-elementor-inner-sections-by-boomdevs'),
-            //     'value' => ini_get('max_input_vars'),
-            //     'status' => (intval(ini_get('max_input_vars')) >= 1000) ? 'good' : 'warning',
-            // ],
         ];
     }
 

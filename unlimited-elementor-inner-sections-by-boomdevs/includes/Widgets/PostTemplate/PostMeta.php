@@ -24,7 +24,7 @@ class PostMeta extends Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'eicon-post-info';
+		return 'pea_post_meta_icon';
 	}
 
 	public function get_categories() {
