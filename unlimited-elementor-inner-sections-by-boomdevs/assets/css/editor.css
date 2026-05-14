@@ -322,6 +322,15 @@
 .elementor-panel .pea_price_list_icon {
   --pea-icon: url('../../assets/icons/price-list.svg');
 }
+.elementor-panel .pea_woo_mini_cart_icon {
+  --pea-icon: url('../../assets/icons/woo-mini-cart.svg');
+} 
+.elementor-panel .pea_pdf_viewer_icon {
+  --pea-icon: url('../../assets/icons/pdf-viewer.svg');
+}
+.elementor-panel .pea_code_snippet_icon {
+  --pea-icon: url('../../assets/icons/code-snippet.svg');
+}
 
 /* ---------- Extensions Icons ---------- */
 .elementor-panel .elementor-panel-menu-item-icon:has( > i[class^="pea_"][class$="_icon"]) {

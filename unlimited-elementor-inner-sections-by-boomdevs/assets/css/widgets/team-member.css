@@ -180,7 +180,7 @@ visibility: hidden;
     /* overflow: hidden; */
     transition: all .3s ease-in-out;
 }
-.pea-team-member-wrapper .pea-team-member-item .pea-team-member-social-profile-wrapper .pea-team-member-social-icon-wrapper-btn {
+.pea-team-member-social-profile-wrapper .pea-team-member-social-icon-wrapper-btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -190,7 +190,7 @@ visibility: hidden;
     border-radius: 50% 50% 50% 50%;
     transition: all .3s ease-in-out;
 }
-.pea-team-member-wrapper .pea-team-member-item .pea-team-member-social-profile-wrapper .pea-team-member-social-icon-wrapper-btn svg {
+.pea-team-member-social-profile-wrapper .pea-team-member-social-icon-wrapper-btn svg {
     width: 20px;
     height: 20px;
     transition: all .3s ease-in-out;

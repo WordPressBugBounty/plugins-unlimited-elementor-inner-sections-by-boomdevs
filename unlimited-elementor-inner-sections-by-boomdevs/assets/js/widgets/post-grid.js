@@ -83,7 +83,6 @@
              * Update pagination button states and regenerate page numbers
              */
             function updatePaginationState($pagination, currentPage, totalPages) {
-                // console.log('Updating pagination:', currentPage, '/', totalPages);
 
                 // Update data attributes
                 $pagination.data('current_page', currentPage);
@@ -204,7 +203,6 @@
                         isArchive: isArchive,
                     },
                     success: function (response) {
-                        // console.log(response);
                         if (response.success) {
                             if (mode === 'append') {
                                 $container.append(response.data.html);

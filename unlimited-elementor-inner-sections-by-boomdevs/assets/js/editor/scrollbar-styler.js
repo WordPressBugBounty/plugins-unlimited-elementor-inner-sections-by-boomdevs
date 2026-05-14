@@ -115,7 +115,6 @@
 
         _render() {
             const settings = this._getSettings();
-            console.log('settings', settings);
             this._injectCSS( this._buildCSS( settings ) );
             this._initScrollbar( settings );
         }
@@ -150,7 +149,6 @@
 
             const lines = [];
             
-            console.log(elementor.settings.page.model.attributes[K.width]);
             lines.push(
                 `.prime-scrollbar-theme { --os-size: ${ width }; }`,
 

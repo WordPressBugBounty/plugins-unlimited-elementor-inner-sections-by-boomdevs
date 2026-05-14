@@ -36,7 +36,7 @@ class ScrollbarStylerTab extends Tab_Base {
     }
 
     public function get_title(): string {
-        return esc_html__( 'Page ScrollBar Styler', 'unlimited-elementor-inner-sections-by-boomdevs' );
+        return esc_html__( 'Page ScrollBar Styler (PEA)', 'unlimited-elementor-inner-sections-by-boomdevs' );
     }
 
     public function get_icon(): string {

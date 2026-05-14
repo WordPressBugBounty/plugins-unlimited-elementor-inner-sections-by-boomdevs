@@ -38,7 +38,7 @@ class StickySection {
     public function register_controls( Element_Base $element, array $args ) {
 
         $element->start_controls_section( 'pea_sticky_section', [
-            'label' => esc_html__( 'Sticky Section', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+            'label' => esc_html__( 'Sticky Section (PEA)', 'unlimited-elementor-inner-sections-by-boomdevs' ),
             'tab'   => Controls_Manager::TAB_ADVANCED,
         ] );
 

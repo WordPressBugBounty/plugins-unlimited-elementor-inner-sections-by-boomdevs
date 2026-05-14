@@ -1,0 +1,943 @@
+/* ============================================================
+   Prime Code Snippet Widget — CSS
+   Prime Elementor Addons Pro
+   ============================================================ */
+
+/* ---- Google Fonts Import ---- */
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Source+Code+Pro:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600&family=Inconsolata:wght@300;400;500;600&display=swap");
+
+/* ============================================================
+   CSS Variables / Design Tokens
+   ============================================================ */
+.prime-code-snippet-wrapper {
+  --prime-cs-bg: #1e1e2e;
+  --prime-cs-header-bg: #181825;
+  --prime-cs-border: #313244;
+  --prime-cs-tab-bg: #181825;
+  --prime-cs-tab-active: #1e1e2e;
+  --prime-cs-tab-color: #6c7086;
+  --prime-cs-tab-active-c: #cdd6f4;
+  --prime-cs-tab-accent: #7c3aed;
+  --prime-cs-text: #cdd6f4;
+  --prime-cs-subtext: #6c7086;
+  --prime-cs-copy-bg: #7c3aed;
+  --prime-cs-copy-hover: #6d28d9;
+  --prime-cs-copy-success: #16a34a;
+  --prime-cs-btn-bg: #313244;
+  --prime-cs-btn-hover: #45475a;
+  --prime-cs-radius: 12px;
+  --prime-cs-font: "Fira Code", "Cascadia Code", monospace;
+  --prime-cs-font-size: 14px;
+  --prime-cs-line-height: 1.6;
+  --prime-cs-scrollbar: #45475a;
+  --prime-cs-scrollbar-thumb: #6c7086;
+  --prime-cs-badge-bg: rgba(124, 58, 237, 0.15);
+  --prime-cs-badge-color: #a78bfa;
+  --prime-cs-preview-bg: #f8fafc;
+  --prime-cs-hl-bg: rgba(124, 58, 237, 0.15);
+  --prime-cs-hl-border: #7c3aed;
+}
+
+/* ============================================================
+   Syntax Themes
+   ============================================================ */
+
+/* Dracula */
+.prime-theme-dracula {
+  --prime-cs-bg: #282a36;
+  --prime-cs-header-bg: #21222c;
+  --prime-cs-border: #44475a;
+  --prime-cs-tab-bg: #21222c;
+  --prime-cs-tab-color: #6272a4;
+  --prime-cs-text: #f8f8f2;
+  --prime-cs-tab-accent: #bd93f9;
+  --prime-cs-copy-bg: #bd93f9;
+  --prime-cs-copy-hover: #a680f0;
+  --prime-cs-btn-bg: #44475a;
+}
+
+/* Monokai */
+.prime-theme-monokai {
+  --prime-cs-bg: #272822;
+  --prime-cs-header-bg: #1e1f1b;
+  --prime-cs-border: #3e3d32;
+  --prime-cs-tab-bg: #1e1f1b;
+  --prime-cs-tab-color: #75715e;
+  --prime-cs-text: #f8f8f2;
+  --prime-cs-tab-accent: #a6e22e;
+  --prime-cs-copy-bg: #f92672;
+  --prime-cs-copy-hover: #e0063a;
+  --prime-cs-btn-bg: #3e3d32;
+}
+
+/* Oceanic Next */
+.prime-theme-oceanic-next {
+  --prime-cs-bg: #1b2b34;
+  --prime-cs-header-bg: #14232b;
+  --prime-cs-border: #2b3c47;
+  --prime-cs-tab-bg: #14232b;
+  --prime-cs-tab-color: #4f6979;
+  --prime-cs-text: #cdd3de;
+  --prime-cs-tab-accent: #6699cc;
+  --prime-cs-copy-bg: #6699cc;
+  --prime-cs-copy-hover: #557ab5;
+  --prime-cs-btn-bg: #2b3c47;
+}
+
+/* One Dark */
+.prime-theme-one-dark {
+  --prime-cs-bg: #282c34;
+  --prime-cs-header-bg: #21252b;
+  --prime-cs-border: #3e4452;
+  --prime-cs-tab-bg: #21252b;
+  --prime-cs-tab-color: #5c6370;
+  --prime-cs-text: #abb2bf;
+  --prime-cs-tab-accent: #61afef;
+  --prime-cs-copy-bg: #61afef;
+  --prime-cs-copy-hover: #4a9fd4;
+  --prime-cs-btn-bg: #3e4452;
+}
+
+/* Nord */
+.prime-theme-nord {
+  --prime-cs-bg: #2e3440;
+  --prime-cs-header-bg: #242933;
+  --prime-cs-border: #3b4252;
+  --prime-cs-tab-bg: #242933;
+  --prime-cs-tab-color: #4c566a;
+  --prime-cs-text: #d8dee9;
+  --prime-cs-tab-accent: #88c0d0;
+  --prime-cs-copy-bg: #88c0d0;
+  --prime-cs-copy-hover: #72aebf;
+  --prime-cs-btn-bg: #3b4252;
+}
+
+/* Tomorrow Night */
+.prime-theme-tomorrow-night {
+  --prime-cs-bg: #1d1f21;
+  --prime-cs-header-bg: #141516;
+  --prime-cs-border: #373b41;
+  --prime-cs-tab-bg: #141516;
+  --prime-cs-tab-color: #666666;
+  --prime-cs-text: #c5c8c6;
+  --prime-cs-tab-accent: #81a2be;
+  --prime-cs-copy-bg: #81a2be;
+  --prime-cs-btn-bg: #373b41;
+}
+
+/* Solarized Dark */
+.prime-theme-solarized-dark {
+  --prime-cs-bg: #002b36;
+  --prime-cs-header-bg: #00212b;
+  --prime-cs-border: #073642;
+  --prime-cs-tab-bg: #00212b;
+  --prime-cs-tab-color: #586e75;
+  --prime-cs-text: #839496;
+  --prime-cs-tab-accent: #268bd2;
+  --prime-cs-copy-bg: #268bd2;
+  --prime-cs-btn-bg: #073642;
+}
+
+/* Solarized Light */
+.prime-theme-solarized-light {
+  --prime-cs-bg: #fdf6e3;
+  --prime-cs-header-bg: #eee8d5;
+  --prime-cs-border: #d4cbb4;
+  --prime-cs-tab-bg: #eee8d5;
+  --prime-cs-tab-color: #93a1a1;
+  --prime-cs-text: #657b83;
+  --prime-cs-tab-accent: #268bd2;
+  --prime-cs-copy-bg: #268bd2;
+  --prime-cs-btn-bg: #d4cbb4;
+}
+
+/* GitHub Dark */
+.prime-theme-github-dark {
+  --prime-cs-bg: #0d1117;
+  --prime-cs-header-bg: #010409;
+  --prime-cs-border: #30363d;
+  --prime-cs-tab-bg: #010409;
+  --prime-cs-tab-color: #484f58;
+  --prime-cs-text: #e6edf3;
+  --prime-cs-tab-accent: #58a6ff;
+  --prime-cs-copy-bg: #238636;
+  --prime-cs-btn-bg: #21262d;
+}
+
+/* GitHub Light */
+.prime-theme-github-light {
+  --prime-cs-bg: #ffffff;
+  --prime-cs-header-bg: #f6f8fa;
+  --prime-cs-border: #d0d7de;
+  --prime-cs-tab-bg: #f6f8fa;
+  --prime-cs-tab-color: #57606a;
+  --prime-cs-text: #24292f;
+  --prime-cs-tab-accent: #0969da;
+  --prime-cs-copy-bg: #0969da;
+  --prime-cs-btn-bg: #d0d7de;
+}
+
+/* VS Code Dark */
+.prime-theme-vs-dark {
+  --prime-cs-bg: #1e1e1e;
+  --prime-cs-header-bg: #252526;
+  --prime-cs-border: #3c3c3c;
+  --prime-cs-tab-bg: #252526;
+  --prime-cs-tab-color: #969696;
+  --prime-cs-text: #d4d4d4;
+  --prime-cs-tab-accent: #007acc;
+  --prime-cs-copy-bg: #007acc;
+  --prime-cs-btn-bg: #3c3c3c;
+}
+
+/* Night Owl */
+.prime-theme-night-owl {
+  --prime-cs-bg: #011627;
+  --prime-cs-header-bg: #001122;
+  --prime-cs-border: #1d3b53;
+  --prime-cs-tab-bg: #001122;
+  --prime-cs-tab-color: #5f7e97;
+  --prime-cs-text: #d6deeb;
+  --prime-cs-tab-accent: #82aaff;
+  --prime-cs-copy-bg: #82aaff;
+  --prime-cs-btn-bg: #1d3b53;
+}
+
+/* Cobalt */
+.prime-theme-cobalt {
+  --prime-cs-bg: #002240;
+  --prime-cs-header-bg: #001932;
+  --prime-cs-border: #0d3558;
+  --prime-cs-tab-bg: #001932;
+  --prime-cs-tab-color: #3d7db3;
+  --prime-cs-text: #ffffff;
+  --prime-cs-tab-accent: #ffc600;
+  --prime-cs-copy-bg: #ffc600;
+  --prime-cs-copy-hover: #d9a800;
+  --prime-cs-btn-bg: #0d3558;
+}
+
+/* Ayu Dark */
+.prime-theme-ayu-dark {
+  --prime-cs-bg: #0a0e14;
+  --prime-cs-header-bg: #07090f;
+  --prime-cs-border: #1c2127;
+  --prime-cs-tab-bg: #07090f;
+  --prime-cs-tab-color: #3d424d;
+  --prime-cs-text: #b3b1ad;
+  --prime-cs-tab-accent: #e6b450;
+  --prime-cs-copy-bg: #e6b450;
+  --prime-cs-copy-hover: #cc9f3c;
+  --prime-cs-btn-bg: #1c2127;
+}
+
+/* ============================================================
+   Font Families
+   ============================================================ */
+.prime-font-fira-code {
+  --prime-cs-font: "Fira Code", monospace;
+}
+.prime-font-source-code-pro {
+  --prime-cs-font: "Source Code Pro", monospace;
+}
+.prime-font-jetbrains-mono {
+  --prime-cs-font: "JetBrains Mono", monospace;
+}
+.prime-font-inconsolata {
+  --prime-cs-font: "Inconsolata", monospace;
+}
+.prime-font-ubuntu-mono {
+  --prime-cs-font: "Ubuntu Mono", monospace;
+}
+.prime-font-courier-new {
+  --prime-cs-font: "Courier New", monospace;
+}
+.prime-font-monospace {
+  --prime-cs-font: monospace;
+}
+
+/* ============================================================
+   Base Wrapper
+   ============================================================ */
+.prime-code-snippet-wrapper {
+  position: relative;
+  background: var(--prime-cs-bg);
+  border: 1px solid var(--prime-cs-border);
+  border-radius: var(--prime-cs-radius);
+  overflow: hidden;
+  font-family: var(--prime-cs-font);
+  transition: box-shadow 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Glassmorphism */
+.prime-code-snippet-wrapper.prime-glass {
+  background: rgba(30, 30, 46, 0.65);
+}
+
+/* ============================================================
+   Header Bar
+   ============================================================ */
+.prime-cs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--prime-cs-header-bg);
+  border-bottom: 1px solid var(--prime-cs-border);
+  min-height: 44px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.prime-cs-header-left,
+.prime-cs-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ---- Mac-OS Dots ---- */
+.prime-cs-macos-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.prime-cs-macos-dots .dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+
+.prime-cs-macos-dots .dot-red {
+  background: #ff5f56;
+}
+.prime-cs-macos-dots .dot-yellow {
+  background: #ffbd2e;
+}
+.prime-cs-macos-dots .dot-green {
+  background: #27c93f;
+}
+
+.prime-cs-macos-dots:hover .dot {
+  opacity: 0.8;
+}
+
+/* ---- Window Title ---- */
+.prime-cs-window-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--prime-cs-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* ---- Header Buttons ---- */
+.prime-cs-copy-btn,
+.prime-cs-download-btn,
+.prime-cs-wrap-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    color 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.prime-cs-copy-btn {
+  background: var(--prime-cs-copy-bg) !important;
+  color: #fff !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.prime-cs-copy-btn:hover {
+  background: var(--prime-cs-copy-hover, #5b21b6) !important;
+  transform: translateY(-1px);
+}
+
+.prime-cs-copy-btn:active {
+  transform: translateY(0);
+}
+
+.prime-cs-copy-btn.prime-copied {
+  background: var(--prime-cs-copy-success) !important;
+  animation: prime-pulse 0.3s ease;
+}
+
+.prime-cs-copy-btn svg {
+  flex-shrink: 0;
+}
+
+.prime-cs-copy-label {
+  display: inline-block;
+}
+
+.prime-cs-download-btn,
+.prime-cs-wrap-btn {
+  background: var(--prime-cs-btn-bg) !important;
+  color: var(--prime-cs-text) !important;
+  padding: 5px 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.prime-cs-download-btn:hover,
+.prime-cs-wrap-btn:hover {
+  background: var(--prime-cs-btn-hover, #3e3d32) !important;
+  transform: translateY(-1px);
+}
+
+.prime-cs-download-btn:active,
+.prime-cs-wrap-btn:active {
+  transform: translateY(0);
+}
+
+.prime-cs-download-btn svg,
+.prime-cs-wrap-btn svg {
+  flex-shrink: 0;
+}
+
+.prime-cs-wrap-btn.prime-wrap-active {
+  background: var(--prime-cs-tab-accent);
+  color: #fff;
+}
+
+@keyframes prime-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ============================================================
+   Tabs Bar
+   ============================================================ */
+.prime-cs-tabs-bar {
+  display: flex;
+  align-items: stretch;
+  background: var(--prime-cs-header-bg);
+  border-bottom: 1px solid var(--prime-cs-border);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--prime-cs-scrollbar-thumb) transparent;
+}
+
+.prime-cs-tabs-bar::-webkit-scrollbar {
+  height: 3px;
+}
+
+.prime-cs-tabs-bar::-webkit-scrollbar-thumb {
+  background: var(--prime-cs-scrollbar-thumb);
+  border-radius: 2px;
+}
+
+.prime-cs-tab {
+  padding: 9px 16px;
+  border: none;
+  background: transparent;
+  color: var(--prime-cs-tab-color);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  flex-shrink: 0;
+}
+
+.prime-cs-tab:hover {
+  color: var(--prime-cs-text);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.prime-cs-tab.active {
+  color: var(--prime-cs-tab-accent) #007acc;
+  border-bottom-color: var(--prime-cs-tab-accent);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ============================================================
+   Code Panel
+   ============================================================ */
+.prime-cs-panel {
+  display: none;
+  position: relative;
+}
+
+.prime-cs-panel.active {
+  display: block;
+}
+
+/* ============================================================
+   Language Badge
+   ============================================================ */
+.prime-cs-lang-badge {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  z-index: 10;
+  background: var(--prime-cs-badge-bg);
+  color: var(--prime-cs-badge-color);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+/* Language-specific badge colors */
+.prime-lang-javascript .prime-cs-lang-badge,
+.prime-cs-lang-badge.prime-lang-javascript {
+  background: rgba(255, 191, 0, 0.15);
+  color: #ffbf00;
+  border-color: rgba(255, 191, 0, 0.3);
+}
+.prime-lang-css .prime-cs-lang-badge,
+.prime-cs-lang-badge.prime-lang-css {
+  background: rgba(36, 169, 220, 0.15);
+  color: #24a9dc;
+  border-color: rgba(36, 169, 220, 0.3);
+}
+.prime-lang-html .prime-cs-lang-badge,
+.prime-cs-lang-badge.prime-lang-html {
+  background: rgba(228, 77, 38, 0.15);
+  color: #e44d26;
+  border-color: rgba(228, 77, 38, 0.3);
+}
+.prime-lang-php .prime-cs-lang-badge,
+.prime-cs-lang-badge.prime-lang-php {
+  background: rgba(119, 123, 179, 0.2);
+  color: #777bb3;
+  border-color: rgba(119, 123, 179, 0.3);
+}
+.prime-lang-python .prime-cs-lang-badge,
+.prime-cs-lang-badge.prime-lang-python {
+  background: rgba(55, 118, 171, 0.15);
+  color: #3776ab;
+  border-color: rgba(55, 118, 171, 0.3);
+}
+.prime-lang-typescript .prime-cs-lang-badge,
+.prime-cs-lang-badge.prime-lang-typescript {
+  background: rgba(0, 122, 204, 0.15);
+  color: #007acc;
+  border-color: rgba(0, 122, 204, 0.3);
+}
+.prime-lang-json .prime-cs-lang-badge,
+.prime-cs-lang-badge.prime-lang-json {
+  background: rgba(200, 200, 50, 0.15);
+  color: #c8c832;
+  border-color: rgba(200, 200, 50, 0.3);
+}
+.prime-lang-bash .prime-cs-lang-badge,
+.prime-cs-lang-badge.prime-lang-bash {
+  background: rgba(80, 200, 80, 0.15);
+  color: #50c850;
+  border-color: rgba(80, 200, 80, 0.3);
+}
+
+/* ============================================================
+   Code Block & Scrollbar
+   ============================================================ */
+.prime-cs-code-wrap {
+  overflow: auto;
+  overflow-x: auto;
+  position: relative;
+  scrollbar-width: thin;
+  scrollbar-color: var(--prime-cs-scrollbar-thumb) var(--prime-cs-scrollbar);
+}
+
+.prime-cs-code-wrap::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.prime-cs-code-wrap::-webkit-scrollbar-track {
+  background: var(--prime-cs-scrollbar);
+  border-radius: 4px;
+}
+
+.prime-cs-code-wrap::-webkit-scrollbar-thumb {
+  background: var(--prime-cs-scrollbar-thumb);
+  border-radius: 4px;
+  border: 2px solid var(--prime-cs-scrollbar);
+}
+
+.prime-cs-code-wrap::-webkit-scrollbar-thumb:hover {
+  background: var(--prime-cs-text);
+}
+
+.prime-cs-code-wrap pre {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 20px 20px 20px 20px !important;
+  font-family: var(--prime-cs-font) !important;
+  font-size: var(--prime-cs-font-size) !important;
+  line-height: var(--prime-cs-line-height) !important;
+  tab-size: 2;
+}
+
+.prime-cs-code-wrap pre code {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  background: transparent !important;
+}
+
+/* Word wrap toggle */
+.prime-word-wrap .prime-cs-code-wrap pre,
+.prime-cs-code-wrap.prime-wrap-on pre {
+  white-space: pre-wrap !important;
+  word-break: break-all !important;
+  overflow-wrap: break-word !important;
+}
+
+/* ============================================================
+   Line Highlighting
+   ============================================================ */
+.prime-cs-code-wrap pre .line-highlight,
+.prime-cs-code-wrap .token-line-highlighted {
+  background: var(--prime-cs-hl-bg) !important;
+  border-left: 3px solid var(--prime-cs-hl-border) !important;
+  margin-left: -20px;
+  padding-left: 17px;
+  display: block;
+}
+
+/* Prism line-highlight plugin compatibility */
+.prime-cs-code-wrap pre[data-line] .line-highlight {
+  background: rgba(124, 58, 237, 0.12);
+  border-left: 3px solid var(--prime-cs-tab-accent);
+}
+
+/* ============================================================
+   Line Numbers Override
+   ============================================================ */
+.prime-cs-code-wrap pre.line-numbers {
+  padding-left: 3.8em !important;
+}
+
+.prime-cs-code-wrap .line-numbers-rows {
+  border-right: 1px solid var(--prime-cs-border) !important;
+}
+
+.prime-cs-code-wrap .line-numbers .line-numbers-rows > span:before {
+  color: var(--prime-cs-subtext) !important;
+}
+
+/* ============================================================
+   Code Folding
+   ============================================================ */
+.prime-cs-fold-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background: var(--prime-cs-btn-bg);
+  border: 1px solid var(--prime-cs-border);
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 10px;
+  color: var(--prime-cs-text);
+  margin-right: 4px;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.prime-cs-fold-btn:hover {
+  background: var(--prime-cs-tab-accent);
+  color: #fff;
+}
+
+.prime-cs-folded-placeholder {
+  display: none;
+  padding: 4px 20px;
+  font-size: 12px;
+  color: var(--prime-cs-subtext);
+  cursor: pointer;
+  font-family: var(--prime-cs-font);
+  background: rgba(255, 255, 255, 0.03);
+  border-top: 1px dashed var(--prime-cs-border);
+  border-bottom: 1px dashed var(--prime-cs-border);
+  user-select: none;
+}
+
+.prime-cs-folded-placeholder:hover {
+  color: var(--prime-cs-text);
+}
+
+/* ============================================================
+   Live Preview
+   ============================================================ */
+.prime-cs-live-preview {
+  border-top: 1px solid var(--prime-cs-border);
+  background: var(--prime-cs-preview-bg);
+}
+
+.prime-cs-live-preview-header {
+  padding: 8px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--prime-cs-subtext);
+  background: var(--prime-cs-header-bg);
+  border-bottom: 1px solid var(--prime-cs-border);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.prime-cs-preview-frame {
+  width: 100%;
+  min-height: 200px;
+  border: none;
+  display: block;
+}
+
+/* ============================================================
+   Gradient Border
+   ============================================================ */
+.prime-code-snippet-wrapper.prime-gradient-border {
+  position: relative;
+  border: none !important;
+  background-clip: padding-box;
+  isolation: isolate;
+}
+
+.prime-code-snippet-wrapper.prime-gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: calc(var(--prime-cs-radius) + 2px);
+  padding: var(--prime-grad-width, 2px);
+  background: var(--prime-grad-bg, linear-gradient(135deg, #7c3aed, #06b6d4));
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* ============================================================
+   Fetching Loader
+   ============================================================ */
+.prime-cs-fetching {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 32px 20px;
+  color: var(--prime-cs-subtext);
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.prime-cs-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--prime-cs-border);
+  border-top-color: var(--prime-cs-tab-accent);
+  border-radius: 50%;
+  animation: prime-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+.prime-cs-fetch-error {
+  padding: 16px 20px;
+  color: #f38ba8;
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@keyframes prime-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================
+   Prism Theme Override Base
+   (Ensures theme colors work within our wrapper)
+   ============================================================ */
+.prime-code-snippet-wrapper code[class*="language-"],
+.prime-code-snippet-wrapper pre[class*="language-"] {
+  background: transparent !important;
+  text-shadow: none !important;
+}
+
+/* ============================================================
+   Responsive Styles
+   ============================================================ */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .prime-cs-header {
+    padding: 8px 12px;
+  }
+
+  .prime-cs-window-title {
+    max-width: 140px;
+    font-size: 12px;
+  }
+
+  .prime-cs-copy-btn {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+
+  .prime-cs-code-wrap pre {
+    font-size: 13px !important;
+    padding: 16px !important;
+  }
+
+  .prime-cs-lang-badge {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .prime-cs-header {
+    padding: 7px 10px;
+    gap: 6px;
+  }
+
+  .prime-cs-macos-dots .dot {
+    width: 10px;
+    height: 10px;
+  }
+
+  .prime-cs-window-title {
+    max-width: 100px;
+    font-size: 11px;
+  }
+
+  .prime-cs-copy-btn .prime-cs-copy-label {
+    display: none;
+  }
+
+  .prime-cs-copy-btn {
+    padding: 5px 7px;
+  }
+
+  .prime-cs-code-wrap pre {
+    font-size: 12px !important;
+    padding: 12px !important;
+  }
+
+  .prime-cs-tab {
+    padding: 7px 12px;
+    font-size: 11.5px;
+  }
+
+  .prime-cs-lang-badge {
+    top: 8px;
+    right: 8px;
+    font-size: 9px;
+  }
+
+  .prime-cs-live-preview-header {
+    font-size: 10px;
+    padding: 6px 12px;
+  }
+
+  .prime-code-snippet-wrapper {
+    border-radius: 8px;
+  }
+
+  .prime-cs-code-wrap pre.line-numbers {
+    padding-left: 3.2em !important;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .prime-cs-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 8px 10px;
+  }
+
+  .prime-cs-header-left,
+  .prime-cs-header-right {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .prime-cs-header-right {
+    justify-content: flex-end;
+  }
+
+  .prime-cs-code-wrap pre {
+    font-size: 11.5px !important;
+    padding: 10px !important;
+  }
+
+  .prime-cs-tabs-bar {
+    font-size: 11px;
+  }
+}
+
+/* ============================================================
+   Print Styles
+   ============================================================ */
+@media print {
+  .prime-cs-header-right,
+  .prime-cs-tabs-bar {
+    display: none !important;
+  }
+  .prime-cs-code-wrap {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  .prime-code-snippet-wrapper {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+}

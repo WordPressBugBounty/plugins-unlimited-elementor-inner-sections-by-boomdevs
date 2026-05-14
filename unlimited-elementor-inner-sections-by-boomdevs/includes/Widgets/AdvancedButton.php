@@ -288,7 +288,7 @@ class AdvancedButton extends Widget_Base {
                 \Elementor\Group_Control_Typography::get_type(),
                 [
                     'name' => 'button_typography',
-                    'selector' => '{{WRAPPER}} .pea-advanced-button',
+                    'selector' => '{{WRAPPER}} .pea-advanced-button-wrapper .pea-advanced-button .pea-advanced-button-text',
                     'fields_options' => [
                         'typography' => [
                             'default' => 'custom',

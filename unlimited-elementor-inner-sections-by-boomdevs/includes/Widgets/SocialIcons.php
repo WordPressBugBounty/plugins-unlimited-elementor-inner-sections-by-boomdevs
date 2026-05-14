@@ -167,6 +167,12 @@ class SocialIcons extends Widget_Base {
                             'type' => Controls_Manager::SWITCHER,
                         ]
                     );
+                    $repeater->add_control( 'social_icon_icon_normal_color_heading_this', [
+                        'label'     => esc_html__( 'Normal Style', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                        'type'      => Controls_Manager::HEADING,
+                        'separator' => 'before',
+                        'condition' => [ 'social_icon_custom_styles' => 'yes' ],
+                    ] );
                     $repeater->add_control(
                         'social_icon_icon_color_this',
                         [
@@ -234,6 +240,64 @@ class SocialIcons extends Widget_Base {
                     //         ]
                     //     ]
                     // );
+                    $repeater->add_control( 'social_icon_icon_hover_color_heading_this', [
+                        'label'     => esc_html__( 'Hover Style', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                        'type'      => Controls_Manager::HEADING,
+                        'separator' => 'before',
+                        'condition' => [ 'social_icon_custom_styles' => 'yes' ],
+                    ] );
+                    $repeater->add_control(
+                        'social_icon_icon_hover_color_this',
+                        [
+                            'label'  => esc_html__( 'Icon Color', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                            'type' => Controls_Manager::COLOR,
+                            'default' => '',
+                            'selectors' => [
+                                '{{WRAPPER}} {{CURRENT_ITEM}}:hover .pea-social-icon-link .pea-social-icon-wrapper .pea-social-icon i' => 'color: {{VALUE}}',
+                                '{{WRAPPER}} {{CURRENT_ITEM}}:hover .pea-social-icon-link .pea-social-icon-wrapper .pea-social-icon svg' => 'fill: {{VALUE}}',
+                            ],
+                            'condition' => [
+                                'social_icon_custom_styles' => 'yes'
+                            ]
+                        ]
+                    );
+                    $repeater->add_control(
+                        'social_icon_icon_bg_hover_color_this',
+                        [
+                            'label'  => esc_html__( 'Icon Bg Color', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                            'type' => Controls_Manager::COLOR,
+                            'default' => '',
+                            'selectors' => [
+                                '{{WRAPPER}} {{CURRENT_ITEM}}:hover .pea-social-icon' => 'background-color: {{VALUE}}',
+                                '{{WRAPPER}} {{CURRENT_ITEM}}:hover .pea-social-icon-link' => 'border-color: {{VALUE}}',
+                            ],
+                            'condition' => [
+                                'social_icon_custom_styles' => 'yes'
+                            ]
+                        ]
+                    );
+                    $repeater->add_group_control(
+                        Group_Control_Background::get_type(),
+                        [
+                            'name'      => 'social_icon_icon_hover_bg_type_this',
+                            'types'          => [ 'classic', 'gradient' ],
+                            // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control config, not a WP_Query.
+                            'exclude'        => [ 'image' ],
+                            'fields_options' => [
+                                'background' => [
+                                    'label'     => esc_html__( 'Background Type', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                                    'default' => 'classic',
+                                ],
+                                'color' => [
+                                    'default' => '', // ✅ Set your default normal color here
+                                ],
+                            ],
+                            'selector'  => '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon-link:hover',
+                            'condition' => [
+                                'social_icon_custom_styles' => 'yes'
+                            ]
+                        ]
+                    );
                 $repeater->end_controls_tab();
             $repeater->end_controls_tabs();
 

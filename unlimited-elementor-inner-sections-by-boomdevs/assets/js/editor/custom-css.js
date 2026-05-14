@@ -21,10 +21,7 @@
             function processCss( rawCss, uniqueSelector ) {
 
                 let css = rawCss.trim();
-
-                if ( ! css ) {
-                    return '';
-                }
+                if ( ! css ) return '';
 
                 // Replace explicit "selector" keyword first
                 css = css.replace( /selector/g, uniqueSelector );
@@ -36,7 +33,7 @@
 
                         selectors = selectors.trim();
 
-                        // Skip @ rules (media, keyframes, font-face etc.)
+                        // Skip @ rules (media, keyframes, font-face, etc.)
                         if ( selectors.startsWith('@') ) {
                             return match;
                         }
@@ -46,22 +43,23 @@
                             return selectors + '{' + declarations + '}';
                         }
 
-                        // Scope each comma-separated selector
-                        const scopedSelectors = selectors
-                            .split(',')
-                            .map( sel => {
-                                sel = sel.trim();
+                        const scopedSelectors = [];
 
-                                // Avoid double space issues
-                                if ( ! sel ) {
-                                    return '';
-                                }
+                        selectors.split(',').forEach( sel => {
+                            sel = sel.trim();
+                            if ( ! sel ) return;
 
-                                return uniqueSelector + ' ' + sel;
-                            })
-                            .join(', ');
+                            // If selector starts with . or # it might be ON the element itself
+                            // Generate BOTH: combined (same element) + descendant (child)
+                            if ( /^[.#]/.test( sel ) ) {
+                                scopedSelectors.push( uniqueSelector + sel );       // same element
+                                scopedSelectors.push( uniqueSelector + ' ' + sel ); // child
+                            } else {
+                                scopedSelectors.push( uniqueSelector + ' ' + sel ); // tag/pseudo — child only
+                            }
+                        });
 
-                        return scopedSelectors + '{' + declarations + '}';
+                        return scopedSelectors.join(', ') + '{' + declarations + '}';
                     }
                 );
 

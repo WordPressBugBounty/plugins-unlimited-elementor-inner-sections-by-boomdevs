@@ -8,7 +8,6 @@
   });
 
   function BackToTop() {
-    console.log("BackToTop widget initialized");
 
     var $backToTop = $("#backToTop");
     var $buttonInner = $backToTop.find(".pea_back_to_top_content_wropper");

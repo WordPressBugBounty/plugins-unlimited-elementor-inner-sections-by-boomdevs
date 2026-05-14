@@ -34,8 +34,6 @@
     const monthlySchedule = $wrapper.data("monthly-schedule");
     const selectedTimezone = $wrapper.data("selected-timezone");
 
-    console.log("Selected Timezone", selectedTimezone);
-
     function getCurrentTime() {
       if (selectedTimezone) {
         return new Date(new Date().toLocaleString("en-US", { timeZone: selectedTimezone }));

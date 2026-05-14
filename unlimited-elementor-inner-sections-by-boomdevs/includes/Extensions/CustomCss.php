@@ -33,12 +33,20 @@ class CustomCss {
             2
         );
 
-        // Frontend CSS injection
+        // Frontend widget custom CSS injection
         add_action(
             'elementor/element/parse_css',
             [ $this, 'add_element_css' ],
             10,
             2
+        );
+
+        // Page-level CSS injection (Page Settings → Advanced → Custom CSS PEA)
+        add_action(
+            'elementor/css-file/post/parse',
+            [ $this, 'add_page_settings_css' ],
+            10,
+            1
         );
     }
 
@@ -60,23 +68,39 @@ class CustomCss {
             '/([^{]+)\{([^}]*)\}/s',
             function( $matches ) use ( $unique_selector ) {
 
-                $selectors    = $matches[1];
+                $selectors    = trim( $matches[1] );
                 $declarations = $matches[2];
 
-                // Already scoped
+                // Skip @ rules (media, keyframes, etc.)
+                if ( strpos( $selectors, '@' ) === 0 ) {
+                    return $matches[0];
+                }
+
+                // Already scoped — leave as-is
                 if ( strpos( $selectors, $unique_selector ) !== false ) {
                     return $selectors . '{' . $declarations . '}';
                 }
 
-                $scoped_selectors = array_map(
-                    function( $sel ) use ( $unique_selector ) {
-                        $sel = trim( $sel );
-                        return $unique_selector . ' ' . $sel;
-                    },
-                    explode( ',', $selectors )
-                );
+                $all_scoped = [];
 
-                return implode( ', ', $scoped_selectors ) . '{' . $declarations . '}';
+                foreach ( explode( ',', $selectors ) as $sel ) {
+                    $sel = trim( $sel );
+                    if ( empty( $sel ) ) {
+                        continue;
+                    }
+
+                    // If selector starts with . or # it might be ON the element itself
+                    // Generate BOTH: combined (same element) + descendant (child)
+                    if ( preg_match( '/^[.#]/', $sel ) ) {
+                        $all_scoped[] = $unique_selector . $sel;       // same element: .wrapper.my-class
+                        $all_scoped[] = $unique_selector . ' ' . $sel; // child:        .wrapper .my-class
+                    } else {
+                        // Tag selectors, pseudo-classes etc. — descendant only
+                        $all_scoped[] = $unique_selector . ' ' . $sel;
+                    }
+                }
+
+                return implode( ', ', $all_scoped ) . '{' . $declarations . '}';
             },
             $css
         );
@@ -127,13 +151,49 @@ class CustomCss {
             return;
         }
 
-        $settings = $element->get_settings_for_display();
+        $document = \Elementor\Plugin::$instance->documents->get(
+            $post_css->get_post_id()
+        );
+
+        $settings = $element->get_settings();
 
         if ( empty( $settings['pea_custom_css'] ) ) {
             return;
         }
 
         $unique_selector = $post_css->get_element_unique_selector( $element );
+
+        $css = $this->process_css(
+            $settings['pea_custom_css'],
+            $unique_selector
+        );
+
+        $post_css->get_stylesheet()->add_raw_css( $css );
+    }
+
+    /**
+     * Inject PEA Custom CSS from Page Settings into the post stylesheet.
+     *
+     * Fires when Elementor builds/rebuilds the post-level CSS file.
+     *
+     * @param \Elementor\Core\Files\CSS\Post $post_css
+     */
+    public function add_page_settings_css( $post_css ) {
+
+        $document = \Elementor\Plugin::$instance->documents->get( $post_css->get_post_id() );
+
+        if ( ! $document ) {
+            return;
+        }
+
+        $settings = $document->get_settings();
+
+        if ( empty( $settings['pea_custom_css'] ) ) {
+            return;
+        }
+
+        // Page wrapper selector
+        $unique_selector = '.elementor-page-' . $post_css->get_post_id();
 
         $css = $this->process_css(
             $settings['pea_custom_css'],

@@ -22,7 +22,7 @@ final class Plugin
      *
      * @var string
      */
-    const VERSION = '1.3.1';
+    const VERSION = '1.3.2';
 
     /**
      * Plugin slug
@@ -563,6 +563,26 @@ final class Plugin
      */
     public function enqueue_widget_styles()
     {
+        // Register prismcss as a shared dependency for Code Snippet .
+        wp_register_style(
+            'prismjs',
+            'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css',
+            [],
+            '1.29.0'
+        );
+        wp_register_style(
+            'prismjs-line-numbers',
+            'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css',
+            ['prismjs'],
+            '1.29.0'
+        );
+        wp_register_style(
+            'prismjs-line-highlight',
+            'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-highlight/prism-line-highlight.min.css',
+            ['prismjs'],
+            '1.29.0'
+        );
+        
         $widgets = [
             'advanced-button',
             'advanced-heading',
@@ -609,6 +629,7 @@ final class Plugin
             'post-author',
             'post-comment',
             'template',
+            'pdf-viewer',
 
             // add all your widgets here
         ];
@@ -645,6 +666,14 @@ final class Plugin
             [],
             PEA_VERSION
         );
+
+        // Code Snippet
+        wp_register_style(
+            'prime-elementor-addons--code-snippet',
+            PEA_PLUGIN_URL . 'assets/css/widgets/code-snippet.css',
+            ['prismjs', 'prismjs-line-numbers', 'prismjs-line-highlight'],
+            PEA_VERSION
+        );
     }
 
     /**
@@ -675,8 +704,49 @@ final class Plugin
             'news-ticker',
             'back-to-top',
             'template',
+            'pdf-viewer',
+            "code-snippet",
             // add all your widgets here
         ];
+
+        // Register PDF.js library (3.11.174) as shared dependency for pdf-viewer widget
+        wp_register_script(
+            'pdfjs-lib',
+            PEA_PLUGIN_URL . 'assets/lib/pdf/pdf.min.js',
+            [],
+            '3.11.174',
+            true
+        );
+
+        // Register prismjs as a shared dependency for code snippet widget.
+        wp_register_script(
+            'prismjs',
+            'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js',
+            [],
+            '1.29.0',
+            true
+        );
+        wp_register_script(
+            'prismjs-autoloader',
+            'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js',
+            ['prismjs'],
+            '1.29.0',
+            true
+        );
+        wp_register_script(
+            'prismjs-line-numbers',
+            'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js',
+            ['prismjs'],
+            '1.29.0',
+            true
+        );
+        wp_register_script(
+            'prismjs-line-highlight',
+            'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-highlight/prism-line-highlight.min.js',
+            ['prismjs'],
+            '1.29.0',
+            true
+        );
 
         $rive_runtime_local_path = PEA_PLUGIN_PATH . 'assets/js/vendor/rive.min.js';
         $rive_runtime_wasm_path = PEA_PLUGIN_PATH . 'assets/js/vendor/rive.wasm';
@@ -726,6 +796,12 @@ final class Plugin
             if ('lottie-animation' === $widget && $lottie_runtime_registered) {
                 $dependencies[] = 'prime-elementor-addons-lottie-runtime';
             }
+            if ($widget === 'code-snippet') {
+                $dependencies = ['jquery', 'prismjs', 'prismjs-line-numbers', 'prismjs-line-highlight'];
+            }
+            if ($widget === 'pdf-viewer') {
+                $dependencies[] = 'pdfjs-lib';
+            }
 
             wp_register_script(
                 "prime-elementor-addons--{$widget}",
@@ -769,6 +845,21 @@ final class Plugin
                 'nonce'    => wp_create_nonce( 'pea_template_nonce' ),
             ]
         );
+
+        // Code Snippet
+        wp_register_script(
+            'prime-elementor-addons--code-snippet',
+            PEA_PLUGIN_URL . 'assets/js/widgets/code-snippet.js',
+            ['jquery', 'prismjs', 'prismjs-line-numbers', 'prismjs-line-highlight', 'prismjs-autoloader'],
+            PEA_VERSION,
+            true
+        );
+
+        wp_localize_script('prime-elementor-addons--code-snippet', 'primeCsConfig', [
+            'pluginUrl'     => PEA_PLUGIN_URL,
+            'prismCDN'      => 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/',
+            'prismLangPath' => 'https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/',
+        ]);
     }
 
     // method for widget script localization
@@ -1461,6 +1552,36 @@ final class Plugin
                 'name' => 'pea_post_carousel',
                 'title' => __('Post Carousel', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'icon' => 'pea_post_carousel_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_woo_mini_cart',
+                'title' => __('Advanced Mini Cart', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_woo_mini_cart_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_vertical_timeline',
+                'title' => __('Vertical Timeline', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_post_timeline_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_price_menu',
+                'title' => __('Price Menu', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_price_menu_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_price_list',
+                'title' => __('Price List', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_price_list_icon',
+                'categories' => '["prime-elementor-addons"]',
+            ],
+            [
+                'name' => 'pea_media_carousel',
+                'title' => __('Media Carousel', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'icon' => 'pea_marquee_carousel_icon',
                 'categories' => '["prime-elementor-addons"]',
             ],
         ]);
