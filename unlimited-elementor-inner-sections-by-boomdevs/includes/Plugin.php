@@ -22,7 +22,7 @@ final class Plugin
      *
      * @var string
      */
-    const VERSION = '1.3.2';
+    const VERSION = '1.3.3';
 
     /**
      * Plugin slug
@@ -191,15 +191,17 @@ final class Plugin
         add_action('rest_api_init', ['\PrimeElementorAddons\RestApi\AdvancedSearchRoute', 'register_routes']);
 
         add_action('elementor/documents/register_controls', array( $this, 'select_testing_content'), 10);
-        add_action('elementor/editor/after_enqueue_scripts', [$this, 'enqueue_editor_scripts'], 5);
+        add_action('elementor/editor/after_enqueue_scripts', [$this, 'enqueue_editor_scripts'], 10);
         add_action('elementor/editor/after_enqueue_styles', [$this, 'enqueue_editor_style']);
         add_filter('elementor/editor/localize_settings', [$this, 'promote_pro_elements']);
-        add_action('wp_ajax_get_author_by_post_type', [$this, 'get_author_by_post_type']);
-        add_action('wp_ajax_get_category_by_post_type', [$this, 'get_category_by_post_type']);
-        add_action('wp_ajax_get_tag_by_post_type', [$this, 'get_tag_by_post_type']);
-        add_action('wp_ajax_pea_get_terms_by_taxonomy', [$this, 'get_terms_by_taxonomy']);
+
+        add_action('wp_ajax_get_author_by_post_type', ['\PrimeElementorAddons\Ajax\PostGridAjaxHandler', 'get_author_by_post_type']);
+        add_action('wp_ajax_get_category_by_post_type', ['\PrimeElementorAddons\Ajax\PostGridAjaxHandler', 'get_category_by_post_type']);
+        add_action('wp_ajax_get_tag_by_post_type', ['\PrimeElementorAddons\Ajax\PostGridAjaxHandler', 'get_tag_by_post_type']);
+        add_action('wp_ajax_pea_get_terms_by_taxonomy', ['\PrimeElementorAddons\Ajax\PostGridAjaxHandler', 'get_terms_by_taxonomy']);
         add_action('wp_ajax_pea_load_posts', ['\PrimeElementorAddons\Ajax\PostGridAjaxHandler', 'handle_load_posts']);
         add_action('wp_ajax_nopriv_pea_load_posts', ['\PrimeElementorAddons\Ajax\PostGridAjaxHandler', 'handle_load_posts']);
+        
 		$this->rive_and_lottie_support();
 		$this->svg_support();
 		$this->taxonomy_image_support();
@@ -532,6 +534,12 @@ final class Plugin
     public function register_custom_controls($controls_manager)
     {
         $controls_manager->register(new \PrimeElementorAddons\Controls\SortableMultiSelectControl());
+        if ( ! \Elementor\Plugin::$instance->controls_manager->get_control_groups( \PrimeElementorAddons\Controls\GradientControl::get_type() ) ) {
+            \Elementor\Plugin::$instance->controls_manager->add_group_control(
+                \PrimeElementorAddons\Controls\GradientControl::get_type(),
+                new \PrimeElementorAddons\Controls\GradientControl()
+            );
+        }
     }
 
     /**
@@ -1161,35 +1169,12 @@ final class Plugin
         );
 
         wp_enqueue_script(
-            'prime-elementor-addons-editor-post-category',
-            PEA_PLUGIN_URL . 'assets/js/editor/post-category.js',
-            [
-                'jquery',
-                'elementor-editor',
-            ],
-            PEA_VERSION,
-            true
-        );
-
-        wp_enqueue_script(
             'prime-elementor-addons-pro-widget-editor',
             PEA_PLUGIN_URL . 'assets/js/editor/pro-widget-notice.js',
             [
                 'jquery',
                 'elementor-editor',
                 'elementor-common',
-            ],
-            PEA_VERSION,
-            true
-        );
-
-        // TODO have to give support of templately when templately on custom-css.js dont work correctly
-        wp_enqueue_script(
-            'prime-elementor-addons-custom-css-editor',
-            PEA_PLUGIN_URL . 'assets/js/editor/custom-css.js',
-            [
-                'jquery',
-                'elementor-editor',
             ],
             PEA_VERSION,
             true
@@ -1214,210 +1199,6 @@ final class Plugin
             [],
             PEA_VERSION
         );
-    }
-
-    public function get_author_by_post_type()
-    {
-        if (!check_ajax_referer('pea_editor_only_nonce', 'pea_editor_nonce_check', false)) {
-            wp_send_json_error(['message' => 'Invalid nonce'], 403);
-            return;
-        }
-
-        if (!current_user_can('edit_posts')) {
-            wp_send_json_error(['message' => esc_html__('Unauthorized', 'unlimited-elementor-inner-sections-by-boomdevs')], 403);
-        }
-
-        $allowed_post_types = get_post_types(['public' => true]);
-        $post_type = isset($_POST['post_type'])
-            ? sanitize_key(wp_unslash($_POST['post_type']))
-            : '';
-        if (!in_array($post_type, $allowed_post_types, true)) {
-            wp_send_json_error(['message' => esc_html__('Invalid post type', 'unlimited-elementor-inner-sections-by-boomdevs')], 400);
-        }
-
-        if (empty($post_type)) {
-            wp_send_json_error(['message' => esc_html__('Invalid post type', 'unlimited-elementor-inner-sections-by-boomdevs')], 400);
-        }
-
-        global $wpdb;
-
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Get author IDs from posts of the given post type
-        $author_ids = $wpdb->get_col($wpdb->prepare(
-            "SELECT DISTINCT post_author 
-            FROM $wpdb->posts 
-            WHERE post_type = %s 
-            AND post_status = 'publish'",
-            $post_type
-        ));
-
-        if (empty($author_ids)) {
-            return [];
-        }
-
-        // Fetch user info
-        $authors = [];
-        foreach ($author_ids as $author_id) {
-            $user = get_user_by('id', $author_id);
-            if ($user) {
-                $authors[$user->ID] = $user->display_name;
-            }
-        }
-
-        wp_send_json_success($authors);
-    }
-
-    public function get_category_by_post_type()
-    {
-        if (!check_ajax_referer('pea_editor_only_nonce', 'pea_editor_nonce_check', false)) {
-            wp_send_json_error(['message' => 'Invalid nonce'], 403);
-            return;
-        }
-
-        if (!current_user_can('edit_posts')) {
-            wp_send_json_error(['message' => esc_html__('Unauthorized', 'unlimited-elementor-inner-sections-by-boomdevs')], 403);
-        }
-
-        $allowed_post_types = get_post_types(['public' => true]);
-        $post_type = isset($_POST['post_type'])
-            ? sanitize_key(wp_unslash($_POST['post_type']))
-            : '';
-        if (!in_array($post_type, $allowed_post_types, true)) {
-            wp_send_json_error(['message' => esc_html__('Invalid post type', 'unlimited-elementor-inner-sections-by-boomdevs')], 400);
-        }
-
-        if (empty($post_type)) {
-            wp_send_json_error(['message' => esc_html__('Invalid post type', 'unlimited-elementor-inner-sections-by-boomdevs')], 400);
-        }
-
-        $options = [];
-
-        // Get all taxonomies linked to the post type
-        $taxonomies = get_object_taxonomies($post_type, 'objects');
-
-        foreach ($taxonomies as $taxonomy) {
-
-            // Skip non-hierarchical (object tags, etc.)
-            if (!$taxonomy->hierarchical) {
-                continue;
-            }
-
-            // Get all terms from this category-like taxonomy
-            $terms = get_terms([
-                'taxonomy' => $taxonomy->name,
-                'hide_empty' => false,
-                'number' => 100,
-                'orderby' => 'count',
-                'order' => 'DESC',
-            ]);
-
-            if (!empty($terms) && !is_wp_error($terms)) {
-                foreach ($terms as $term) {
-                    $options[$term->term_id] = $term->name;
-                }
-            }
-        }
-
-        wp_send_json_success($options);
-    }
-
-    public function get_tag_by_post_type()
-    {
-        if (!check_ajax_referer('pea_editor_only_nonce', 'pea_editor_nonce_check', false)) {
-            wp_send_json_error(['message' => 'Invalid nonce'], 403);
-            return;
-        }
-
-        if (!current_user_can('edit_posts')) {
-            wp_send_json_error(['message' => esc_html__('Unauthorized', 'unlimited-elementor-inner-sections-by-boomdevs')], 403);
-        }
-
-        $allowed_post_types = get_post_types(['public' => true]);
-        $post_type = isset($_POST['post_type'])
-            ? sanitize_key(wp_unslash($_POST['post_type']))
-            : '';
-        if (!in_array($post_type, $allowed_post_types, true)) {
-            wp_send_json_error(['message' => esc_html__('Invalid post type', 'unlimited-elementor-inner-sections-by-boomdevs')], 400);
-        }
-
-        if (empty($post_type)) {
-            wp_send_json_error(['message' => esc_html__('Invalid post type', 'unlimited-elementor-inner-sections-by-boomdevs')], 400);
-        }
-        $options = [];
-
-        // Get all taxonomies linked to the post type
-        $taxonomies = get_object_taxonomies($post_type, 'objects');
-
-        foreach ($taxonomies as $taxonomy) {
-
-            // Skip hierarchical (object category, etc.)
-            if ($taxonomy->hierarchical) {
-                continue;
-            }
-
-            // Get all terms from this tag-like taxonomy
-            $terms = get_terms([
-                'taxonomy' => $taxonomy->name,
-                'hide_empty' => false,
-                'number' => 100,
-                'orderby' => 'count',
-                'order' => 'DESC',
-            ]);
-
-            if (!empty($terms) && !is_wp_error($terms)) {
-                foreach ($terms as $term) {
-                    $options[$term->term_id] = $term->name;
-                }
-            }
-        }
-
-        wp_send_json_success($options);
-    }
-
-    public function get_terms_by_taxonomy()
-    {
-        if (!check_ajax_referer('pea_editor_only_nonce', 'pea_editor_nonce_check', false)) {
-            wp_send_json_error(['message' => 'Invalid nonce'], 403);
-            return;
-        }
-
-        if (!current_user_can('edit_posts')) {
-            wp_send_json_error(['message' => esc_html__('Unauthorized', 'unlimited-elementor-inner-sections-by-boomdevs')], 403);
-            return;
-        }
-
-        $taxonomy = isset($_POST['taxonomy'])
-            ? sanitize_key(wp_unslash($_POST['taxonomy']))
-            : '';
-
-        if ($taxonomy === '' || !taxonomy_exists($taxonomy)) {
-            wp_send_json_error(['message' => esc_html__('Invalid taxonomy', 'unlimited-elementor-inner-sections-by-boomdevs')], 400);
-            return;
-        }
-
-        $terms = get_terms([
-            'taxonomy' => $taxonomy,
-            'hide_empty' => false,
-            'orderby' => 'name',
-            'order' => 'ASC',
-            'number' => 0,
-        ]);
-
-        if (is_wp_error($terms)) {
-            wp_send_json_error(['message' => esc_html__('Unable to load terms', 'unlimited-elementor-inner-sections-by-boomdevs')], 500);
-            return;
-        }
-
-        $options = [];
-
-        foreach ($terms as $term) {
-            $options[$term->term_id] = sprintf(
-                '%s (ID: %d)',
-                $term->name,
-                $term->term_id
-            );
-        }
-
-        wp_send_json_success($options);
     }
 
     public function promote_pro_elements($config)

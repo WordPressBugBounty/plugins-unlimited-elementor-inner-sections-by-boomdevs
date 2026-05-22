@@ -175,7 +175,7 @@ class Api {
         if (!$template_id) {
             return new \WP_REST_Response([
                 'success' => false,
-                'message' => __('Invalid template ID.', 'pea'),
+                'message' => __('Invalid template ID.', 'unlimited-elementor-inner-sections-by-boomdevs'),
             ], 400);
         }
 
@@ -185,7 +185,7 @@ class Api {
         if (!$post || 'pea-site-builder' !== $post->post_type) {
             return new \WP_REST_Response([
                 'success' => false,
-                'message' => __('Template not found.', 'pea'),
+                'message' => __('Template not found.', 'unlimited-elementor-inner-sections-by-boomdevs'),
             ], 404);
         }
 
@@ -195,13 +195,13 @@ class Api {
         if (!$deleted) {
             return new \WP_REST_Response([
                 'success' => false,
-                'message' => __('Unable to delete template.', 'pea'),
+                'message' => __('Unable to delete template.', 'unlimited-elementor-inner-sections-by-boomdevs'),
             ], 500);
         }
 
         return new \WP_REST_Response([
             'success' => true,
-            'message' => __('Template deleted successfully.', 'pea'),
+            'message' => __('Template deleted successfully.', 'unlimited-elementor-inner-sections-by-boomdevs'),
         ], 200);
     }
 
@@ -240,16 +240,16 @@ class Api {
     private function get_template_label($type) {
 
         $labels = [
-            'header'       => __('Header', 'pea'),
-            'footer'       => __('Footer', 'pea'),
-            'home'         => __('Homepage', 'pea'),
-            'singlePost'   => __('Single Post', 'pea'),
-            'blogArchive'  => __('Archive', 'pea'),
-            'search'       => __('Search Result', 'pea'),
-            'notFound'     => __('404 Page', 'pea'),
-            'body'         => __('Full Site Template', 'pea'),
+            'header'       => __('Header', 'unlimited-elementor-inner-sections-by-boomdevs'),
+            'footer'       => __('Footer', 'unlimited-elementor-inner-sections-by-boomdevs'),
+            'home'         => __('Homepage', 'unlimited-elementor-inner-sections-by-boomdevs'),
+            'singlePost'   => __('Single Post', 'unlimited-elementor-inner-sections-by-boomdevs'),
+            'blogArchive'  => __('Archive', 'unlimited-elementor-inner-sections-by-boomdevs'),
+            'search'       => __('Search Result', 'unlimited-elementor-inner-sections-by-boomdevs'),
+            'notFound'     => __('404 Page', 'unlimited-elementor-inner-sections-by-boomdevs'),
+            'body'         => __('Full Site Template', 'unlimited-elementor-inner-sections-by-boomdevs'),
         ];
 
-        return $labels[$type] ?? __('Template', 'pea');
+        return $labels[$type] ?? __('Template', 'unlimited-elementor-inner-sections-by-boomdevs');
     }
 }

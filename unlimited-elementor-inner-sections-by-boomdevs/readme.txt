@@ -3,7 +3,7 @@ Plugin Name: Prime Elementor Addons – Lightweight Elementor Widgets for Faster
 tags: elementor, elementor-addon, elementor-widgets, accordion, tabs
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 Requires PHP: 7.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -296,6 +296,17 @@ It's very easy and straight forward to install this plugin. But before installin
 4.  Activate the plugin through the 'Plugins' screen form your WordPress website dashboard.
 
 == Changelog ==
+
+= 1.3.3 – 22 May 2026 =
+* New: Added **Post Duplicator** extension – quickly duplicate posts, pages, and custom post types with a single click.
+* New: Added **Wrapper Link** extension – make entire Elementor sections, columns, and containers clickable with custom links.
+* Improvement: Enhanced Social Icons widget for better Elementor editor performance and smoother editing experience.
+* Improvement: Fixed Progress Bar widget styling control issues.
+* Improvement: Resolved Advanced Slider carousel responsive layout issues.
+* Improvement: Fixed styling-related issues in Image Gallery, News Ticker, Pricing Table, and Progress Bar widgets.
+* Improvement: Fixed Post Category and Archive Post Grid editor JavaScript issues inside Elementor editor.
+* Improvement: Corrected incorrectly placed text domains for better translation compatibility.
+* Improvement: General bug fixes, stability improvements, and performance optimizations.
 
 = 1.3.2 – 14 May 2026 =
 * New: Added **PDF Viewer** widget – embed and display PDF files directly inside Elementor pages with responsive layout controls.

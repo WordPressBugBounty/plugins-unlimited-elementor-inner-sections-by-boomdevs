@@ -100,14 +100,14 @@ class ScrollbarStylerTab extends Tab_Base {
             $this->add_control(
                 'prime_scrollbar_auto_hide',
                 [
-                    'label'   => __('Auto Hide', 'pea'),
+                    'label'   => __('Auto Hide', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'type'    => Controls_Manager::SELECT,
                     'default' => 'never',
                     'options' => [
-                        'never' => __('Never', 'pea'),
-                        'scroll' => __('While Scrolling', 'pea'),
-                        'leave' => __('Mouse Leave', 'pea'),
-                        'move' => __('Mouse Move', 'pea'),
+                        'never' => __('Never', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                        'scroll' => __('While Scrolling', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                        'leave' => __('Mouse Leave', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                        'move' => __('Mouse Move', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     ],
                     'condition' => [
                         'prime_scrollbar_hide!' => 'yes',
@@ -118,7 +118,7 @@ class ScrollbarStylerTab extends Tab_Base {
             $this->add_control(
                 'prime_scrollbar_auto_hide_delay',
                 [
-                    'label' => __('Auto Hide Delay', 'pea'),
+                    'label' => __('Auto Hide Delay', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'type'  => Controls_Manager::NUMBER,
                     'default' => 800,
                     'min' => 0,
@@ -132,7 +132,7 @@ class ScrollbarStylerTab extends Tab_Base {
             $this->add_control(
                 'prime_scrollbar_wheel_speed',
                 [
-                    'label' => __('Wheel Speed', 'pea'),
+                    'label' => __('Wheel Speed', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'type'  => Controls_Manager::SLIDER,
                     'range' => [
                         'px' => [
@@ -150,16 +150,16 @@ class ScrollbarStylerTab extends Tab_Base {
             $this->add_control(
                 'prime_scrollbar_position',
                 [
-                    'label' => __('Scrollbar Position', 'pea'),
+                    'label' => __('Scrollbar Position', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'type'  => Controls_Manager::CHOOSE,
                     'default' => 'right',
                     'options' => [
                         'left' => [
-                            'title' => __('Left', 'pea'),
+                            'title' => __('Left', 'unlimited-elementor-inner-sections-by-boomdevs'),
                             'icon'  => 'eicon-h-align-left',
                         ],
                         'right' => [
-                            'title' => __('Right', 'pea'),
+                            'title' => __('Right', 'unlimited-elementor-inner-sections-by-boomdevs'),
                             'icon'  => 'eicon-h-align-right',
                         ],
                     ],

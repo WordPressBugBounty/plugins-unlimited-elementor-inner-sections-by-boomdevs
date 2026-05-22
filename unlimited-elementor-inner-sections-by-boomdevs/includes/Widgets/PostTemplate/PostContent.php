@@ -51,7 +51,7 @@ class PostContent extends Widget_Base {
 		$this->add_control(
 			'post_content_drop_cap',
 			[
-				'label' => __('Drop Cap', 'text-domain'),
+				'label' => __('Drop Cap', 'unlimited-elementor-inner-sections-by-boomdevs'),
 				'type' => Controls_Manager::SWITCHER,
 				'return_value' => 'font-size: 60px; float:left; margin-right:10px;',
 				'default' => 'no',

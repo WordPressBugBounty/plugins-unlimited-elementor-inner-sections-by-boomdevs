@@ -91,7 +91,7 @@ class PostMeta extends Widget_Base {
 		$this->add_control(
 			'custom_date_format',
 			[
-				'label' => __( 'Custom Format', 'text-domain' ),
+				'label' => __( 'Custom Format', 'unlimited-elementor-inner-sections-by-boomdevs' ),
 				'type' => Controls_Manager::TEXT,
 				'placeholder' => 'Y-m-d',
 				'default' => 'M j, Y',

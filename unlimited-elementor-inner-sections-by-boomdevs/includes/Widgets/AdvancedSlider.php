@@ -312,7 +312,15 @@ class AdvancedSlider extends Widget_Nested_Base {
                     'default' => [
                         'unit' => '',
                         'size' => 3,
-                    ]
+                    ],
+                    'tablet_default' => [
+                        'unit' => '',
+                        'size' => 2,
+                    ],
+                    'mobile_default' => [
+                        'unit' => '',
+                        'size' => 1,
+                    ],
                 ]
             );  
             $this->add_responsive_control(
@@ -331,7 +339,15 @@ class AdvancedSlider extends Widget_Nested_Base {
                     'default' => [
                         'unit' => 'px',
                         'size' => 20,
-                    ]
+                    ],
+                    'tablet_default' => [
+                        'unit' => 'px',
+                        'size' => 15,
+                    ],
+                    'mobile_default' => [
+                        'unit' => 'px',
+                        'size' => 10,
+                    ],
                 ]
             );  
 		$this->end_controls_section();
@@ -1786,8 +1802,8 @@ class AdvancedSlider extends Widget_Nested_Base {
             'loop'   => $settings['enable_loop'] === 'yes',
             'speed'  => $settings['transition_speed_ms']['size'] ?? 500,
             'allowTouchMove' => $settings['enable_allow_touchmove'] === 'yes',
-            'mousewheel' => $settings['enable_mouse_wheel'] === 'yes',
-            'keyboard'   => $settings['enable_keyboard_navigation'] === 'yes',
+            'mousewheel' => $settings['enable_mouse_wheel'] === 'yes' ? true : false,
+            'keyboard' => $settings['enable_keyboard_navigation'] === 'yes' ? [ 'enabled' => true, 'onlyInViewport' => true ] : false,
         ];
 
         if ( $is_carousel ) {
@@ -1816,7 +1832,7 @@ class AdvancedSlider extends Widget_Nested_Base {
                     'slidesPerView' => $tablet_columns,
                     'spaceBetween'  => $tablet_gap,
                 ],
-                1025 => [
+                1024 => [
                     'slidesPerView' => $desktop_columns,
                     'spaceBetween'  => $desktop_gap,
                 ],
@@ -2048,9 +2064,6 @@ class AdvancedSlider extends Widget_Nested_Base {
                 var tabletGap  = settings.column_gap_tablet?.size || 15;
                 var mobileGap  = settings.column_gap_mobile?.size || 10;
 
-                swiperSettings.slidesPerView = desktopColumns;
-                swiperSettings.spaceBetween  = desktopGap;
-
                 swiperSettings.breakpoints = {
                     0: {
                         slidesPerView: mobileColumns,
@@ -2060,7 +2073,7 @@ class AdvancedSlider extends Widget_Nested_Base {
                         slidesPerView: tabletColumns,
                         spaceBetween: tabletGap
                     },
-                    1025: {
+                    1024: {
                         slidesPerView: desktopColumns,
                         spaceBetween: desktopGap
                     }

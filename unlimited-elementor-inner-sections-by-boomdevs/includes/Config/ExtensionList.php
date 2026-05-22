@@ -124,6 +124,32 @@ class ExtensionList {
                 'complete' => 'true',
                 'class' => 'ConditionalContent',
             ],
+            'duplicator' => [
+                'slug' => 'duplicator',
+                'title' => 'Duplicator',
+                'description' => 'Clone any post, page or template in one click.',
+                'package' => 'free',
+                'badge' => 'free',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/extensions/duplicator.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'Duplicator',
+            ],
+            'wrapper-link' => [
+                'slug' => 'wrapper-link',
+                'title' => 'Wrapper Link',
+                'description' => 'Make widgets, columns, or sections clickable with a custom link.',
+                'package' => 'free',
+                'badge' => 'free',
+                'status' => 'true',
+                'icon' => PEA_PLUGIN_URL . 'assets/icons/extensions/wrapper-link.svg',
+                'doc' => 'https://wpmessiah.com/',
+                'demo' => 'https://wpmessiah.com/',
+                'complete' => 'true',
+                'class' => 'WrapperLink',
+            ],
         ];
         $this->extensions = apply_filters('prime_elementor_addons_extensions_list', $this->extensions);
     }

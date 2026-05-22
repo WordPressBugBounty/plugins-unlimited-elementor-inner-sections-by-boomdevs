@@ -5696,6 +5696,622 @@
             });
         });
         
+        var PostGridPresetStyles = {
+            'preset-2': {
+                'show_category': 'yes',
+                'author_position': 'after-desc',
+                'post_content_border_border': 'solid',
+                'post_content_border_width': {
+                    'top': '0',
+                    'right': '1',
+                    'bottom': '1',
+                    'left': '1',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'post_content_border_color': '#E1E3E8',
+                'post_content_border_radius': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '16',
+                    'left': '16',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'post_content_padding': {
+                    'top': '24',
+                    'right': '24',
+                    'bottom': '24',
+                    'left': '24',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'thumbnail_border_radius': {
+                    'top': '16',
+                    'right': '16',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'title_margin': {
+                    'top': '16',
+                    'right': '0',
+                    'bottom': '16',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'category_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'author_box_margin': {
+                    'top': '24',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                // 'count_down_wrapper_bg_color_background': 'classic',
+                // 'count_down_wrapper_bg_color_color': '#fff',
+                // 'digit_all_color': '#15171C',
+                // 'label_color': '#8891A5',
+                // 'separator_color': '#15171C',
+            },
+            'preset-3': {
+                'show_author_image': 'no',
+                'show_author_prefix': 'yes',
+                'author_prefix_text': 'By',
+                'show_category': 'no',
+                'author_position': 'after-title',
+                'post_grid_border_border': 'solid',
+                'post_grid_border_width': {
+                    'top': '1',
+                    'right': '1',
+                    'bottom': '1',
+                    'left': '1',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'post_grid_border_color': '#E1E3E8',
+                'post_grid_border_radius': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'post_grid_padding': {
+                    'top': '8',
+                    'right': '8',
+                    'bottom': '8',
+                    'left': '8',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'post_content_border_radius': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'post_content_padding': {
+                    'top': '32',
+                    'right': '24',
+                    'bottom': '32',
+                    'left': '24',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'thumbnail_border_radius': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'title_alignment': 'center',
+                'title_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '24',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'description_alignment': 'center',
+                'description_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'author_alignment': 'center',
+                'author_gap': {
+                    'unit': 'px',
+                    'size': 8,
+                    'sizes': [] // Required for responsive
+                },
+                'author_box_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '24',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'author_typography_typography': 'custom',
+                'author_typography_font_weight': '500',
+                'author_color': '#555E72',
+                'author_prefix_color': '#555E72',
+                'date_typography_typography': 'custom',
+                'date_typography_font_weight': '500',
+                'date_color': '#555E72',
+            },
+            'preset-4': {
+                'show_author': 'yes',
+                'show_author_image': 'yes',
+                'show_author_prefix': 'no',
+                'show_read_more': 'no',
+                'show_category': 'yes',
+                'post_card_style': 'list',
+                'list_image_spacing': {
+                    'unit': 'px',
+                    'size': 24,
+                    'sizes': [] // Required for responsive
+                },
+                'author_position': 'after-desc',
+                'post_grid_border_border': 'none',
+                'post_grid_border_radius': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'post_grid_padding': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'post_content_padding': {
+                    'top': '29',
+                    'right': '24',
+                    'bottom': '29',
+                    'left': '24',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'thumbnail_width': {
+                    'unit': 'px',
+                    'size': 410,
+                    'sizes': [] // Required for responsive
+                },
+                'thumbnail_height': {
+                    'unit': 'px',
+                    'size': 300,
+                    'sizes': [] // Required for responsive
+                },
+                'thumbnail_border_radius': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'title_alignment': 'start',
+                'title_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '16',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'description_typography_typography': 'custom',
+                'description_typography_font_weight': '400',
+                'description_alignment': 'start',
+                'description_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '24',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'category_typography_typography': 'custom',
+                'category_typography_font_weight': '400',
+                'category_bg_color': '#ffffff',
+                'category_border_border': 'solid',
+                'category_border_width': {
+                    'top': '1',
+                    'right': '1',
+                    'bottom': '1',
+                    'left': '1',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'category_border_color': '#E1E3E8',
+                'category_border_radius': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'category_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '16',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'author_alignment': 'start',
+                'author_box_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'author_typography_typography': 'custom',
+                'author_typography_font_weight': '400',
+                'author_color': '#15171C',
+                'author_prefix_color': '#15171C',
+                'date_typography_typography': 'custom',
+                'date_typography_font_weight': '400',
+                'date_color': '#15171C',
+            },
+            'preset-5': {
+                'show_author': 'no',
+                'show_author_image': 'no',
+                'show_date': 'yes',
+                'author_position': 'after-desc',
+                'show_read_more': 'no',
+                'show_category': 'yes',
+                'show_excerpt': 'no',
+                'post_card_style': 'list',
+                'list_column': {
+                    'unit': '',
+                    'size': 2,
+                    'sizes': [] // Required for responsive
+                },
+                'list_gap': {
+                    'unit': 'px',
+                    'size': 30,
+                    'sizes': [] // Required for responsive
+                },
+                'list_image_spacing': {
+                    'unit': 'px',
+                    'size': 24,
+                    'sizes': [] // Required for responsive
+                },
+                'post_grid_bg_color_background': 'classic',
+                'post_grid_bg_color_color': '#F7F7F7',
+                'post_grid_border_border': 'none',
+                'post_grid_border_radius': {
+                    'top': '14',
+                    'right': '14',
+                    'bottom': '14',
+                    'left': '14',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'post_grid_padding': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'post_content_padding': {
+                    'top': '0',
+                    'right': '24',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'thumbnail_width': {
+                    'unit': 'px',
+                    'size': 280,
+                    'sizes': [] // Required for responsive
+                },
+                'thumbnail_height': {
+                    'unit': 'px',
+                    'size': 235,
+                    'sizes': [] // Required for responsive
+                },
+                'thumbnail_border_radius': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'title_alignment': 'start',
+                'title_typography_typography': 'custom',
+                'title_typography_font_family': 'Work Sans',
+                'title_typography_font_size': {
+                    'unit': 'px',
+                    'size': 20,
+                    'sizes': [] 
+                },
+                'title_typography_font_weight': '500',
+                'title_typography_line_height': {
+                    'unit': '%',
+                    'size': 140,
+                    'sizes': []
+                },
+                'title_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '32',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'category_typography_typography': 'custom',
+                'category_typography_font_family': 'Work Sans',
+                'category_typography_font_size': {
+                    'unit': 'px',
+                    'size': 14,
+                    'sizes': [] 
+                },
+                'category_typography_font_weight': '400',
+                'category_typography_line_height': {
+                    'unit': '%',
+                    'size': 120,
+                    'sizes': []
+                },
+                'category_color': '#555E72',
+                'category_bg_color': '#ffffff',
+                'category_border_border': 'none',
+                'category_border_radius': {
+                    'top': '30',
+                    'right': '30',
+                    'bottom': '30',
+                    'left': '30',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'category_padding': {
+                    'top': '6',
+                    'right': '12',
+                    'bottom': '6',
+                    'left': '12',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'category_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '32',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'author_alignment': 'start',
+                'author_box_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'date_typography_typography': 'custom',
+                'date_typography_font_family': 'Work Sans',
+                'date_typography_font_size': {
+                    'unit': 'px',
+                    'size': 16,
+                    'sizes': [] 
+                },
+                'date_typography_font_weight': '500',
+                'date_typography_line_height': {
+                    'unit': '%',
+                    'size': 140,
+                    'sizes': []
+                },
+                'date_color': '#555E72',
+            },
+            'preset-6': {
+                'show_featured_image': 'no',
+                'show_author': 'no',
+                'show_author_image': 'no',
+                'show_date': 'no',
+                'show_read_more': 'yes',
+                'show_category': 'yes',
+                'show_excerpt': 'yes',
+                'post_card_style': 'grid',
+                'grid_column': {
+                    'unit': '',
+                    'size': 3,
+                    'sizes': [] // Required for responsive
+                },
+                'grid_row_gap': {
+                    'unit': 'px',
+                    'size': 30,
+                    'sizes': [] // Required for responsive
+                },
+                'grid_column_gap': {
+                    'unit': 'px',
+                    'size': 30,
+                    'sizes': [] // Required for responsive
+                },
+                'post_content_bg_color_background': 'gradient',
+                'post_content_bg_color_color': '#FF84ED',
+                'post_content_bg_color_color_stop': {
+                    'unit': '%',
+                    'size': 0,
+                    'sizes': [] // Required for responsive
+                },
+                'post_content_bg_color_color_b': '#431B92',
+                'post_content_bg_color_color_b_stop': {
+                    'unit': '%',
+                    'size': 100,
+                    'sizes': [] // Required for responsive
+                },
+                'post_content_bg_color_gradient_angle': {
+                    'unit': 'deg',
+                    'size': 132,
+                    'sizes': [] // Required for responsive
+                },
+                'post_content_border_radius': {
+                    'top': '12',
+                    'right': '12',
+                    'bottom': '12',
+                    'left': '12',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'post_content_padding': {
+                    'top': '32',
+                    'right': '32',
+                    'bottom': '32',
+                    'left': '32',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'title_alignment': 'start',
+                'title_color': '#FFFFFF',
+                'title_typography_typography': 'custom',
+                'title_typography_font_family': 'Work Sans',
+                'title_typography_font_size': {
+                    'unit': 'px',
+                    'size': 20,
+                    'sizes': [] 
+                },
+                'title_typography_font_weight': '500',
+                'title_typography_line_height': {
+                    'unit': '%',
+                    'size': 140,
+                    'sizes': []
+                },
+                'title_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '24',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'description_color': '#FFFFFF',
+                'description_typography_typography': 'custom',
+                'description_typography_font_family': 'Work Sans',
+                'description_typography_font_size': {
+                    'unit': 'px',
+                    'size': 16,
+                    'sizes': [] 
+                },
+                'description_typography_font_weight': '400',
+                'description_typography_line_height': {
+                    'unit': '%',
+                    'size': 140,
+                    'sizes': []
+                },
+                'description_alignment': 'start',
+                'description_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '24',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'category_typography_typography': 'custom',
+                'category_typography_font_family': 'Work Sans',
+                'category_typography_font_size': {
+                    'unit': 'px',
+                    'size': 14,
+                    'sizes': [] 
+                },
+                'category_typography_font_weight': '400',
+                'category_typography_line_height': {
+                    'unit': '%',
+                    'size': 120,
+                    'sizes': []
+                },
+                'category_color': '#FFFFFF',
+                'category_bg_color': '#FFFFFF20',
+                'category_border_border': 'none',
+                'category_border_radius': {
+                    'top': '50',
+                    'right': '50',
+                    'bottom': '50',
+                    'left': '50',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'category_padding': {
+                    'top': '6',
+                    'right': '12',
+                    'bottom': '6',
+                    'left': '12',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'category_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '24',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'read_more_alignment': 'start',
+                'read_more_color': '#fff',
+                'read_more_bg_color': 'transparent',
+                'read_more_icon_color': '#fff',
+                'read_more_border_radius': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'read_more_padding': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+                'read_more_margin': {
+                    'top': '0',
+                    'right': '0',
+                    'bottom': '0',
+                    'left': '0',
+                    'unit': 'px',
+                    'isLinked': true
+                },
+            },
+        };
+
         elementor.hooks.addAction('panel/open_editor/widget/pea_post_grid', function(panel, model, view) {
             // Show loading state
             function loadAuthors(postType) {
@@ -5899,622 +6515,31 @@
                 }
             });
 
-            var PostGridPresetStyles = {
-                'preset-2': {
-                    'show_category': 'yes',
-                    'author_position': 'after-desc',
-                    'post_content_border_border': 'solid',
-                    'post_content_border_width': {
-                        'top': '0',
-                        'right': '1',
-                        'bottom': '1',
-                        'left': '1',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'post_content_border_color': '#E1E3E8',
-                    'post_content_border_radius': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '16',
-                        'left': '16',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'post_content_padding': {
-                        'top': '24',
-                        'right': '24',
-                        'bottom': '24',
-                        'left': '24',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'thumbnail_border_radius': {
-                        'top': '16',
-                        'right': '16',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'title_margin': {
-                        'top': '16',
-                        'right': '0',
-                        'bottom': '16',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'category_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'author_box_margin': {
-                        'top': '24',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    // 'count_down_wrapper_bg_color_background': 'classic',
-                    // 'count_down_wrapper_bg_color_color': '#fff',
-                    // 'digit_all_color': '#15171C',
-                    // 'label_color': '#8891A5',
-                    // 'separator_color': '#15171C',
-                },
-                'preset-3': {
-                    'show_author_image': 'no',
-                    'show_author_prefix': 'yes',
-                    'author_prefix_text': 'By',
-                    'show_category': 'no',
-                    'author_position': 'after-title',
-                    'post_grid_border_border': 'solid',
-                    'post_grid_border_width': {
-                        'top': '1',
-                        'right': '1',
-                        'bottom': '1',
-                        'left': '1',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'post_grid_border_color': '#E1E3E8',
-                    'post_grid_border_radius': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'post_grid_padding': {
-                        'top': '8',
-                        'right': '8',
-                        'bottom': '8',
-                        'left': '8',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'post_content_border_radius': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'post_content_padding': {
-                        'top': '32',
-                        'right': '24',
-                        'bottom': '32',
-                        'left': '24',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'thumbnail_border_radius': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'title_alignment': 'center',
-                    'title_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '24',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'description_alignment': 'center',
-                    'description_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'author_alignment': 'center',
-                    'author_gap': {
-                        'unit': 'px',
-                        'size': 8,
-                        'sizes': [] // Required for responsive
-                    },
-                    'author_box_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '24',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'author_typography_typography': 'custom',
-                    'author_typography_font_weight': '500',
-                    'author_color': '#555E72',
-                    'author_prefix_color': '#555E72',
-                    'date_typography_typography': 'custom',
-                    'date_typography_font_weight': '500',
-                    'date_color': '#555E72',
-                },
-                'preset-4': {
-                    'show_author': 'yes',
-                    'show_author_image': 'yes',
-                    'show_author_prefix': 'no',
-                    'show_read_more': 'no',
-                    'show_category': 'yes',
-                    'post_card_style': 'list',
-                    'list_image_spacing': {
-                        'unit': 'px',
-                        'size': 24,
-                        'sizes': [] // Required for responsive
-                    },
-                    'author_position': 'after-desc',
-                    'post_grid_border_border': 'none',
-                    'post_grid_border_radius': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'post_grid_padding': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'post_content_padding': {
-                        'top': '29',
-                        'right': '24',
-                        'bottom': '29',
-                        'left': '24',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'thumbnail_width': {
-                        'unit': 'px',
-                        'size': 410,
-                        'sizes': [] // Required for responsive
-                    },
-                    'thumbnail_height': {
-                        'unit': 'px',
-                        'size': 300,
-                        'sizes': [] // Required for responsive
-                    },
-                    'thumbnail_border_radius': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'title_alignment': 'start',
-                    'title_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '16',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'description_typography_typography': 'custom',
-                    'description_typography_font_weight': '400',
-                    'description_alignment': 'start',
-                    'description_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '24',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'category_typography_typography': 'custom',
-                    'category_typography_font_weight': '400',
-                    'category_bg_color': '#ffffff',
-                    'category_border_border': 'solid',
-                    'category_border_width': {
-                        'top': '1',
-                        'right': '1',
-                        'bottom': '1',
-                        'left': '1',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'category_border_color': '#E1E3E8',
-                    'category_border_radius': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'category_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '16',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'author_alignment': 'start',
-                    'author_box_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'author_typography_typography': 'custom',
-                    'author_typography_font_weight': '400',
-                    'author_color': '#15171C',
-                    'author_prefix_color': '#15171C',
-                    'date_typography_typography': 'custom',
-                    'date_typography_font_weight': '400',
-                    'date_color': '#15171C',
-                },
-                'preset-5': {
-                    'show_author': 'no',
-                    'show_author_image': 'no',
-                    'show_date': 'yes',
-                    'author_position': 'after-desc',
-                    'show_read_more': 'no',
-                    'show_category': 'yes',
-                    'show_excerpt': 'no',
-                    'post_card_style': 'list',
-                    'list_column': {
-                        'unit': '',
-                        'size': 2,
-                        'sizes': [] // Required for responsive
-                    },
-                    'list_gap': {
-                        'unit': 'px',
-                        'size': 30,
-                        'sizes': [] // Required for responsive
-                    },
-                    'list_image_spacing': {
-                        'unit': 'px',
-                        'size': 24,
-                        'sizes': [] // Required for responsive
-                    },
-                    'post_grid_bg_color_background': 'classic',
-                    'post_grid_bg_color_color': '#F7F7F7',
-                    'post_grid_border_border': 'none',
-                    'post_grid_border_radius': {
-                        'top': '14',
-                        'right': '14',
-                        'bottom': '14',
-                        'left': '14',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'post_grid_padding': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'post_content_padding': {
-                        'top': '0',
-                        'right': '24',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'thumbnail_width': {
-                        'unit': 'px',
-                        'size': 280,
-                        'sizes': [] // Required for responsive
-                    },
-                    'thumbnail_height': {
-                        'unit': 'px',
-                        'size': 235,
-                        'sizes': [] // Required for responsive
-                    },
-                    'thumbnail_border_radius': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'title_alignment': 'start',
-                    'title_typography_typography': 'custom',
-                    'title_typography_font_family': 'Work Sans',
-                    'title_typography_font_size': {
-                        'unit': 'px',
-                        'size': 20,
-                        'sizes': [] 
-                    },
-                    'title_typography_font_weight': '500',
-                    'title_typography_line_height': {
-                        'unit': '%',
-                        'size': 140,
-                        'sizes': []
-                    },
-                    'title_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '32',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'category_typography_typography': 'custom',
-                    'category_typography_font_family': 'Work Sans',
-                    'category_typography_font_size': {
-                        'unit': 'px',
-                        'size': 14,
-                        'sizes': [] 
-                    },
-                    'category_typography_font_weight': '400',
-                    'category_typography_line_height': {
-                        'unit': '%',
-                        'size': 120,
-                        'sizes': []
-                    },
-                    'category_color': '#555E72',
-                    'category_bg_color': '#ffffff',
-                    'category_border_border': 'none',
-                    'category_border_radius': {
-                        'top': '30',
-                        'right': '30',
-                        'bottom': '30',
-                        'left': '30',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'category_padding': {
-                        'top': '6',
-                        'right': '12',
-                        'bottom': '6',
-                        'left': '12',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'category_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '32',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'author_alignment': 'start',
-                    'author_box_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'date_typography_typography': 'custom',
-                    'date_typography_font_family': 'Work Sans',
-                    'date_typography_font_size': {
-                        'unit': 'px',
-                        'size': 16,
-                        'sizes': [] 
-                    },
-                    'date_typography_font_weight': '500',
-                    'date_typography_line_height': {
-                        'unit': '%',
-                        'size': 140,
-                        'sizes': []
-                    },
-                    'date_color': '#555E72',
-                },
-                'preset-6': {
-                    'show_featured_image': 'no',
-                    'show_author': 'no',
-                    'show_author_image': 'no',
-                    'show_date': 'no',
-                    'show_read_more': 'yes',
-                    'show_category': 'yes',
-                    'show_excerpt': 'yes',
-                    'post_card_style': 'grid',
-                    'grid_column': {
-                        'unit': '',
-                        'size': 3,
-                        'sizes': [] // Required for responsive
-                    },
-                    'grid_row_gap': {
-                        'unit': 'px',
-                        'size': 30,
-                        'sizes': [] // Required for responsive
-                    },
-                    'grid_column_gap': {
-                        'unit': 'px',
-                        'size': 30,
-                        'sizes': [] // Required for responsive
-                    },
-                    'post_content_bg_color_background': 'gradient',
-                    'post_content_bg_color_color': '#FF84ED',
-                    'post_content_bg_color_color_stop': {
-                        'unit': '%',
-                        'size': 0,
-                        'sizes': [] // Required for responsive
-                    },
-                    'post_content_bg_color_color_b': '#431B92',
-                    'post_content_bg_color_color_b_stop': {
-                        'unit': '%',
-                        'size': 100,
-                        'sizes': [] // Required for responsive
-                    },
-                    'post_content_bg_color_gradient_angle': {
-                        'unit': 'deg',
-                        'size': 132,
-                        'sizes': [] // Required for responsive
-                    },
-                    'post_content_border_radius': {
-                        'top': '12',
-                        'right': '12',
-                        'bottom': '12',
-                        'left': '12',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'post_content_padding': {
-                        'top': '32',
-                        'right': '32',
-                        'bottom': '32',
-                        'left': '32',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'title_alignment': 'start',
-                    'title_color': '#FFFFFF',
-                    'title_typography_typography': 'custom',
-                    'title_typography_font_family': 'Work Sans',
-                    'title_typography_font_size': {
-                        'unit': 'px',
-                        'size': 20,
-                        'sizes': [] 
-                    },
-                    'title_typography_font_weight': '500',
-                    'title_typography_line_height': {
-                        'unit': '%',
-                        'size': 140,
-                        'sizes': []
-                    },
-                    'title_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '24',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'description_color': '#FFFFFF',
-                    'description_typography_typography': 'custom',
-                    'description_typography_font_family': 'Work Sans',
-                    'description_typography_font_size': {
-                        'unit': 'px',
-                        'size': 16,
-                        'sizes': [] 
-                    },
-                    'description_typography_font_weight': '400',
-                    'description_typography_line_height': {
-                        'unit': '%',
-                        'size': 140,
-                        'sizes': []
-                    },
-                    'description_alignment': 'start',
-                    'description_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '24',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'category_typography_typography': 'custom',
-                    'category_typography_font_family': 'Work Sans',
-                    'category_typography_font_size': {
-                        'unit': 'px',
-                        'size': 14,
-                        'sizes': [] 
-                    },
-                    'category_typography_font_weight': '400',
-                    'category_typography_line_height': {
-                        'unit': '%',
-                        'size': 120,
-                        'sizes': []
-                    },
-                    'category_color': '#FFFFFF',
-                    'category_bg_color': '#FFFFFF20',
-                    'category_border_border': 'none',
-                    'category_border_radius': {
-                        'top': '50',
-                        'right': '50',
-                        'bottom': '50',
-                        'left': '50',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'category_padding': {
-                        'top': '6',
-                        'right': '12',
-                        'bottom': '6',
-                        'left': '12',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'category_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '24',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'read_more_alignment': 'start',
-                    'read_more_color': '#fff',
-                    'read_more_bg_color': 'transparent',
-                    'read_more_icon_color': '#fff',
-                    'read_more_border_radius': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'read_more_padding': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                    'read_more_margin': {
-                        'top': '0',
-                        'right': '0',
-                        'bottom': '0',
-                        'left': '0',
-                        'unit': 'px',
-                        'isLinked': true
-                    },
-                },
-            };
+            panel.$el.off('change', '[data-setting="preset_styles"]');
+            panel.$el.on('change', '[data-setting="preset_styles"]', function() {
+                var selectedPreset = $(this).val();
+                const allControls = view.model.get('settings').controls || {};
 
+                _.each(allControls, function(control, key) {
+                    if (key === 'preset_styles') {
+                        view.model.setSetting(key, selectedPreset);
+                        return;
+                    }
+
+                    if (selectedPreset !== 'default' && PostGridPresetStyles[selectedPreset]) {
+                        view.model.setSetting(key, PostGridPresetStyles[selectedPreset][key] ?? control.default);
+                    } else if (selectedPreset === 'default') {
+                        view.model.setSetting(key, control.default);
+                    }
+                });
+                
+                view.model.renderRemoteServer();
+                
+            });
+
+        });
+
+        elementor.hooks.addAction('panel/open_editor/widget/pea_archive_post_grid', function(panel, model, view) {
             panel.$el.off('change', '[data-setting="preset_styles"]');
             panel.$el.on('change', '[data-setting="preset_styles"]', function() {
                 var selectedPreset = $(this).val();
@@ -7803,6 +7828,135 @@
 
         });
 
+        
+        elementor.hooks.addAction('panel/open_editor/widget/pea_post_category', function (panel, model, view) {
+            const settingsModel = view.model.get('settings');
+
+            function getSettingArray(settingKey) {
+                const value = view.model.getSetting(settingKey);
+
+                if (Array.isArray(value)) {
+                    return value.map(String);
+                }
+
+                if (typeof value === 'string' && value.trim() !== '') {
+                    return value.split(',').map(function (item) {
+                        return item.trim();
+                    }).filter(Boolean);
+                }
+
+                return [];
+            }
+
+            function getControlSelect(controlName) {
+                return panel.$el.find('.elementor-control-' + controlName + ' select');
+            }
+
+            function fillControlOptions($control, options, selectedValues) {
+                if (!$control.length) {
+                    return;
+                }
+
+                $control.empty();
+
+                Object.entries(options).forEach(function (entry) {
+                    const value = String(entry[0]);
+                    const label = entry[1];
+                    const option = new Option(label, value, false, selectedValues.includes(value));
+
+                    $control.append(option);
+                });
+
+                $control.val(selectedValues).trigger('change');
+            }
+
+            function syncTermFilters() {
+                const taxonomy = String(view.model.getSetting('taxonomy') || '');
+
+                if (!taxonomy) {
+                    return;
+                }
+
+                const includeControl = getControlSelect('include_term_ids');
+                const excludeControl = getControlSelect('exclude_term_ids');
+
+                const savedInclude = getSettingArray('include_term_ids');
+                const savedExclude = getSettingArray('exclude_term_ids');
+
+                if (includeControl.length) {
+                    includeControl.empty().append(new Option('Loading...', '', false, false));
+                }
+
+                if (excludeControl.length) {
+                    excludeControl.empty().append(new Option('Loading...', '', false, false));
+                }
+
+                $.ajax({
+                    url: window.ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'pea_get_terms_by_taxonomy',
+                        taxonomy: taxonomy,
+                        pea_editor_nonce_check: peaEditor.pea_editor_nonce
+                    }
+                }).done(function (response) {
+
+                    if (!response || !response.success || !response.data) {
+                        return;
+                    }
+
+                    const options = response.data;
+
+                    const availableIds = Object.keys(options).map(String);
+
+                    const validInclude = savedInclude.filter(function (id) {
+                        return availableIds.includes(String(id));
+                    });
+
+                    const validExclude = savedExclude.filter(function (id) {
+                        return availableIds.includes(String(id));
+                    });
+
+                    if (includeControl.length) {
+                        fillControlOptions(includeControl, options, validInclude);
+                    }
+
+                    if (excludeControl.length) {
+                        fillControlOptions(excludeControl, options, validExclude);
+                    }
+
+                }).fail(function () {
+
+                    if (includeControl.length) {
+                        includeControl.empty();
+                    }
+
+                    if (excludeControl.length) {
+                        excludeControl.empty();
+                    }
+                });
+            }
+
+            settingsModel.off('change:taxonomy');
+            settingsModel.off('change:term_filter_type');
+            settingsModel.on('change:taxonomy', function () {
+                setTimeout(syncTermFilters, 100);
+            });
+            
+            settingsModel.on('change:term_filter_type', function () {
+                setTimeout(syncTermFilters, 200);
+            });
+
+            syncTermFilters();
+
+            elementor.channels.editor.off('section:activated');
+            elementor.channels.editor.on('section:activated', function (sectionName) {
+                if (sectionName === 'section_general' || sectionName === 'section_taxonomy') {
+                    setTimeout(syncTermFilters, 200);
+                    console.log(sectionName);
+                }
+            });
+        });
 
 
         // view.model.get('settings').on('click:author_include_ids', function(settingsModel, value) {

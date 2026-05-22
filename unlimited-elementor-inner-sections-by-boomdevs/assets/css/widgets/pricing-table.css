@@ -43,7 +43,8 @@
     display: inline-flex;
     justify-content: center;
     text-decoration: none;
-    transition: background-color .3s ease;
+    will-change: background, background-color;
+    transition: background 0.3s ease, background-color 0.3s ease;
 }
 .pea-pricing-button-wrapper-main .pea-pricing-button-wrapper .pea-pricing-button .pea-pricing-button-icon {
     align-items: center;

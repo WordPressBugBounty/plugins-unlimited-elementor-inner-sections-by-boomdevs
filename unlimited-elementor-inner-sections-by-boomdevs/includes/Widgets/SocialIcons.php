@@ -3,6 +3,7 @@
 namespace PrimeElementorAddons\Widgets;
 
 use PrimeElementorAddons\Utils\Helper;
+use PrimeElementorAddons\Controls\GradientControl;
 use Elementor\Group_Control_Background;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Box_Shadow;
@@ -31,11 +32,15 @@ class SocialIcons extends Widget_Base {
 	}
     
     public function get_keywords() {
-        return ['heading', 'title', 'text', 'advanced', 'gradient', 'stroke'];
+        return ['social', 'Icons', 'social icons', 'social share', 'sharing icons'];
     }
     
     public function get_style_depends() {
         return ['prime-elementor-addons--social-icons'];
+    }
+    
+    public function has_widget_inner_wrapper(): bool {
+        return false;
     }
 
 	protected function register_controls() {
@@ -95,211 +100,175 @@ class SocialIcons extends Widget_Base {
 					'selectors' => [
 						'{{WRAPPER}} .pea-socials' => 'justify-content: {{VALUE}};',
 					],
-                    'render_type'  => 'template',
+                    'render_type'  => 'ui',
 				]
 			);
 
+			$this->add_control(
+				'social_icon_title_show',
+				[
+					'label' => esc_html__( 'Title Switcher', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type' => Controls_Manager::SWITCHER,
+                    'label_on' => __( 'Show', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'label_off' => __( 'Hide', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+				]
+			);
+            $this->add_control(
+                'social_icon_will_change',
+                [
+                    'label'     => esc_html__( 'GPU Acceleration', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'type'      => Controls_Manager::HIDDEN,
+                    'default'   => 'transform',
+                    'selectors' => [
+                        '{{WRAPPER}} .pea-social-icon-link' => 'will-change: transform;',
+                    ],
+                ]
+            );
+
             $repeater = new \Elementor\Repeater();
-            $repeater->start_controls_tabs( 'social_icon_item_tabs' );
-                $repeater->start_controls_tab(
-                    'social_icon_item_desc_tab',
-                    [
-                        'label' => __( 'Content', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+            $repeater->add_control(
+                'social_icon_item_icon',
+                [
+                    'label' => esc_html__( 'Icon', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'type' => Controls_Manager::ICONS,
+                    'default' => [
+                        'value' => 'fab fa-facebook',
+                        'library' => 'fa-brands',
+                    ],
+                    'label_block' => true,
+                    'skin' => 'inline',
+                ]
+            );
+
+            $repeater->add_control(
+                'social_icon_item_title', [
+                    'label' => esc_html__( 'Title', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'type' => Controls_Manager::TEXT,
+                    'dynamic' => [
+                        'active' => true,
+                    ],
+                    'default' => esc_html__( 'List Title' , 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'label_block' => true,
+                ]
+            );
+
+            $repeater->add_control(
+                'social_icon_item_title_url',
+                [
+                    'label' => esc_html__( 'Link / Url', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'type' => Controls_Manager::URL,
+                    'dynamic' => [
+                        'active' => true,
+                    ],
+                    'placeholder' => esc_html__( 'https://your-link.com', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'default' => [
+                        'url' => '',
+                        'is_external' => true,
+                        'nofollow' => true,
+                        'custom_attributes' => '',
+                    ],
+                    'label_block' => true,
+                ]
+            );
+            $repeater->add_control(
+                'social_icon_custom_styles',
+                [
+                    'label' => esc_html__( 'Custom Styles', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'type' => Controls_Manager::SWITCHER,
+                ]
+            );
+            $repeater->add_control( 'social_icon_icon_normal_color_heading_this', [
+                'label'     => esc_html__( 'Normal Style', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                'type'      => Controls_Manager::HEADING,
+                'separator' => 'before',
+                'condition' => [ 'social_icon_custom_styles' => 'yes' ],
+            ] );
+            $repeater->add_control(
+                'social_icon_icon_color_this',
+                [
+                    'label'  => esc_html__( 'Icon Color', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'type' => Controls_Manager::COLOR,
+                    'default' => '',
+                    'selectors' => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon-link .pea-social-icon-wrapper .pea-social-icon i' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon-link .pea-social-icon-wrapper .pea-social-icon svg' => 'fill: {{VALUE}}',
+                    ],
+                    'condition' => [
+                        'social_icon_custom_styles' => 'yes'
                     ]
-                );
-
-                    $repeater->add_control(
-                        'social_icon_item_icon',
-                        [
-                            'label' => esc_html__( 'Icon', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                            'type' => Controls_Manager::ICONS,
-                            'default' => [
-                                'value' => 'fab fa-facebook',
-                                'library' => 'fa-brands',
-                            ],
-                            'label_block' => true,
-                            'skin' => 'inline',
-                        ]
-                    );
-
-                    $repeater->add_control(
-                        'social_icon_item_title', [
-                            'label' => esc_html__( 'Title', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                            'type' => Controls_Manager::TEXT,
-                            'dynamic' => [
-                                'active' => true,
-                            ],
-                            'default' => esc_html__( 'List Title' , 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                            'separator' => 'before',
-                            'label_block' => true,
-                        ]
-                    );
-
-                    $repeater->add_control(
-                        'social_icon_item_title_url',
-                        [
-                            'label' => esc_html__( 'Link / Url', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                            'type' => Controls_Manager::URL,
-                            'dynamic' => [
-                                'active' => true,
-                            ],
-                            'placeholder' => esc_html__( 'https://your-link.com', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                            'default' => [
-                                'url' => '',
-                                'is_external' => true,
-                                'nofollow' => true,
-                                'custom_attributes' => '',
-                            ],
-                            'label_block' => true,
-                        ]
-                    );
-                $repeater->end_controls_tab();
-                $repeater->start_controls_tab(
-                    'styles_tab',
-                    [
-                        'label' => __( 'Style', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                ]
+            );
+            $repeater->add_control(
+                'social_icon_icon_bg_color_this',
+                [
+                    'label'  => esc_html__( 'Icon Bg Color', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'type' => Controls_Manager::COLOR,
+                    'default' => '',
+                    'selectors' => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon' => 'background-color: {{VALUE}}',
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon-link' => 'border-color: {{VALUE}}',
+                    ],
+                    'condition' => [
+                        'social_icon_custom_styles' => 'yes'
                     ]
-                );
-                    $repeater->add_control(
-                        'social_icon_custom_styles',
-                        [
-                            'label' => esc_html__( 'Custom Styles', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                            'type' => Controls_Manager::SWITCHER,
-                        ]
-                    );
-                    $repeater->add_control( 'social_icon_icon_normal_color_heading_this', [
-                        'label'     => esc_html__( 'Normal Style', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                        'type'      => Controls_Manager::HEADING,
-                        'separator' => 'before',
-                        'condition' => [ 'social_icon_custom_styles' => 'yes' ],
-                    ] );
-                    $repeater->add_control(
-                        'social_icon_icon_color_this',
-                        [
-                            'label'  => esc_html__( 'Icon Color', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                            'type' => Controls_Manager::COLOR,
-                            'default' => '',
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon-link .pea-social-icon-wrapper .pea-social-icon i' => 'color: {{VALUE}}',
-                                '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon-link .pea-social-icon-wrapper .pea-social-icon svg' => 'fill: {{VALUE}}',
-                            ],
-                            'condition' => [
-                                'social_icon_custom_styles' => 'yes'
-                            ]
-                        ]
-                    );
-                    $repeater->add_control(
-                        'social_icon_icon_bg_color_this',
-                        [
-                            'label'  => esc_html__( 'Icon Bg Color', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                            'type' => Controls_Manager::COLOR,
-                            'default' => '',
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon' => 'background-color: {{VALUE}}',
-                                '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon-link' => 'border-color: {{VALUE}}',
-                            ],
-                            'condition' => [
-                                'social_icon_custom_styles' => 'yes'
-                            ]
-                        ]
-                    );
-                
-                    $repeater->add_group_control(
-                        Group_Control_Background::get_type(),
-                        [
-                            'name'      => 'social_icon_icon_bg_type_this',
-                            'types'          => [ 'classic', 'gradient' ],
-                            // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control config, not a WP_Query.
-                            'exclude'        => [ 'image' ],
-                            'fields_options' => [
-                                'background' => [
-                                    'label'     => esc_html__( 'Background Type', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                                    'default' => 'classic',
-                                ],
-                                'color' => [
-                                    'default' => '', // ✅ Set your default normal color here
-                                ],
-                            ],
-                            'selector'  => '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon-link',
-                            'condition' => [
-                                'social_icon_custom_styles' => 'yes'
-                            ]
-                        ]
-                    );
-                    // $repeater->add_control(
-                    //     'social_icon_icon_border_color_this',
-                    //     [
-                    //         'label'  => esc_html__( 'Icon Border Color', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                    //         'type' => Controls_Manager::COLOR,
-                    //         'default' => '',
-                    //         'selectors' => [
-                    //             '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon-link' => 'border-color: {{VALUE}}',
-                    //         ],
-                    //         'condition' => [
-                    //             'social_icon_custom_styles' => 'yes'
-                    //         ]
-                    //     ]
-                    // );
-                    $repeater->add_control( 'social_icon_icon_hover_color_heading_this', [
-                        'label'     => esc_html__( 'Hover Style', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                        'type'      => Controls_Manager::HEADING,
-                        'separator' => 'before',
-                        'condition' => [ 'social_icon_custom_styles' => 'yes' ],
-                    ] );
-                    $repeater->add_control(
-                        'social_icon_icon_hover_color_this',
-                        [
-                            'label'  => esc_html__( 'Icon Color', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                            'type' => Controls_Manager::COLOR,
-                            'default' => '',
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}}:hover .pea-social-icon-link .pea-social-icon-wrapper .pea-social-icon i' => 'color: {{VALUE}}',
-                                '{{WRAPPER}} {{CURRENT_ITEM}}:hover .pea-social-icon-link .pea-social-icon-wrapper .pea-social-icon svg' => 'fill: {{VALUE}}',
-                            ],
-                            'condition' => [
-                                'social_icon_custom_styles' => 'yes'
-                            ]
-                        ]
-                    );
-                    $repeater->add_control(
-                        'social_icon_icon_bg_hover_color_this',
-                        [
-                            'label'  => esc_html__( 'Icon Bg Color', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                            'type' => Controls_Manager::COLOR,
-                            'default' => '',
-                            'selectors' => [
-                                '{{WRAPPER}} {{CURRENT_ITEM}}:hover .pea-social-icon' => 'background-color: {{VALUE}}',
-                                '{{WRAPPER}} {{CURRENT_ITEM}}:hover .pea-social-icon-link' => 'border-color: {{VALUE}}',
-                            ],
-                            'condition' => [
-                                'social_icon_custom_styles' => 'yes'
-                            ]
-                        ]
-                    );
-                    $repeater->add_group_control(
-                        Group_Control_Background::get_type(),
-                        [
-                            'name'      => 'social_icon_icon_hover_bg_type_this',
-                            'types'          => [ 'classic', 'gradient' ],
-                            // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control config, not a WP_Query.
-                            'exclude'        => [ 'image' ],
-                            'fields_options' => [
-                                'background' => [
-                                    'label'     => esc_html__( 'Background Type', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                                    'default' => 'classic',
-                                ],
-                                'color' => [
-                                    'default' => '', // ✅ Set your default normal color here
-                                ],
-                            ],
-                            'selector'  => '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon-link:hover',
-                            'condition' => [
-                                'social_icon_custom_styles' => 'yes'
-                            ]
-                        ]
-                    );
-                $repeater->end_controls_tab();
-            $repeater->end_controls_tabs();
+                ]
+            );
+            $repeater->add_group_control(
+                    GradientControl::get_type(),
+                [
+                    'name'     => 'social_icon_icon_bg_type_this',
+                    'selector' => '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon-link',
+                    'condition' => [
+                        'social_icon_custom_styles' => 'yes',
+                    ],
+                ]
+            );
+            $repeater->add_control( 'social_icon_icon_hover_color_heading_this', [
+                'label'     => esc_html__( 'Hover Style', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                'type'      => Controls_Manager::HEADING,
+                'separator' => 'before',
+                'condition' => [ 'social_icon_custom_styles' => 'yes' ],
+            ] );
+            $repeater->add_control(
+                'social_icon_icon_hover_color_this',
+                [
+                    'label'  => esc_html__( 'Icon Color', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'type' => Controls_Manager::COLOR,
+                    'default' => '',
+                    'selectors' => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}}:hover .pea-social-icon-link .pea-social-icon-wrapper .pea-social-icon i' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} {{CURRENT_ITEM}}:hover .pea-social-icon-link .pea-social-icon-wrapper .pea-social-icon svg' => 'fill: {{VALUE}}',
+                    ],
+                    'condition' => [
+                        'social_icon_custom_styles' => 'yes'
+                    ]
+                ]
+            );
+            $repeater->add_control(
+                'social_icon_icon_bg_hover_color_this',
+                [
+                    'label'  => esc_html__( 'Icon Bg Color', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'type' => Controls_Manager::COLOR,
+                    'default' => '',
+                    'selectors' => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}}:hover .pea-social-icon' => 'background-color: {{VALUE}}',
+                        '{{WRAPPER}} {{CURRENT_ITEM}}:hover .pea-social-icon-link' => 'border-color: {{VALUE}}',
+                    ],
+                    'condition' => [
+                        'social_icon_custom_styles' => 'yes'
+                    ]
+                ]
+            );
+            $repeater->add_group_control(
+                    GradientControl::get_type(),
+                [
+                    'name'     => 'social_icon_icon_hover_bg_type_this',
+                    'selector'  => '{{WRAPPER}} {{CURRENT_ITEM}} .pea-social-icon-link:hover',
+                    'condition' => [
+                        'social_icon_custom_styles' => 'yes',
+                    ],
+                ]
+            );
 
             $this->add_control(
                 'social_icons',
@@ -417,37 +386,6 @@ class SocialIcons extends Widget_Base {
 					],
 				]
 			);
-        
-            // $this->add_group_control(
-            //     \Elementor\Group_Control_Typography::get_type(),
-            //     [
-            //         'name' => 'social_icon_wrapper_typography',
-            //         'selector' => '{{WRAPPER}} .pea-advanced-button',
-            //         'fields_options' => [
-            //             'typography' => [
-            //                 'default' => 'custom',
-            //             ],
-            //             'font_family' => [
-            //                 'default' => 'Work Sans',
-            //             ],
-            //             'font_weight' => [
-            //                 'default' => '500',
-            //             ],
-            //             'font_size' => [
-            //                 'default' => [
-            //                     'unit' => 'px',
-            //                     'size' => 18,
-            //                 ],
-            //             ],
-            //             'line_height' => [
-            //                 'default' => [
-            //                     'unit' => '%',
-            //                     'size' => 130,
-            //                 ],
-            //             ],
-            //         ],
-            //     ]
-            // );
 		
 			$this->start_controls_tabs( 'social_icon_wrapper_tabs' );
 				$this->start_controls_tab(
@@ -475,7 +413,7 @@ class SocialIcons extends Widget_Base {
 					);
 					
 					$this->add_group_control(
-						\Elementor\Group_Control_Border::get_type(),
+						Group_Control_Border::get_type(),
 						[
 							'name'     => 'social_icon_wrapper_border_type',
 							'label'    => esc_html__('Border Type', 'unlimited-elementor-inner-sections-by-boomdevs'),
@@ -664,29 +602,6 @@ class SocialIcons extends Widget_Base {
 						'label' => esc_html__( 'Normal', 'unlimited-elementor-inner-sections-by-boomdevs' ),
 					]
 				);
-				
-					// $this->add_responsive_control(
-					// 	'social_icon_rotate',
-					// 	[
-					// 		'label' => esc_html__('Rotation', 'unlimited-elementor-inner-sections-by-boomdevs'),
-					// 		'type' => Controls_Manager::SLIDER,
-					// 		'size_units' => ['deg'],
-					// 		'range' => [
-					// 			'px' => [
-					// 				'min' => -360,
-					// 				'max' => 360,
-					// 				'step' => 1,
-					// 			],
-					// 		],
-					// 		'default' => [
-					// 			'unit' => 'deg',
-					// 			'size' => -40,
-					// 		],
-					// 		'selectors'       => [
-					// 			'{{WRAPPER}} .pea-social-icon-wrapper' => 'transform: rotate({{SIZE}}deg);',
-					// 		],
-					// 	]
-					// );
 			
 					$this->add_control(
 						'social_icon_color',
@@ -735,29 +650,6 @@ class SocialIcons extends Widget_Base {
 
 					]
 				);
-				
-					// $this->add_responsive_control(
-					// 	'social_icon_hover_rotate',
-					// 	[
-					// 		'label' => esc_html__('Rotation', 'unlimited-elementor-inner-sections-by-boomdevs'),
-					// 		'type' => Controls_Manager::SLIDER,
-					// 		'size_units' => ['deg'],
-					// 		'range' => [
-					// 			'px' => [
-					// 				'min' => -360,
-					// 				'max' => 360,
-					// 				'step' => 1,
-					// 			],
-					// 		],
-					// 		'default' => [
-					// 			'unit' => 'deg',
-					// 			'size' => 0,
-					// 		],
-					// 		'selectors'       => [
-					// 			'{{WRAPPER}} .pea-social-list-item:hover .pea-social-icon-wrapper' => 'transform: rotate({{SIZE}}deg);',
-					// 		],
-					// 	]
-					// );
 			
 					$this->add_control(
 						'social_icon_hover_color',
@@ -873,15 +765,9 @@ class SocialIcons extends Widget_Base {
             [
                 'label' => esc_html__('Title', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'tab' => Controls_Manager::TAB_STYLE,
+                'condition' => [ 'social_icon_title_show' => 'yes' ]
             ]
         );
-			$this->add_control(
-				'social_icon_title_show',
-				[
-					'label' => esc_html__( 'Title Switcher', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-					'type' => Controls_Manager::SWITCHER,
-				]
-			);
         
             $this->add_group_control(
                 \Elementor\Group_Control_Typography::get_type(),
@@ -911,9 +797,6 @@ class SocialIcons extends Widget_Base {
                             ],
                         ],
                     ],
-					'condition' => [
-						'social_icon_title_show' => 'yes'
-					]
                 ]
             );
 
@@ -922,9 +805,6 @@ class SocialIcons extends Widget_Base {
                     'social_icon_title_normal_style',
                     [
                         'label' => esc_html__( 'Normal', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-						'condition' => [
-							'social_icon_title_show' => 'yes'
-						]
                     ]
                 );
             
@@ -937,9 +817,6 @@ class SocialIcons extends Widget_Base {
                             'selectors' => [
                                 '{{WRAPPER}} .pea-social-icon-title' => 'color: {{VALUE}};',
 							],
-							'condition' => [
-								'social_icon_title_show' => 'yes'
-							]
                         ]
                     );
 
@@ -949,9 +826,6 @@ class SocialIcons extends Widget_Base {
                     'social_icon_title_hover_style',
                     [
                         'label' => esc_html__( 'Hover', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-						'condition' => [
-							'social_icon_title_show' => 'yes'
-						]
                     ]
                 );
 
@@ -964,9 +838,6 @@ class SocialIcons extends Widget_Base {
                             'selectors' => [
                                 '{{WRAPPER}} .pea-social-icon-link:hover .pea-social-icon-title' => 'color: {{VALUE}};',
 							],
-							'condition' => [
-								'social_icon_title_show' => 'yes'
-							]
                         ]
                     );
 
@@ -977,9 +848,6 @@ class SocialIcons extends Widget_Base {
                 'social_icon_title_hr',
                 [
                     'type' => Controls_Manager::DIVIDER,
-					'condition' => [
-						'social_icon_title_show' => 'yes'
-					]
                 ]
             );
 
@@ -992,37 +860,30 @@ class SocialIcons extends Widget_Base {
                     'selectors' => [
                         '{{WRAPPER}} .pea-social-icon-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
-					'condition' => [
-						'social_icon_title_show' => 'yes'
-					]
                 ]
             );
         
         $this->end_controls_section();
 	}
 
+
 	protected function render() {
 		$settings = $this->get_settings_for_display();
  
 
 		$social_icon_presets = $settings['social_icon_presets']; 
-		// $button_alignment = $settings['button_alignment']; 
-		// $button_link = $settings['button_link']['url'];
-		// $button_target = $settings['button_link']['is_external'] ? ' target=_blank' : '';
-		// $button_nofollow = $settings['button_link']['nofollow'] ? ' rel=nofollow' : '';
-		// $media_type = $settings['choose_social_icon_or_img'];
-		// $link_button_icon = $settings['link_button_icon'];
-		// $link_button_position = $settings['link_button_position'];
+        $show_title = ( $settings['social_icon_title_show'] === 'yes' );
 		
 		?>
         <div class="pea-widget-wrapper pea-social-icons-wrapper <?php echo esc_attr($social_icon_presets); ?>">
 			<div class="pea-social-links-wrapper">
                 <ul class="pea-socials" aria-label="Social Icons">
                     <?php foreach ( $settings['social_icons'] as $index => $icon ) : 
-                        $icon_link = $icon['social_icon_item_title_url']['url'];
-                        $icon_target = $icon['social_icon_item_title_url']['is_external'] ? ' target=_blank' : '';
-                        $icon_nofollow = $icon['social_icon_item_title_url']['nofollow'] ? ' rel=nofollow' : ''; ?>
-                        <li class="pea-social-list-item single-social-icon-item-<?php echo esc_attr($index); ?> elementor-repeater-item-<?php echo esc_attr( $icon['_id'] ) ?>">
+                        $url_data      = $icon['social_icon_item_title_url'] ?? [];
+                        $icon_link     = $url_data['url'] ?? '';
+                        $icon_target   = ! empty( $url_data['is_external'] ) ? ' target=_blank' : '';
+                        $icon_nofollow = ! empty( $url_data['nofollow'] )    ? ' rel=nofollow'  : ''; ?>
+                        <li class="pea-social-list-item single-social-icon-item-<?php echo esc_attr($index); ?> elementor-repeater-item-<?php echo esc_attr( $icon['_id'] ) ?>" >
                             <a class="pea-social-icon-link" 
                                 href="<?php echo esc_url($icon_link); ?>"
                                 <?php echo esc_attr($icon_target); ?>
@@ -1033,7 +894,7 @@ class SocialIcons extends Widget_Base {
                                     <div class="pea-social-icon" aria-hidden="true">
                                         <?php \Elementor\Icons_Manager::render_icon( $icon['social_icon_item_icon'], [ 'aria-hidden' => 'true' ] ); ?>
                                     </div>
-                                    <?php if($settings['social_icon_title_show'] === 'yes'){ ?>
+                                    <?php if($show_title){ ?>
                                         <span class="pea-social-icon-title" aria-hidden="true"><?php echo esc_html($icon['social_icon_item_title']); ?></span>
                                     <?php } ?>
                                 </div>

@@ -1140,7 +1140,7 @@ class PostComment extends Widget_Base {
 									<p>This is a nested reply comment to show the structure.</p>
 								</div>
 
-								<div class="reply"><a rel="nofollow" class="comment-reply-link" href="http://wpprimeelementoraddonsdev.local/porro-illum-nemo-nostrum-sunt/?replytocom=4#respond" data-commentid="4" data-postid="364" data-belowelement="div-comment-4" data-respondelement="respond" data-replyto="Reply to Testing Name" aria-label="Reply to Testing Name">Reply</a></div>			
+								<div class="reply"><a rel="nofollow" class="comment-reply-link" href="#" data-commentid="4" data-postid="364" data-belowelement="div-comment-4" data-respondelement="respond" data-replyto="Reply to Testing Name" aria-label="Reply to Testing Name">Reply</a></div>			
 							</article>
 						</li>
 					</ol>

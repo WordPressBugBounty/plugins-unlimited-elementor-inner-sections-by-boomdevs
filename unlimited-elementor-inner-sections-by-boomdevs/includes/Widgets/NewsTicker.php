@@ -204,7 +204,7 @@ class NewsTicker extends Widget_Nested_Base
                 'type' => Controls_Manager::ICONS,
                 'default' => [
                     'value' => 'fas fa-bolt',
-                    'library' => 'solid',
+                    'library' => 'fa-solid',
                 ],
                 'condition' => ['show_label' => 'yes'],
             ]
@@ -501,6 +501,8 @@ class NewsTicker extends Widget_Nested_Base
                     '{{WRAPPER}} .pea-ticker-label' => 'color: {{VALUE}};',
                     '{{WRAPPER}} .pea-ticker-label-text' => 'color: {{VALUE}};',
                     '{{WRAPPER}} .pea-ticker-label-icon' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .pea-ticker-label-icon i' => 'color: {{VALUE}};',
+                    '{{WRAPPER}} .pea-ticker-label-icon svg' => 'fill: {{VALUE}};',
                 ],
             ]
         );
@@ -1081,7 +1083,16 @@ class NewsTicker extends Widget_Nested_Base
                         <# } #>
                             <# if ( showLabel ) { #>
                                 <div class="pea-ticker-label">
-                                    <span class="pea-ticker-label-icon"><i class="fas fa-bolt" aria-hidden="true"></i></span>
+                                    <# if ( settings.label_icon && settings.label_icon.value ) { #>
+                                        <span class="pea-ticker-label-icon">
+                                            <# var iconHTML = elementor.helpers.renderIcon( view, settings.label_icon, { 'aria-hidden': 'true' }, 'i', 'object' );
+                                            if ( iconHTML && iconHTML.rendered ) { #>
+                                                {{{ iconHTML.value }}}
+                                            <# } else { #>
+                                                <i class="{{ settings.label_icon.value }}" aria-hidden="true"></i>
+                                            <# } #>
+                                        </span>
+                                    <# } #>
                                     <div class="pea-ticker-label-inner">
                                         <span class="pea-ticker-label-text">{{ settings.label_text }}</span>
                                     </div>

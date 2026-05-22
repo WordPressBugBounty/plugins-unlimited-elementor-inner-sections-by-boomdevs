@@ -48,6 +48,12 @@ class CustomCss {
             10,
             1
         );
+
+        add_action( 
+            'elementor/editor/after_enqueue_scripts', 
+            [$this, 'custom_css_script'], 
+            5
+        );
     }
 
     /**
@@ -201,5 +207,21 @@ class CustomCss {
         );
 
         $post_css->get_stylesheet()->add_raw_css( $css );
+    }
+
+    
+    public function custom_css_script() {        
+        // TODO have to give support of templately when templately on custom-css.js dont work correctly
+        wp_enqueue_script(
+            'prime-elementor-addons-custom-css-editor',
+            PEA_PLUGIN_URL . 'assets/js/editor/custom-css.js',
+            [
+                'jquery',
+                'elementor-editor',
+            ],
+            PEA_VERSION,
+            true
+        );
+
     }
 }

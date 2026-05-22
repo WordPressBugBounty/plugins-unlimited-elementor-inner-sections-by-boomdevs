@@ -168,7 +168,7 @@ class ProductGrid extends Widget_Base
         $this->add_responsive_control(
             'grid_columns',
             [
-                'label' => esc_html__('Grid Columns', '...'),
+                'label' => esc_html__('Grid Columns', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'type' => Controls_Manager::SELECT,
                 'desktop_default' => '3',
                 'tablet_default' => '2',
@@ -298,7 +298,7 @@ class ProductGrid extends Widget_Base
         $this->add_control(
             'exclude_product_ids',
             [
-                'label' => esc_html__('Exclude Products', 'text-domain'),
+                'label' => esc_html__('Exclude Products', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'type' => Controls_Manager::SELECT2,
                 'multiple' => true,
                 'label_block' => true,
@@ -360,7 +360,7 @@ class ProductGrid extends Widget_Base
         $this->add_control(
             'badge_text',
             [
-                'label' => esc_html__('Badge Text', 'text-domain'),
+                'label' => esc_html__('Badge Text', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'type' => Controls_Manager::TEXT,
                 'default' => 'New',
             ]
@@ -369,7 +369,7 @@ class ProductGrid extends Widget_Base
         $this->add_control(
             'badge_product_ids',
             [
-                'label' => esc_html__('Badge Products', 'text-domain'),
+                'label' => esc_html__('Badge Products', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'type' => Controls_Manager::SELECT2,
                 'multiple' => true,
                 'label_block' => true,

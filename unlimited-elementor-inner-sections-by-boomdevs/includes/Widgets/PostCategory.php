@@ -79,26 +79,45 @@ class PostCategory extends Widget_Base
         );
 
         $this->add_control(
-            'show_count',
+            'show_author',
             [
-                'label' => esc_html__('Show Post Count', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'label' => esc_html__('Show Author', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'type' => Controls_Manager::SWITCHER,
                 'return_value' => 'yes',
                 'default' => 'yes',
-                'separator' => 'before',
             ]
         );
 
         $this->add_control(
-            'show_count_label',
+            'show_count',
             [
-                'label' => esc_html__('Show Count Label', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'label' => esc_html__('Show Count', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'type' => Controls_Manager::SWITCHER,
+                'return_value' => 'yes',
+                'default' => 'yes',
+            ]
+        );
+
+        $this->add_control(
+            'show_post_type_name_with_count',
+            [
+                'label' => esc_html__('Count With Post Type Name', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'type' => Controls_Manager::SWITCHER,
                 'return_value' => 'yes',
                 'default' => 'yes',
                 'condition' => [
                     'show_count' => 'yes',
                 ],
+            ]
+        );
+
+        $this->add_control(
+            'show_title',
+            [
+                'label' => esc_html__('Show Title', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'type' => Controls_Manager::SWITCHER,
+                'return_value' => 'yes',
+                'default' => 'yes',
             ]
         );
 
@@ -127,16 +146,6 @@ class PostCategory extends Widget_Base
         );
 
         $this->add_control(
-            'show_author',
-            [
-                'label' => esc_html__('Show Author', 'unlimited-elementor-inner-sections-by-boomdevs'),
-                'type' => Controls_Manager::SWITCHER,
-                'return_value' => 'yes',
-                'default' => 'yes',
-            ]
-        );
-
-        $this->add_control(
             'show_image',
             [
                 'label' => esc_html__('Show Term Image', 'unlimited-elementor-inner-sections-by-boomdevs'),
@@ -147,7 +156,6 @@ class PostCategory extends Widget_Base
                     'yes' => esc_html__('Show', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'no' => esc_html__('Hide', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 ],
-                'separator' => 'before',
             ]
         );
 
@@ -332,7 +340,7 @@ class PostCategory extends Widget_Base
         );
 
         $this->add_control(
-            'selection_type',
+            'term_filter_type',
             [
                 'label' => esc_html__('Taxonomy Filter', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'type' => Controls_Manager::SELECT,
@@ -354,7 +362,7 @@ class PostCategory extends Widget_Base
                 'label_block' => true,
                 'options' => [],
                 'condition' => [
-                    'selection_type' => 'include',
+                    'term_filter_type' => 'include',
                 ],
             ]
         );
@@ -368,7 +376,7 @@ class PostCategory extends Widget_Base
                 'label_block' => true,
                 'options' => [],
                 'condition' => [
-                    'selection_type' => 'exclude',
+                    'term_filter_type' => 'exclude',
                 ],
             ]
         );
@@ -1998,7 +2006,7 @@ class PostCategory extends Widget_Base
         $order = strtoupper((string) ($settings['order'] ?? 'ASC')) === 'DESC' ? 'DESC' : 'ASC';
         $hide_empty = ($settings['show_empty_taxonomy'] ?? '') !== 'yes';
         $show_children = ($settings['show_children'] ?? '') === 'yes';
-        $selection_type = (string) ($settings['selection_type'] ?? 'none');
+        $term_filter_type = (string) ($settings['term_filter_type'] ?? 'none');
 
         $args = [
             'taxonomy' => $taxonomy,
@@ -2012,14 +2020,14 @@ class PostCategory extends Widget_Base
             $args['parent'] = 0;
         }
 
-        if ($selection_type === 'include') {
+        if ($term_filter_type === 'include') {
             $include_ids = $this->parse_ids($settings['include_term_ids'] ?? '');
             if (!empty($include_ids)) {
                 $args['include'] = $include_ids;
             }
         }
 
-        if ($selection_type === 'exclude') {
+        if ($term_filter_type === 'exclude') {
             $exclude_ids = $this->parse_ids($settings['exclude_term_ids'] ?? '');
             if (!empty($exclude_ids)) {
                 $args['exclude'] = $exclude_ids;
@@ -2093,9 +2101,10 @@ class PostCategory extends Widget_Base
         }
 
         $preset = $this->get_active_preset($settings);
-        $show_count = ($settings['show_count'] ?? 'yes') === 'yes';
-        $show_count_label = ($settings['show_count_label'] ?? '') === 'yes';
+        $show_title = ($settings['show_title'] ?? '') === 'yes';
         $show_description = ($settings['show_description'] ?? '') === 'yes';
+        $show_count = ($settings['show_count'] ?? 'yes') === 'yes';
+        $show_post_type_name_with_count = ($settings['show_post_type_name_with_count'] ?? '') === 'yes';
         $excerpt_length = max(1, absint($settings['description_excerpt_length'] ?? 10));
         $show_image = $this->should_show_term_image($settings);
         $show_author = ($settings['show_author'] ?? '') === 'yes';
@@ -2126,7 +2135,7 @@ class PostCategory extends Widget_Base
 
         $html .= '<div class="pea-post-category-meta">';
         $html .= '<div class="pea-post-category-body">';
-        $html .= $this->render_term_heading($term, $term_link, $taxonomy, $show_count, $show_count_label, $preset, $image_source);
+        $html .= $this->render_term_heading($term, $term_link, $taxonomy, $show_count, $show_post_type_name_with_count, $preset, $image_source, $show_title);
 
         if ($show_description && !empty($term->description)) {
             $html .= '<p class="pea-post-category-description">' . esc_html($this->trim_words((string) $term->description, $excerpt_length)) . '</p>';
@@ -2185,15 +2194,15 @@ class PostCategory extends Widget_Base
         return $html;
     }
 
-    private function render_term_heading($term, $term_link, $taxonomy, $show_count, $show_count_label, $preset, $image_source = '')
+    private function render_term_heading($term, $term_link, $taxonomy, $show_count, $show_post_type_name_with_count, $preset, $image_source = '', $show_title = true)
     {
         $count_html = '';
 
         if ($show_count) {
-            $count_html = '<span class="pea-post-category-count">' . $this->format_count_html((int) $term->count, $taxonomy, $show_count_label) . '</span>';
+            $count_html = '<span class="pea-post-category-count">' . $this->format_count_html((int) $term->count, $taxonomy, $show_post_type_name_with_count) . '</span>';
         }
 
-        $link_html = '<a class="pea-post-category-link" href="' . esc_url($term_link) . '">' . esc_html($term->name) . '</a>';
+        $link_html = $show_title ? '<a class="pea-post-category-link" href="' . esc_url($term_link) . '">' . esc_html($term->name) . '</a>' : '';
 
         if ($preset === 'preset-2') {
             $style_attr = '';
@@ -2208,7 +2217,7 @@ class PostCategory extends Widget_Base
         }
 
         if ($preset === 'preset-5') {
-            return '<div class="pea-post-category-heading pea-post-category-heading-list">' . $link_html . $this->format_count_badge_html((int) $term->count, $taxonomy, $show_count_label) . '</div>';
+            return '<div class="pea-post-category-heading pea-post-category-heading-list">' . $link_html . $this->format_count_badge_html((int) $term->count, $taxonomy, $show_post_type_name_with_count) . '</div>';
         }
 
         if ($preset === 'preset-6') {

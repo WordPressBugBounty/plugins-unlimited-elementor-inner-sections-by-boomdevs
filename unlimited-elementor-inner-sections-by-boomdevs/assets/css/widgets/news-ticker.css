@@ -105,7 +105,7 @@
     align-items: center;
 }
 
-.pea-ticker-item {
+.swiper-slide.pea-ticker-item {
     height: auto;
     display: flex;
     align-items: center;

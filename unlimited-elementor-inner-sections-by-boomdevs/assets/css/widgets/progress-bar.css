@@ -33,7 +33,7 @@
     /* overflow: hidden; */
     position: relative;
 }
-.pea-progress-bar-wrapper .pea-progressbar-item .pea-progressbar-line-wrapper .pea-progressbar-line {
+.pea-progressbar-item .pea-progressbar-line-wrapper .pea-progressbar-line {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -42,11 +42,11 @@
     box-sizing: border-box;
     transition: width 1.5s ease-in-out;
 }
-.pea-progress-bar-wrapper .pea-progressbar-item .pea-progressbar-line-wrapper .pea-progressbar-content {
+.pea-progressbar-item .pea-progressbar-line-wrapper .pea-progressbar-content {
     position: relative;
     z-index: 5;
 }
-.pea-progress-bar-wrapper .pea-progressbar-item .pea-progressbar-line-wrapper .pea-progressbar-line .pea-progressbar-number {
+.pea-progressbar-item .pea-progressbar-line-wrapper .pea-progressbar-line .pea-progressbar-number {
     position: absolute;
     right: 0;
     top: 50%;
@@ -54,7 +54,7 @@
     transition: left 1.5s ease-in-out;
     z-index: 10;
 }
-.pea-progress-bar-wrapper .pea-progressbar-item .pea-progressbar-line-wrapper .pea-progressbar-line .pea-progressbar-number {
+.pea-progressbar-item .pea-progressbar-line-wrapper .pea-progressbar-line .pea-progressbar-number {
     position: absolute;
     right: 0;
     top: 50%;
@@ -62,7 +62,7 @@
     transition: left 1.5s ease-in-out;
     z-index: 10;
 }
-.pea-progress-bar-wrapper .pea-progressbar-item.vertical .pea-progressbar-line-wrapper .pea-progressbar-line .pea-progressbar-number {
+.pea-progressbar-item.vertical .pea-progressbar-line-wrapper .pea-progressbar-line .pea-progressbar-number {
     /* position: absolute; */
     top: 0;
     /* left: 50%;

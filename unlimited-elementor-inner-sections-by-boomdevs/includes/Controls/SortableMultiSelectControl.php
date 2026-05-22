@@ -36,7 +36,7 @@ class SortableMultiSelectControl extends Base_Data_Control {
         return [
             'options' => [],
             'multiple' => true,
-            'placeholder' => __('Select items…', 'plugin'),
+            'placeholder' => __('Select items…', 'unlimited-elementor-inner-sections-by-boomdevs'),
             'hideSelected' => true, // flag for JS to know
         ];
     }

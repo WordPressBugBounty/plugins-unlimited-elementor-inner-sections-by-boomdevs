@@ -499,7 +499,7 @@ class ProgressBar extends Widget_Base {
                             'default' => '#399CFF', // ✅ Set your default normal color here
                         ],
                     ],
-                    'selector'  => '{{WRAPPER}} .pea-progressbar-line',
+                    'selector'  => '{{WRAPPER}} .pea-progress-bar-wrapper .pea-progressbar-item .pea-progressbar-line-wrapper .pea-progressbar-line',
                     'condition' => [
                         'progress_bar_zebra_track_color_enable!' => 'yes',
                     ],
@@ -880,7 +880,7 @@ class ProgressBar extends Widget_Base {
                         'type' => Controls_Manager::COLOR,
                         'default' => '#000000',
                         'selectors' => [
-                            '{{WRAPPER}} .pea-progressbar-label' => 'color: {{VALUE}}',
+                            '{{WRAPPER}} .pea-progressbar-item .pea-progressbar-content .pea-progressbar-label' => 'color: {{VALUE}}',
                         ],
                     ]
                 );

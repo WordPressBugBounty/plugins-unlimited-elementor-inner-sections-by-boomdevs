@@ -2998,25 +2998,22 @@ class PricingTable extends Widget_Base {
                             'type' => Controls_Manager::COLOR,
                             'default' => '',
                             'selectors' => [
-                                '{{WRAPPER}} .pea-pricing-button:hover .pea-pricing-button' => 'color: {{VALUE}}',
+                                '{{WRAPPER}} .pea-pricing-button:hover' => 'color: {{VALUE}}',
                             ],
                             'condition' => [
                                 'show_button' => 'yes',
                             ],
                         ]
                     );
-            
-                    $this->add_control(
-                        'button_hover_bg_color',
+
+                    $this->add_group_control(
+                        Group_Control_Background::get_type(),
                         [
-                            'label' => esc_html__('Background Color', 'unlimited-elementor-inner-sections-by-boomdevs'),
-                            'type' => Controls_Manager::COLOR,
-                            'selectors' => [
-                                '{{WRAPPER}} .pea-pricing-button:hover .pea-pricing-button' => 'background-color: {{VALUE}}',
-                            ],
-                            'condition' => [
-                                'show_button' => 'yes',
-                            ],
+                            'name'      => 'button_hover_bg_color',
+                            'types'          => [ 'classic', 'gradient' ],
+                            // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control config, not a WP_Query.
+                            'exclude'        => [ 'image' ],
+                            'selector'  => '{{WRAPPER}} .pea-pricing-button:hover',
                         ]
                     );
                 
@@ -3026,7 +3023,7 @@ class PricingTable extends Widget_Base {
                             'label' => esc_html__('Border Color', 'unlimited-elementor-inner-sections-by-boomdevs'),
                             'type' => Controls_Manager::COLOR,
                             'selectors' => [
-                                '{{WRAPPER}} .pea-pricing-button:hover .pea-pricing-button' => 'border-color: {{VALUE}};',
+                                '{{WRAPPER}} .pea-pricing-button:hover' => 'border-color: {{VALUE}};',
                             ]
                         ]
                     );
