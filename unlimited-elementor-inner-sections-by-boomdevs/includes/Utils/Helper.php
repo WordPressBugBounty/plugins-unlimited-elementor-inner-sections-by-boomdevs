@@ -540,7 +540,7 @@ class Helper {
 		$args = array(
 			'post_type' => 'post',
 			'post_status' => 'publish',
-			'posts_per_page' => 10,
+			'posts_per_page' => 20,
 		);
 
 		$posts = new \WP_Query($args);

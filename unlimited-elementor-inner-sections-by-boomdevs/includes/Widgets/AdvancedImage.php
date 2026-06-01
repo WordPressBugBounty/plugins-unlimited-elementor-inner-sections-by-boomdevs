@@ -742,9 +742,9 @@ class AdvancedImage extends Widget_Base {
                 <!-- Title -->
                 <?php if ($show_title === 'yes' && !empty($image_title)) : ?>
                     <div class="pea-image-title-wrapper">
-                        <<?php echo esc_attr($title_tag); ?> class="pea-image-title">
+                        <<?php echo tag_escape($title_tag); ?> class="pea-image-title">
                             <?php echo esc_html($image_title); ?>
-                        </<?php echo esc_attr($title_tag); ?>>
+                        </<?php echo tag_escape($title_tag); ?>>
                     </div>
                 <?php endif; ?>
                 

@@ -1644,7 +1644,7 @@ class Testimonial extends Widget_Base {
                         <?php } ?>
                         <?php if($settings['show_title'] === 'yes') { ?>
                             <div class="pea-testimonial-title-container" >
-                                <<?php echo esc_attr($title_tag); ?> class="pea-testimonial-title"><?php echo esc_html($title); ?></<?php echo esc_attr($title_tag); ?>>
+                                <<?php echo tag_escape($title_tag); ?> class="pea-testimonial-title"><?php echo esc_html($title); ?></<?php echo tag_escape($title_tag); ?>>
                             </div>
                         <?php } ?>
                         <?php if($settings['show_desc'] === 'yes') { ?>

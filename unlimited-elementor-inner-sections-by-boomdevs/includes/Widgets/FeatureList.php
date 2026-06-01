@@ -1456,9 +1456,9 @@ class FeatureList extends Widget_Base {
                                 </div>
                             </div>
                             <div class="pea-feature-list-content">
-                                <<?php echo esc_attr($settings['feature_item_title_tag']); ?> class="pea-feature-list-title">
+                                <<?php echo tag_escape($settings['feature_item_title_tag']); ?> class="pea-feature-list-title">
                                     <?php echo esc_html($feature['feature_list_item_title']); ?>
-                                </<?php echo esc_attr($settings['feature_item_title_tag']); ?>>
+                                </<?php echo tag_escape($settings['feature_item_title_tag']); ?>>
                                 <p class="pea-feature-list-text">
                                     <?php echo esc_html($feature['feature_list_item_desc']); ?>
                                 </p>

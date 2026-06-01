@@ -161,16 +161,16 @@ trait PostGridRenderer {
                     <?php if($show_title === 'yes'){ ?>
                         <?php if ($wrapper_link === 'yes'): ?>
                             <span class="pea-post-title-span">
-                                <<?php echo esc_attr($title_tag); ?> class="pea-post-title"><?php echo esc_html($title); ?></<?php echo esc_attr($title_tag); ?>>
+                                <<?php echo tag_escape($title_tag); ?> class="pea-post-title"><?php echo esc_html($title); ?></<?php echo tag_escape($title_tag); ?>>
                             </span>
                         <?php else: ?>
                             <?php if ($title_link === 'yes'): ?>
                                 <a href="<?php echo esc_url($permalink); ?>">
-                                    <<?php echo esc_attr($title_tag); ?> class="pea-post-title"><?php echo esc_html($title); ?></<?php echo esc_attr($title_tag); ?>>
+                                    <<?php echo tag_escape($title_tag); ?> class="pea-post-title"><?php echo esc_html($title); ?></<?php echo tag_escape($title_tag); ?>>
                                 </a>
                             <?php else: ?>
                                 <span class="pea-post-title-span">
-                                    <<?php echo esc_attr($title_tag); ?> class="pea-post-title"><?php echo esc_html($title); ?></<?php echo esc_attr($title_tag); ?>>
+                                    <<?php echo tag_escape($title_tag); ?> class="pea-post-title"><?php echo esc_html($title); ?></<?php echo tag_escape($title_tag); ?>>
                                 </span>
                             <?php endif; ?>
                         <?php endif; ?>

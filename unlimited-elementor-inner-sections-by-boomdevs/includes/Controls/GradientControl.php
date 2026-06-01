@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Enhanced UX: Single color OR Gradient toggle with conditional fields,
  * matching Elementor's native background control pattern.
  *
- * @since 1.3.3
+ * @since 1.3.4
  */
 class GradientControl extends Group_Control_Base {
 

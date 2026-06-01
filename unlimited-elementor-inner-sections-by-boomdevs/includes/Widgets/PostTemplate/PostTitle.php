@@ -229,7 +229,7 @@ class PostTitle extends Widget_Base {
 		$link = get_permalink($post_id);
 		$target = '';
         echo '<div class="pea-single-post-title-wrapper">';
-		echo '<'. esc_attr($settings['post_title_tag']) .' class="pea-single-post-title">';
+		echo '<'. tag_escape($settings['post_title_tag']) .' class="pea-single-post-title">';
 			if($settings['enable_post_link'] === 'yes') {
 				if($settings['open_in_new_tab'] === 'yes') {
 					$target = 'target="_blank"';	
@@ -240,7 +240,7 @@ class PostTitle extends Widget_Base {
 			if($settings['enable_post_link'] === 'yes') {
 				echo '</a>';
 			}
-		echo '</'. esc_attr($settings['post_title_tag']) .'>';
+		echo '</'. tag_escape($settings['post_title_tag']) .'>';
         echo '</div>';
 
 	}

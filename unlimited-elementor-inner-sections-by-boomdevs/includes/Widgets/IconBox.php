@@ -1644,9 +1644,9 @@ class IconBox extends Widget_Base {
                     </div>
                 </div>
                 <div class="pea-icon-box-content-wrapper">
-                    <<?php echo esc_attr($settings['title_tag']); ?> class="pea-icon-box-title " >
+                    <<?php echo tag_escape($settings['title_tag']); ?> class="pea-icon-box-title " >
                         <?php echo wp_kses_post($title); ?>
-                    </<?php echo esc_attr($settings['title_tag']); ?>>
+                    </<?php echo tag_escape($settings['title_tag']); ?>>
                     <p class="pea-icon-box-description " >
                         <?php echo wp_kses_post($description); ?>
                     </p>

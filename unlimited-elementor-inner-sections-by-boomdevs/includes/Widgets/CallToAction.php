@@ -1628,9 +1628,9 @@ class CallToAction extends Widget_Base {
             <div class="pea-cta-content-wrapper-inner">
                 <div class="pea-cta-content-wrapper">
                     <?php if($settings['show_cta_title'] === 'yes'){ ?>
-                        <<?php echo esc_attr($title_tag); ?> placeholder="CTA Title" class="pea-cta-heading">
+                        <<?php echo tag_escape($title_tag); ?> placeholder="CTA Title" class="pea-cta-heading">
                            <?php echo esc_html($title); ?>
-                        </<?php echo esc_attr($title_tag); ?>>
+                        </<?php echo tag_escape($title_tag); ?>>
                     <?php } ?>
                     <?php if($settings['show_cta_description'] === 'yes'){ ?>
                         <p placeholder="CTA Description" class="pea-cta-description">

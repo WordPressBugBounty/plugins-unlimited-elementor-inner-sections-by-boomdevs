@@ -3,12 +3,8 @@
 namespace PrimeElementorAddons\Widgets\PostTemplate;
 
 use Elementor\Controls_Manager;
-use Elementor\Group_Control_Background;
-use Elementor\Group_Control_Text_Stroke;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Border;
-use Elementor\Group_Control_Box_Shadow;
-use Elementor\Group_Control_Text_Shadow;
 use Elementor\Widget_Base;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -65,75 +61,10 @@ class PostMeta extends Widget_Base {
 					'date'       => esc_html__( 'Date', 'unlimited-elementor-inner-sections-by-boomdevs' ),
 					'time'       => esc_html__( 'Time', 'unlimited-elementor-inner-sections-by-boomdevs' ),
 					'comment'       => esc_html__( 'Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'read-time'       => esc_html__( 'Reading Time', 'unlimited-elementor-inner-sections-by-boomdevs' ),
 				],
-				'default' => ['author', 'date', 'time', 'comment'],
+				'default' => ['author', 'date', 'time', 'comment', 'read-time'],
 				'label_block'        => true,
-			]
-		);
-
-		$this->add_control(
-			'date_format',
-			[
-				'label'       => esc_html__( 'Date Format', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-				'type'        => \Elementor\Controls_Manager::SELECT,
-				'default'     => 'default',
-				'options'     => [
-					'default'       => esc_html__( 'Default', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-					'wordpress'       => esc_html__( 'Wordpress', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-					'custom'       => esc_html__( 'Custom', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-				],
-				'condition' => [
-					'select_post_meta' => 'date'
-				],
-			]
-		);
-
-		$this->add_control(
-			'custom_date_format',
-			[
-				'label' => __( 'Custom Format', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-				'type' => Controls_Manager::TEXT,
-				'placeholder' => 'Y-m-d',
-				'default' => 'M j, Y',
-				'condition' => [
-					'date_format' => 'custom'
-				],
-			]
-		);
-
-		$this->add_control(
-			'time_format',
-			[
-				'label'       => esc_html__( 'Time Format', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-				'type'        => \Elementor\Controls_Manager::SELECT,
-				'default'     => 'g:i a',
-				'options'     => [
-					'g:i a'       	=> esc_html__( 'Default', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-					'H:i'       	=> esc_html__( 'Format 2 ', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-					'@ G:i'       	=> esc_html__( 'Format 3 ', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-					'h:i:s A'       => esc_html__( 'Format 4 ', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-					'G:i:s'       	=> esc_html__( 'Format 5 ', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-					'g:i:s a'       => esc_html__( 'Format 6 ', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-				],
-				'condition' => [
-					'select_post_meta' => 'time'
-				],
-				
-			]
-		);
-
-		$this->add_control(
-			'by_author',
-			[
-				'label' => esc_html__( 'Show "By" Author', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-				'type' => Controls_Manager::SWITCHER,
-				'label_on' => esc_html__( 'Yes', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-				'label_off' => esc_html__( 'No', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-				'return_value' => 'yes',
-				'default' => 'yes',
-				'condition' => [
-					'select_post_meta' => 'author'
-				],
 			]
 		);
 
@@ -165,6 +96,359 @@ class PostMeta extends Widget_Base {
         );
 
 		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_post_author',
+			[
+				'label' => esc_html__( 'Author', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'select_post_meta' => 'author'
+				],
+			]
+		);
+
+			$this->add_control(
+				'by_author',
+				[
+					'label' => esc_html__( 'Show "By" Author', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type' => Controls_Manager::SWITCHER,
+					'label_on' => esc_html__( 'Yes', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'label_off' => esc_html__( 'No', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'return_value' => 'yes',
+					'default' => 'yes',
+				]
+			);
+
+			$this->add_control(
+				'avatar_type',
+				[
+					'label'       => esc_html__( 'Avatar Type', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type'        => \Elementor\Controls_Manager::SELECT,
+					'default'     => 'img',
+					'options'     => [
+						'img'      => esc_html__( 'Image (Gravatar)', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+						'icon'    => esc_html__( 'Icon', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+						'none'       => esc_html__( 'None', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					],
+				]
+			);
+
+			$this->add_control(
+				'author_icon',
+				[
+					'type' => Controls_Manager::ICONS,
+					'default' => [
+						'value' => 'fas fa-user-alt',
+						'library' => 'fa-solid',
+					],
+					'condition' => [
+						'select_post_meta' => 'author',
+						'avatar_type' => 'icon'
+					],
+				]
+			);
+
+		$this->end_controls_section();
+		
+		$this->start_controls_section(
+			'section_post_date_n_time',
+			[
+				'label' => esc_html__( 'Date & Time', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+				'conditions' => [
+					'relation' => 'or',
+					'terms' => [
+						[
+							'name'     => 'select_post_meta',
+							'operator' => 'contains',
+							'value'    => 'date',
+						],
+						[
+							'name'     => 'select_post_meta',
+							'operator' => 'contains',
+							'value'    => 'time',
+						],
+					],
+				],
+			]
+		);
+
+			$this->add_control(
+				'show_date_icon',
+				[
+					'label' => esc_html__( 'Show Date Icon', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type' => Controls_Manager::SWITCHER,
+					'label_on' => esc_html__( 'Yes', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'label_off' => esc_html__( 'No', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'return_value' => 'yes',
+					'default' => 'yes',
+					'condition' => [
+						'select_post_meta' => 'date',
+					],
+				]
+			);
+
+			$this->add_control(
+				'date_icon',
+				[
+					'type' => Controls_Manager::ICONS,
+					'default' => [
+						'value' => 'far fa-calendar',
+						'library' => 'regular',
+					],
+					'condition' => [
+						'select_post_meta' => 'date',
+						'show_date_icon' => 'yes'
+					],
+				]
+			);
+
+			$this->add_control(
+				'date_format',
+				[
+					'label'       => esc_html__( 'Date Format', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type'        => \Elementor\Controls_Manager::SELECT,
+					'default'     => 'default',
+					'options'     => [
+						'default'       => esc_html__( 'Default', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+						'wordpress'       => esc_html__( 'Wordpress', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+						'custom'       => esc_html__( 'Custom', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					],
+					'condition' => [
+						'select_post_meta' => 'date'
+					],
+				]
+			);
+
+			$this->add_control(
+				'custom_date_format',
+				[
+					'label' => __( 'Custom Format', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type' => Controls_Manager::TEXT,
+					'placeholder' => 'Y-m-d',
+					'default' => 'M j, Y',
+					'condition' => [
+						'date_format' => 'custom',
+						'select_post_meta' => 'date'
+					],
+				]
+			);
+
+        	$this->add_control('date_n_time_hr', ['type' => Controls_Manager::DIVIDER,]);
+
+			$this->add_control(
+				'show_time_icon',
+				[
+					'label' => esc_html__( 'Show Time Icon', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type' => Controls_Manager::SWITCHER,
+					'label_on' => esc_html__( 'Yes', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'label_off' => esc_html__( 'No', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'return_value' => 'yes',
+					'default' => 'yes',
+					'condition' => [
+						'select_post_meta' => 'time'
+					],
+				]
+			);
+
+			$this->add_control(
+				'time_icon',
+				[
+					'type' => Controls_Manager::ICONS,
+					'default' => [
+						'value' => 'far fa-clock',
+						'library' => 'regular',
+					],
+					'condition' => [
+						'select_post_meta' => 'time',
+						'show_time_icon' => 'yes'
+					],
+				]
+			);
+
+			$this->add_control(
+				'time_format',
+				[
+					'label'       => esc_html__( 'Time Format', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type'        => \Elementor\Controls_Manager::SELECT,
+					'default'     => 'g:i a',
+					'options'     => [
+						'g:i a'       	=> esc_html__( 'Default', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+						'H:i'       	=> esc_html__( 'Format 2 ', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+						'@ G:i'       	=> esc_html__( 'Format 3 ', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+						'h:i:s A'       => esc_html__( 'Format 4 ', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+						'G:i:s'       	=> esc_html__( 'Format 5 ', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+						'g:i:s a'       => esc_html__( 'Format 6 ', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					],
+					'condition' => [
+						'select_post_meta' => 'time'
+					],
+					
+				]
+			);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_post_comments',
+			[
+				'label' => esc_html__( 'Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'select_post_meta' => 'comment'
+				],
+			]
+		);
+
+			$this->add_control(
+				'show_comment_icon',
+				[
+					'label' => esc_html__( 'Show Comment Icon', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type' => Controls_Manager::SWITCHER,
+					'label_on' => esc_html__( 'Yes', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'label_off' => esc_html__( 'No', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'return_value' => 'yes',
+					'default' => 'yes',
+					'condition' => [
+						'select_post_meta' => 'comment'
+					],
+				]
+			);
+
+			$this->add_control(
+				'comment_icon',
+				[
+					'type' => Controls_Manager::ICONS,
+					'default' => [
+						'value' => 'far fa-comments',
+						'library' => 'regular',
+					],
+					'condition' => [
+						'select_post_meta' => 'comment',
+						'show_comment_icon' => 'yes'
+					],
+				]
+			);
+			$this->add_control(
+				'no_comments_title',
+				[
+					'label'     => __( 'No Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type'      => Controls_Manager::TEXT,
+					'placeholder'   => __( 'No Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'default'   => __( 'No Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'condition' => [
+						'select_post_meta' => 'comment'
+					],
+				]
+			);
+			$this->add_control(
+				'one_comment_title',
+				[
+					'label'     => __( 'One Comment', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type'      => Controls_Manager::TEXT,
+					'placeholder'   => __( 'Comment', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'default'   => __( 'Comment', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'condition' => [
+						'select_post_meta' => 'comment'
+					],
+				]
+			);
+			$this->add_control(
+				'multi_comments_title',
+				[
+					'label'     => __( 'Multi Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type'      => Controls_Manager::TEXT,
+					'placeholder'   => __( 'Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'default'   => __( 'Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'condition' => [
+						'select_post_meta' => 'comment'
+					],
+				]
+			);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_post_read_time',
+			[
+				'label' => esc_html__( 'Reading Time', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'select_post_meta' => 'read-time',
+				],
+			]
+		);
+
+			$this->add_control(
+				'show_read_time_icon',
+				[
+					'label'        => esc_html__( 'Show Read Icon', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type'         => Controls_Manager::SWITCHER,
+					'label_on'     => esc_html__( 'Yes', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'label_off'    => esc_html__( 'No', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'return_value' => 'yes',
+					'default'      => 'yes',
+				]
+			);
+
+			$this->add_control(
+				'read_time_icon',
+				[
+					'type'  => Controls_Manager::ICONS,
+					'default' => [
+						'value'   => 'fab fa-readme',
+						'library' => 'fa-brand',
+					],
+					'condition' => [
+						'show_read_time_icon' => 'yes',
+					],
+				]
+			);
+
+			$this->add_control(
+				'before_read_time',
+				[
+					'label'       => esc_html__( 'Before Text', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type'        => Controls_Manager::TEXT,
+					'placeholder' => esc_html__( 'About', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'default'     => '',
+				]
+			);
+
+			$this->add_control(
+				'reading_speed',
+				[
+					'label'       => esc_html__( 'Reading Speed (WPM)', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type'        => Controls_Manager::NUMBER,
+					'default'     => 200,
+					'min'         => 50,
+					'max'         => 1000,
+					'step'        => 10,
+					'description' => esc_html__( 'Average reading speed in words per minute.', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+				]
+			);
+
+			$this->add_control(
+				'read_time_singular_label',
+				[
+					'label'       => esc_html__( 'Singular Label', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type'        => Controls_Manager::TEXT,
+					'default'     => esc_html__( 'Minute Read', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+				]
+			);
+
+			$this->add_control(
+				'read_time_plural_label',
+				[
+					'label'       => esc_html__( 'Plural Label', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'type'        => Controls_Manager::TEXT,
+					'default'     => esc_html__( 'Minutes Read', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+				]
+			);
+
+		$this->end_controls_section();
+
 
 		// Author Image Styling Section
 		$this->start_controls_section(
@@ -349,7 +633,7 @@ class PostMeta extends Widget_Base {
 						'unit' => 'px',
 					],
 					'selectors' => [
-						'{{WRAPPER}} .pea-single-post-meta span:not(.pea-post-meta-author)' => 'gap: {{SIZE}}{{UNIT}};',
+						'{{WRAPPER}} .pea-single-post-meta span' => 'gap: {{SIZE}}{{UNIT}};',
 					],
 				]
 			);
@@ -361,6 +645,7 @@ class PostMeta extends Widget_Base {
 					'type' => Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .pea-single-post-meta span i' => 'color: {{VALUE}};',
+						'{{WRAPPER}} .pea-single-post-meta span svg' => 'fill: {{VALUE}};',
 					],
 				]
 			);
@@ -372,6 +657,7 @@ class PostMeta extends Widget_Base {
 					'type' => Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .pea-single-post-meta span:hover i' => 'color: {{VALUE}};',
+						'{{WRAPPER}} .pea-single-post-meta span:hover svg' => 'fill: {{VALUE}};',
 					],
 				]
 			); 
@@ -438,27 +724,24 @@ class PostMeta extends Widget_Base {
                 return;
             }
 		} 
-
-		if ($post) {
-			// Get the post date
-			$post_date = mysql2date('Y-m-d', $post->post_date);
 		
-			// Get the year, month, and day
-			list($year, $month, $day) = explode('-', $post_date);
-		
-			// Get the date archive URL
-			$date_url = get_day_link(
-				get_the_date('Y', $post_id),
-				get_the_date('m', $post_id),
-				get_the_date('d', $post_id)
-			);
-		}
+		// Get the date archive URL
+		$date_url = get_day_link(
+			get_the_date('Y', $post_id),
+			get_the_date('m', $post_id),
+			get_the_date('d', $post_id)
+		);
 		
 		$date_format = $settings['date_format'];
 		$time_format = $settings['time_format'];
 		$author_by	 = $settings['by_author'] === 'yes' ? 'By' : '';
 		$author_id   = $post->post_author;
 		$author_name = get_the_author_meta('display_name', $author_id);
+
+		if ( empty( $settings['select_post_meta'] ) || ! is_array( $settings['select_post_meta'] ) ) {
+			return;
+		}
+
 		?>
 		
 		<div class="pea-single-post-meta-wrapper">
@@ -468,8 +751,28 @@ class PostMeta extends Widget_Base {
 						case 'author':
 							?>
 							<span class="pea-post-meta-item pea-post-meta-author">
-								<a class="pea-post-meta-author-pic" href="<?php echo esc_url(get_author_posts_url($author_id)); ?>">
-									<?php echo get_avatar($author_id, 150); ?> <?php echo esc_html($author_by); ?> <?php echo esc_html($author_name); ?>
+								<?php if ( 'none' !== $settings['avatar_type'] ) : ?>
+									<a class="pea-post-meta-author-pic" 
+										href="<?php echo esc_url(get_author_posts_url($author_id)); ?>" 
+   										aria-label="<?php echo esc_attr( sprintf( __('Posts by %s'), $author_name ) ); ?>">
+										<?php if ( 'img' === $settings['avatar_type'] ) : ?>
+											<?php echo get_avatar( $author_id, 150 ); ?>
+										<?php elseif ( 'icon' === $settings['avatar_type'] ) : ?>
+											<span class="pea-post-meta-icon">
+												<?php
+												\Elementor\Icons_Manager::render_icon(
+													$settings['author_icon'],
+													[ 'aria-hidden' => 'true' ]
+												);
+												?>
+											</span>
+										<?php endif; ?>
+									</a>
+								<?php endif; ?>
+								<a class="pea-post-meta-author-text" 
+									href="<?php echo esc_url(get_author_posts_url($author_id)); ?>" 
+									aria-label="<?php echo esc_attr( sprintf( __('Posts by %s'), $author_name ) ); ?>">
+									<?php echo esc_html($author_by); ?> <?php echo esc_html($author_name); ?>
 								</a>
 							</span>
 							<?php
@@ -485,10 +788,17 @@ class PostMeta extends Widget_Base {
 							} elseif ($date_format === 'custom' && !empty($settings['custom_date_format'])) {
 								$date_output = get_the_date($settings['custom_date_format'], $post_id);
 							}
-
+							if ( empty( $date_output ) ) {
+								break;
+							}	
 							?>
 							<span class="pea-post-meta-item pea-post-meta-date">
-								<i class="far fa-calendar-alt"></i>
+								<?php if ( 'yes' === $settings['show_date_icon'] ) {
+									\Elementor\Icons_Manager::render_icon(
+										$settings['date_icon'],
+										[ 'aria-hidden' => 'true' ]
+									);
+								} ?>
 								<a href="<?php echo esc_url($date_url); ?>">
 									<?php echo esc_html($date_output); ?>
 								</a>
@@ -499,7 +809,12 @@ class PostMeta extends Widget_Base {
 						case 'time':
 							?>
 							<span class="pea-post-meta-item pea-post-meta-time">
-								<i class="far fa-clock"></i>
+								<?php if ( 'yes' === $settings['show_time_icon'] ) {
+									\Elementor\Icons_Manager::render_icon(
+										$settings['time_icon'],
+										[ 'aria-hidden' => 'true' ]
+									);
+								} ?>
 								<a href="<?php echo esc_url($date_url); ?>">
             						<?php echo esc_html(get_the_time($time_format, $post_id)); ?>
 								</a>
@@ -508,14 +823,80 @@ class PostMeta extends Widget_Base {
 						break;
 		
 						case 'comment':
+							$comment_count = get_comments_number($post);
+
+							if ( 0 === $comment_count ) {
+								$comment_label = $settings['no_comments_title'];
+							} elseif ( 1 === $comment_count ) {
+								$comment_label = $settings['one_comment_title'];
+							} else {
+								$comment_label = $settings['multi_comments_title'];
+							}
 							?>
 							<span class="pea-post-meta-item pea-post-meta-comment">
-								<i class="far fa-comments"></i>
-								<a href="<?php the_permalink($post); ?>#comment">
-									<?php echo esc_html(get_comments_number($post)); ?> <?php esc_html_e('Comments', 'unlimited-elementor-inner-sections-by-boomdevs'); ?>
+								<?php if ( 'yes' === $settings['show_comment_icon'] ) {
+									\Elementor\Icons_Manager::render_icon(
+										$settings['comment_icon'],
+										[ 'aria-hidden' => 'true' ]
+									);
+								} ?>
+								<a href="<?php echo esc_url( get_permalink( $post_id ) . '#comments' ); ?>">
+									<?php echo esc_html( $comment_count . ' ' . $comment_label ); ?>
 								</a>
 							</span>
 							<?php
+						break;
+
+						case 'read-time':
+							$content = get_post_field( 'post_content', $post_id );
+
+							$content = wp_strip_all_tags( $content );
+							$content = strip_shortcodes( $content );
+							$word_count = $content ? count( preg_split( '/\s+/', trim($content) ) ) : 0;
+
+							$reading_speed = ! empty( $settings['reading_speed'] )
+								? (int) $settings['reading_speed']
+								: 200;
+
+							$read_time = max( 1, ceil( $word_count / $reading_speed ) );
+
+							$before_text = ! empty( $settings['before_read_time'] )
+								? $settings['before_read_time'] . ' '
+								: '';
+
+							$read_time_label = ( $read_time <= 1 )
+								? $settings['read_time_singular_label']
+								: $settings['read_time_plural_label'];
+
+							?>
+							
+							<span class="pea-post-meta-item pea-post-meta-read-time">
+
+								<?php if ( 'yes' === $settings['show_read_time_icon'] ) : ?>
+									
+									<span class="pea-post-meta-icon">
+										<?php \Elementor\Icons_Manager::render_icon(
+											$settings['read_time_icon'],
+											[ 'aria-hidden' => 'true' ]
+										); ?>
+									</span>
+
+								<?php endif; ?>
+
+								<span class="pea-post-meta-text">
+									<?php
+									echo esc_html(
+										$before_text .
+										$read_time . ' ' .
+										$read_time_label
+									);
+									?>
+								</span>
+
+							</span>
+
+							<?php
+
 						break;
 		
 						default:
@@ -524,5 +905,5 @@ class PostMeta extends Widget_Base {
 				} ?>
 			</div>
 		</div>			
-<?php }
+	<?php }
 }

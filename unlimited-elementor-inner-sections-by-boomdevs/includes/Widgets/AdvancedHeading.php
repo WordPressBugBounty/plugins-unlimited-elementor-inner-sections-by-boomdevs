@@ -1388,14 +1388,14 @@ class AdvancedHeading extends Widget_Base {
                 <?php endif; ?>
             <?php endif; ?>
             
-            <<?php echo esc_attr($settings['heading_tag']) ?> <?php echo $this->get_render_attribute_string('heading'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+            <<?php echo tag_escape($settings['heading_tag']) ?> <?php echo $this->get_render_attribute_string('heading'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
                 <?php echo wp_kses($settings['heading_text'], $allowed_tags); ?>
-            </<?php echo esc_attr($settings['heading_tag']) ?>>
+            </<?php echo tag_escape($settings['heading_tag']) ?>>
 
             <?php if ($settings['show_subheading'] === 'yes') : ?>
-                <<?php echo esc_attr($settings['subheading_tag']) ?> class="pea-advanced-subheading">
+                <<?php echo tag_escape($settings['subheading_tag']) ?> class="pea-advanced-subheading">
                     <?php echo wp_kses($settings['subheading_text'], $allowed_tags); ?>
-                </<?php echo esc_attr($settings['subheading_tag']) ?>>
+                </<?php echo tag_escape($settings['subheading_tag']) ?>>
             <?php endif; ?>
             
             <?php if ($settings['show_separator'] === 'yes') : ?>

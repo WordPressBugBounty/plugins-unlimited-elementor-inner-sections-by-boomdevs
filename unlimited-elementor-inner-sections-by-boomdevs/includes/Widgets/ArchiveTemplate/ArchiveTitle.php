@@ -175,6 +175,39 @@ class ArchiveTitle extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'date_archive_format',
+			[
+				'label'   => esc_html__( 'Date Archive Format', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+				'type'    => Controls_Manager::SELECT,
+				'default' => 'd F Y',
+				'options' => [
+					'd F Y'      => esc_html__( 'Day Month Year (15 January 2025)', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'F Y'        => esc_html__( 'Month Year (January 2025)', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'Y'          => esc_html__( 'Year Only (2025)', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'm/d/Y'      => esc_html__( 'MM/DD/YYYY (01/15/2025)', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'd-m-Y'      => esc_html__( 'DD-MM-YYYY (15-01-2025)', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'wordpress'  => esc_html__( 'WordPress Default', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+					'custom'     => esc_html__( 'Custom', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+				],
+			]
+		);
+
+		$this->add_control(
+			'date_archive_custom_format',
+			[
+				'label'       => esc_html__( 'Custom Date Format', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+				'type'        => Controls_Manager::TEXT,
+				'default'     => 'd/m/Y',
+				'placeholder' => esc_html__( 'e.g. d/m/Y or Y-m-d', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+				'label_block' => true,
+				'description' => esc_html__( 'Use PHP date format characters. e.g. d=day, m=month, Y=4-digit year', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+				'condition'   => [
+					'date_archive_format' => 'custom',
+				],
+			]
+		);
+
 		$this->add_control (
 			'search_result_title_before_text_toggle',
 			[
@@ -202,7 +235,7 @@ class ArchiveTitle extends Widget_Base {
             [
                 'label' => esc_html__( 'Alignment', 'unlimited-elementor-inner-sections-by-boomdevs' ),
                 'type' => Controls_Manager::CHOOSE,
-                'default' => 'left',
+                'default' => 'center',
                 'label_block' => false,
                 'options' => [
 					'start'    => [
@@ -387,45 +420,47 @@ class ArchiveTitle extends Widget_Base {
 					$archive_title = $author_before_text_toggle === 'yes' ? '<span class="before-archive">'.$author_before_text.'</span>'.'<span class="archive-text">'.$display_name.'</span>' : '<span class="archive-text">'.$display_name.'</span>';
 				}
 			} elseif (is_date()) {
-				$date = '';
-				if($author_before_text_toggle === 'yes'){
-					$date = '<span class="before-archive">'.$author_before_text.'</span>'.'<span class="archive-text">';
-				}else{
-					$date = '<span class="archive-text">';
+				$format      = $settings['date_archive_format'] ?? 'd F Y';
+				$date_before = $settings['date_archive_title_before_text_toggle'];
+				$before_text = $settings['date_archive_title_before_text'];
+
+				// Resolve the actual format string
+				if ( $format === 'wordpress' ) {
+					$format = get_option('date_format'); // Pull WP Settings > General date format
+				} elseif ( $format === 'custom' ) {
+					$format = ! empty( $settings['date_archive_custom_format'] )
+						? sanitize_text_field( $settings['date_archive_custom_format'] )
+						: 'd/m/Y';
 				}
-				if(!empty(get_query_var('m'))) {
-					// Handle query var 'm' for other permalink structures
-					$m = get_query_var('m');
-					if (!empty($m)) {
-						$date .= substr($m, 0, 4);
-						if (strlen($m) > 4) {
-							$date .= '/'.substr($m, 4, 2);
-						}
-						if (strlen($m) > 6) {
-							$date .= '/'.substr($m, 6, 2);
-						}
-					}
-				} elseif (is_day()) {
-					$date .= get_query_var('year');
-					$date .= '/'.get_query_var('monthnum');
-					$date .= '/'.get_query_var('day');
-				} elseif (is_month()) {
-					$date .= get_query_var('year');
-					$date .= '/'.get_query_var('monthnum');
-				} elseif (is_year()) {
-					$date .= get_query_var('year');
+
+				// Build timestamp from query vars
+				$year  = get_query_var('year')     ?: date('Y');
+				$month = get_query_var('monthnum') ?: 1;
+				$day   = get_query_var('day')      ?: 1;
+
+				// Handle the 'm' shorthand query var (e.g. 202501 or 20250115)
+				if ( ! empty( get_query_var('m') ) ) {
+					$m     = get_query_var('m');
+					$year  = (int) substr($m, 0, 4);
+					$month = strlen($m) > 4 ? (int) substr($m, 4, 2) : 1;
+					$day   = strlen($m) > 6 ? (int) substr($m, 6, 2) : 1;
 				}
-				$date .= '<span>';
-				$archive_title = $date;
+
+				$timestamp   = mktime(0, 0, 0, $month, $day, $year);
+				$date_label  = date_i18n( $format, $timestamp ); // Locale-aware formatting
+
+				$archive_title = $date_before === 'yes'
+					? '<span class="before-archive">' . $before_text . '</span><span class="archive-text">' . esc_html($date_label) . '</span>'
+					: '<span class="archive-text">' . esc_html($date_label) . '</span>';
 			}   else if (is_search()) {
 				$search_query = get_search_query(); // Get the search query
 				$archive_title = $search_before_text_toggle === 'yes' ? '<span class="before-archive">'.$search_before_text.'</span>'.'<span class="archive-text">'.$search_query.'</span>' : '<span class="archive-text">'.$search_query.'</span>';
 			} 
 		}
 
-		echo '<'. esc_attr($settings['archive_title_tag']) .' class="pea-archive-title">';
+		echo '<'. tag_escape($settings['archive_title_tag']) .' class="pea-archive-title">';
 			echo wp_kses_post($archive_title);
-		echo '</'. esc_attr($settings['archive_title_tag']) .'>';
+		echo '</'. tag_escape($settings['archive_title_tag']) .'>';
 	}
 	
 }

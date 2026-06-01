@@ -960,7 +960,7 @@ class ProgressBar extends Widget_Base {
                 <?php if($layout_type === 'horizontal'){ ?>
                     <?php if($text_position === 'text-outside'){ ?>
                         <div class="pea-progressbar-content">
-                            <<?php echo esc_attr($title_tag); ?> class="pea-progressbar-label"><?php echo esc_html($title_text); ?></<?php echo esc_attr($title_tag); ?>>
+                            <<?php echo tag_escape($title_tag); ?> class="pea-progressbar-label"><?php echo esc_html($title_text); ?></<?php echo tag_escape($title_tag); ?>>
                              <?php if($number_position === 'default'){ ?>
                                 <span class="pea-progressbar-number">0%</span>
                             <?php } ?>
@@ -974,7 +974,7 @@ class ProgressBar extends Widget_Base {
                         </div>
                         <?php if($text_position === 'text-inside'){ ?>
                             <div class="pea-progressbar-content">
-                                <<?php echo esc_attr($title_tag); ?> class="pea-progressbar-label"><?php echo esc_html($title_text); ?></<?php echo esc_attr($title_tag); ?>>
+                                <<?php echo tag_escape($title_tag); ?> class="pea-progressbar-label"><?php echo esc_html($title_text); ?></<?php echo tag_escape($title_tag); ?>>
                                 <?php if($number_position === 'default'){ ?>
                                     <span class="pea-progressbar-number">0%</span>
                                 <?php } ?>
@@ -995,7 +995,7 @@ class ProgressBar extends Widget_Base {
                         </div>
                     </div>
                     <div class="pea-progressbar-content">
-                        <<?php echo esc_attr($title_tag); ?> class="pea-progressbar-label"><?php echo esc_html($title_text); ?></<?php echo esc_attr($title_tag); ?>>
+                        <<?php echo tag_escape($title_tag); ?> class="pea-progressbar-label"><?php echo esc_html($title_text); ?></<?php echo tag_escape($title_tag); ?>>
                     </div>
                 <?php } ?>
             </div>

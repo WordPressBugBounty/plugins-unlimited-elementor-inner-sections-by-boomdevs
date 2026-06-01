@@ -1816,9 +1816,9 @@ class ContactForm7 extends Widget_Base {
             <?php if ($custom_title === 'yes' || $custom_description === 'yes') { ?>
                 <div class="pea-cf7-content">
                     <?php if ($title !=  '' && $custom_title ===  'yes') { ?>
-                        <<?php echo esc_attr($title_tag); ?> class="pea-cf7-widget-title">
+                        <<?php echo tag_escape($title_tag); ?> class="pea-cf7-widget-title">
                             <?php echo esc_html($title); ?>
-                        </<?php echo esc_attr($title_tag); ?>>
+                        </<?php echo tag_escape($title_tag); ?>>
                     <?php } ?>
                     <?php if ($description !=  '' && $custom_description ===  'yes') { ?>
                         <p class="pea-cf7-widget-description">

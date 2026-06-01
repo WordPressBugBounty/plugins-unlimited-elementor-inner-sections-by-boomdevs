@@ -1776,19 +1776,19 @@ class AdvancedTabs extends Widget_Nested_Base {
                         ?>
                         <li <?php $this->print_render_attribute_string( $tab_key ); ?>>
                             <?php if($settings['show_description'] === 'yes' && ( $settings['icon_position'] === 'column-reverse' || $settings['icon_position'] === 'row-reverse' )){ ?>
-                                <<?php echo esc_attr($settings['tab_desc_tag']); ?> class="pea-tab-description">
+                                <<?php echo tag_escape($settings['tab_desc_tag']); ?> class="pea-tab-description">
                                     <?php echo esc_html( $tab['tab_desc'] ); ?>
-                                </<?php echo esc_attr($settings['tab_desc_tag']); ?>>
+                                </<?php echo tag_escape($settings['tab_desc_tag']); ?>>
                             <?php } ?>
                             <?php if($settings['show_title'] === 'yes'){ ?>
-                                <<?php echo esc_attr($settings['tab_title_tag']); ?> class="pea-tab-title">
+                                <<?php echo tag_escape($settings['tab_title_tag']); ?> class="pea-tab-title">
                                     <?php echo esc_html( $tab['tab_title'] ); ?>
-                                </<?php echo esc_attr($settings['tab_title_tag']); ?>>
+                                </<?php echo tag_escape($settings['tab_title_tag']); ?>>
                             <?php } ?>
                             <?php if($settings['show_description'] === 'yes' && ( $settings['icon_position'] === 'column' || $settings['icon_position'] === 'row' )){ ?>
-                                <<?php echo esc_attr($settings['tab_desc_tag']); ?> class="pea-tab-description">
+                                <<?php echo tag_escape($settings['tab_desc_tag']); ?> class="pea-tab-description">
                                     <?php echo esc_html( $tab['tab_desc'] ); ?>
-                                </<?php echo esc_attr($settings['tab_desc_tag']); ?>>
+                                </<?php echo tag_escape($settings['tab_desc_tag']); ?>>
                             <?php } ?>
                             <?php if($settings['show_icon_or_image'] === 'yes' && $tab['tab_choose_icon_or_img'] !== 'none'){ ?>
                                 <div class="pea-tab-icon-image-box">

@@ -2273,9 +2273,9 @@ class FluentForm extends Widget_Base {
             <?php if ($custom_title === 'yes' || $custom_description === 'yes') { ?>
                 <div class="pea-fluent-form-content">
                     <?php if ($title !=  '' && $custom_title ===  'yes') { ?>
-                        <<?php echo esc_attr($title_tag); ?> class="pea-fluent-form-widget-title">
+                        <<?php echo tag_escape($title_tag); ?> class="pea-fluent-form-widget-title">
                             <?php echo esc_html($title); ?>
-                        </<?php echo esc_attr($title_tag); ?>>
+                        </<?php echo tag_escape($title_tag); ?>>
                     <?php } ?>
                     <?php if ($description !=  '' && $custom_description ===  'yes') { ?>
                         <p class="pea-fluent-form-widget-description">

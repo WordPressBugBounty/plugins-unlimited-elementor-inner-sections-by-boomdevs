@@ -41,23 +41,159 @@ class PostComment extends Widget_Base {
 
 	protected function register_controls() {
 		$this->start_controls_section(
-			'demo_settings_section',
+			'section_comments_general',
 			[
-				'label' => __('Demo Settings', 'unlimited-elementor-inner-sections-by-boomdevs'),
-				'tab'   => Controls_Manager::TAB_CONTENT,
+				'label' => esc_html__( 'General', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		// $this->add_control(
+		// 	'enable_demo_comments',
+		// 	[
+		// 		'label' => __('Show Demo Comments', 'unlimited-elementor-inner-sections-by-boomdevs'),
+		// 		'description' => __('Editor-only feature. Displays placeholder comments to help with layout styling. No effect on live site.', 'unlimited-elementor-inner-sections-by-boomdevs'),
+		// 		'type' => Controls_Manager::SWITCHER,
+		// 		'label_on' => __('Yes', 'unlimited-elementor-inner-sections-by-boomdevs'),
+		// 		'label_off' => __('No', 'unlimited-elementor-inner-sections-by-boomdevs'),
+		// 		'return_value' => 'yes',
+		// 		'default' => 'no',
+		// 	]
+		// );
+
+		$this->add_control(
+			'show_comment_form_title',
+			[
+				'label' => esc_html__( 'Show Section Title', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
 			]
 		);
 
 		$this->add_control(
-			'enable_demo_comments',
+			'show_comment_count',
 			[
-				'label' => __('Show Demo Comments', 'unlimited-elementor-inner-sections-by-boomdevs'),
-				'description' => __('Editor-only feature. Displays placeholder comments to help with layout styling. No effect on live site.', 'unlimited-elementor-inner-sections-by-boomdevs'),
+				'label' => esc_html__( 'Show Comment Count', 'wpr-addons' ),
 				'type' => Controls_Manager::SWITCHER,
-				'label_on' => __('Yes', 'unlimited-elementor-inner-sections-by-boomdevs'),
-				'label_off' => __('No', 'unlimited-elementor-inner-sections-by-boomdevs'),
-				'return_value' => 'yes',
-				'default' => 'no',
+				'default' => 'yes',
+				'condition' => [
+					'show_comment_form_title' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'comments_text_1',
+			[
+				'label' => esc_html__( 'One Comment', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => 'Comment',
+				'condition' => [
+					'show_comment_form_title' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'comments_text_2',
+			[
+				'label' => esc_html__( 'Multiple Comments', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => 'Comments',
+				'condition' => [
+					'show_comment_form_title' => 'yes'
+				]
+			]
+		);
+
+		$this->add_control(
+			'comments_avatar',
+			[
+				'label' => esc_html__( 'Show Avatar', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->end_controls_section();
+		
+		$this->start_controls_section(
+			'section_comment_form',
+			[
+				'label' => esc_html__( 'Comment Form', 'wpr-addons' ),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'comment_form_title',
+			[
+				'label' => esc_html__( 'Section Title', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => 'Leave a Reply',
+			]
+		);
+
+		$this->add_control(
+			'comment_form_labels',
+			[
+				'label' => esc_html__( 'Show Labels', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'comment_form_input_placeholders',
+			[
+				'label' => esc_html__( 'Show Placeholders', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'comment_form_cookie_check',
+			[
+				'label' => esc_html__( 'Show Wp Cookie Check Field', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'comment_form_website',
+			[
+				'label' => esc_html__( 'Show Website Field', 'wpr-addons' ),
+				'type' => Controls_Manager::SWITCHER,
+				'default' => 'yes',
+				'separator' => 'before',
+			]
+		);
+
+		$this->add_control(
+			'comment_form_submit_text',
+			[
+				'label' => esc_html__( 'Submit Button Text', 'wpr-addons' ),
+				'type' => Controls_Manager::TEXT,
+				'dynamic' => [
+					'active' => true,
+				],
+				'default' => 'Submit',
+				'separator' => 'before',
 			]
 		);
 
@@ -966,133 +1102,244 @@ class PostComment extends Widget_Base {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-		
-		if ( $settings['enable_demo_comments'] === 'yes' ) {
-			$this->render_demo_comment_template();
-			return;
+
+		if (
+			( class_exists( "\Elementor\Plugin" ) && \Elementor\Plugin::$instance->editor->is_edit_mode() ) ||
+			( class_exists( "\Elementor\Plugin" ) && \Elementor\Plugin::$instance->preview->is_preview_mode() ) ||
+			( get_post_type() == 'pea-site-builder' )
+		) {
+			$post_id = get_the_ID();
+			$post_id = \Elementor\Plugin::$instance->documents->get( $post_id, false )->get_settings( 'pea_demo_post_id' );
+			$post    = get_post( $post_id );
+			if ( ! $post ) return;
+		} else {
+			$post_id = get_the_ID();
+			$post    = get_post( $post_id );
+			if ( ! $post ) return;
 		}
 
-		if ( ( class_exists( "\Elementor\Plugin" ) && \Elementor\Plugin::$instance->editor->is_edit_mode() ) ||  ( class_exists( "\Elementor\Plugin" ) && \Elementor\Plugin::$instance->preview->is_preview_mode() ) || ( get_post_type() == 'pea-site-builder' ) ) {
-			$post_id = get_the_ID();
-        	$post_id = \Elementor\Plugin::$instance->documents->get($post_id, false)->get_settings('pea_demo_post_id');
-            $post = get_post( $post_id );
-            if ( ! $post ) {
-                return;
-            }
-        }else{
-            $post_id = get_the_ID();
-            $post = get_post($post_id);
-            if ( ! $post ) {
-                return;
-            }
-		} 
+		if ( ! comments_open( $post ) ) return;
+		if ( post_password_required( $post ) ) return;
 
-		$title = get_the_title($post);
-		$comments_number = get_comments_number($post_id);
-		// Get comments for the specific post
-		$comments = get_comments(array('post_id' => $post_id));
-		if (comments_open($post)) :
-            if ( post_password_required($post) ) {
-				return;
-			}
+		$title        = get_the_title( $post );
+		$actual_count = get_comments_number( $post_id );
+		$show_count   = $settings['show_comment_count'] === 'yes';
+		$show_title   = $settings['show_comment_form_title'] === 'yes';
+		$comments     = get_comments( array( 'post_id' => $post_id ) );
+		$label_single = ! empty( $settings['comments_text_1'] ) ? esc_html( $settings['comments_text_1'] ) : 'Comment';
+		$label_plural = ! empty( $settings['comments_text_2'] ) ? esc_html( $settings['comments_text_2'] ) : 'Comments';
+
 		?>
 		<div class="pea-single-post-comments-wrapper comments-area" id="comments">
-				<?php
-				// You can start editing here -- including this comment!
-				if ( $comments_number > 0 ) : ?>
+
+			<?php
+			// ── Comment area title ─────────────────────────────────────────────────
+			if ( $show_title ) :
+				if ( $actual_count > 0 ) : ?>
 					<div class="pea-heading-bor-bt">
-					<h5 class="comments-title">
-						<?php
-						if ( '1' === $comments_number ) {
-							/* translators: %s: post title */
-							printf( esc_html__( 'One thought on &ldquo;%s&rdquo;', 'unlimited-elementor-inner-sections-by-boomdevs' ), esc_html($title) );
-						} else {
-							printf(
-								   esc_html(
-									  /* translators: 1: number of comments, 2: post title */
-									 _nx( 
-										  '%1$s thought on &ldquo;%2$s&rdquo;',
-										  '%1$s thoughts on &ldquo;%2$s&rdquo;',
-										  $comments_number,
-										  'comments title',
-										  'unlimited-elementor-inner-sections-by-boomdevs'
-									   )
-								   ),
-								   esc_html (number_format_i18n( $comments_number ) ),
-								   esc_html($title)
-							);
-						}
-						?>
-					</h5>
+						<h5 class="comments-title">
+							<?php
+							if ( $show_count ) {
+								if ( 1 === (int) $actual_count ) {
+									printf( '1 %s on &ldquo;%s&rdquo;', $label_single, esc_html( $title ) );
+								} else {
+									printf( '%s %s on &ldquo;%s&rdquo;', esc_html( number_format_i18n( $actual_count ) ), $label_plural, esc_html( $title ) );
+								}
+							} else {
+								if ( 1 === (int) $actual_count ) {
+									printf( '%s on &ldquo;%s&rdquo;', $label_single, esc_html( $title ) );
+								} else {
+									printf( '%s on &ldquo;%s&rdquo;', $label_plural, esc_html( $title ) );
+								}
+							}
+							?>
+						</h5>
 					</div>
-			
-					<?php if ( $comments_number > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
-					<nav id="comment-nav-above" class="navigation comment-navigation" role="navigation">
-						<h2 class="screen-reader-text"><?php esc_html_e( 'Comment navigation', 'unlimited-elementor-inner-sections-by-boomdevs' ); ?></h2>
-						<div class="nav-links">
-			
-							<div class="nav-previous"><?php previous_comments_link( esc_html__( 'Older Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ) ); ?></div>
-							<div class="nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ) ); ?></div>
-			
-						</div><!-- .nav-links -->
-					</nav><!-- #comment-nav-above -->
-					<?php endif; // Check for comment navigation. ?>
-			
-					<ol class="comment-list">
-						<?php
-							wp_list_comments( array(
-								'style'      => 'ol',
-    							'type'  => 'all',
-							), $comments );
-						?>
-					</ol><!-- .comment-list -->
-			
-					<?php if ( $comments_number > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
-					<nav id="comment-nav-below" class="navigation comment-navigation" role="navigation">
-						<h5 class="screen-reader-text"><?php esc_html_e( 'Comment navigation', 'unlimited-elementor-inner-sections-by-boomdevs' ); ?></h5>
-						<div class="nav-links">
-			
-							<div class="nav-previous"><?php previous_comments_link( esc_html__( 'Older Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ) ); ?></div>
-							<div class="nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ) ); ?></div>
-			
-						</div><!-- .nav-links -->
-					</nav><!-- #comment-nav-below -->
+				<?php else : ?>
+					<div class="pea-heading-bor-bt">
+						<h5 class="comments-title">
+							<?php esc_html_e( 'No Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ); ?>
+						</h5>
+					</div>
+				<?php endif;
+			endif;
+
+			// ── Pagination above ───────────────────────────────────────────────────
+			if ( $actual_count > 1 && get_option( 'page_comments' ) ) : ?>
+				<nav id="comment-nav-above" class="navigation comment-navigation" role="navigation">
+					<h2 class="screen-reader-text"><?php esc_html_e( 'Comment navigation', 'unlimited-elementor-inner-sections-by-boomdevs' ); ?></h2>
+					<div class="nav-links">
+						<div class="nav-previous"><?php previous_comments_link( esc_html__( 'Older Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ) ); ?></div>
+						<div class="nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ) ); ?></div>
+					</div>
+				</nav>
+			<?php endif;
+
+			// ── Comment list ───────────────────────────────────────────────────────
+			if ( $actual_count > 0 ) : ?>
+				<ol class="comment-list">
 					<?php
-			
-				endif; // Check for comment navigation.
-				endif; // Check for have_comments().
-				
-				if ( ! comments_open($post) && get_comments_number($post) && post_type_supports( get_post_type(), 'comments' ) ) : ?>
-					<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'unlimited-elementor-inner-sections-by-boomdevs' ); ?></p>
-				<?php
-				endif;
-				comment_form( array(), $post);
-				?>
+					wp_list_comments( array(
+						'style'       => 'ol',
+						'type'        => 'all',
+						'avatar_size' => ( $settings['comments_avatar'] === 'yes' ) ? 60 : 0,
+					), $comments );
+					?>
+				</ol>
+			<?php endif;
+
+			// ── Pagination below ───────────────────────────────────────────────────
+			if ( $actual_count > 1 && get_option( 'page_comments' ) ) : ?>
+				<nav id="comment-nav-below" class="navigation comment-navigation" role="navigation">
+					<h5 class="screen-reader-text"><?php esc_html_e( 'Comment navigation', 'unlimited-elementor-inner-sections-by-boomdevs' ); ?></h5>
+					<div class="nav-links">
+						<div class="nav-previous"><?php previous_comments_link( esc_html__( 'Older Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ) ); ?></div>
+						<div class="nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', 'unlimited-elementor-inner-sections-by-boomdevs' ) ); ?></div>
+					</div>
+				</nav>
+			<?php endif;
+
+			if ( ! comments_open( $post ) && get_comments_number( $post ) && post_type_supports( get_post_type(), 'comments' ) ) : ?>
+				<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'unlimited-elementor-inner-sections-by-boomdevs' ); ?></p>
+			<?php endif;
+
+			// ── Comment form fields filter (author / email / url) ──────────────────
+			add_filter( 'comment_form_default_fields', function( $fields ) use ( $settings ) {
+
+				$show_labels       = $settings['comment_form_labels'] === 'yes';
+				$show_placeholders = $settings['comment_form_input_placeholders'] === 'yes';
+				$req               = get_option( 'require_name_email' );
+
+				$author_label = $show_labels
+					? '<label for="author">' . esc_html__( 'Name', 'unlimited-elementor-inner-sections-by-boomdevs' ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label>'
+					: '';
+				$email_label  = $show_labels
+					? '<label for="email">' . esc_html__( 'Email', 'unlimited-elementor-inner-sections-by-boomdevs' ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label>'
+					: '';
+				$url_label    = $show_labels
+					? '<label for="url">' . esc_html__( 'Website', 'unlimited-elementor-inner-sections-by-boomdevs' ) . '</label>'
+					: '';
+
+				$author_ph = $show_placeholders ? esc_attr__( 'Your Name',    'unlimited-elementor-inner-sections-by-boomdevs' ) : '';
+				$email_ph  = $show_placeholders ? esc_attr__( 'Your Email',   'unlimited-elementor-inner-sections-by-boomdevs' ) : '';
+				$url_ph    = $show_placeholders ? esc_attr__( 'Website URL',  'unlimited-elementor-inner-sections-by-boomdevs' ) : '';
+
+				$fields['author'] = '<p class="comment-form-author">'
+					. $author_label
+					. '<input id="author" name="author" type="text" placeholder="' . $author_ph . '" size="30"' . ( $req ? ' required' : '' ) . ' /></p>';
+
+				$fields['email'] = '<p class="comment-form-email">'
+					. $email_label
+					. '<input id="email" name="email" type="email" placeholder="' . $email_ph . '" size="30"' . ( $req ? ' required' : '' ) . ' /></p>';
+
+				// Website field
+				if ( $settings['comment_form_website'] === 'yes' ) {
+					$fields['url'] = '<p class="comment-form-url">'
+						. $url_label
+						. '<input id="url" name="url" type="url" placeholder="' . $url_ph . '" size="30" /></p>';
+				} else {
+					unset( $fields['url'] );
+				}
+
+				// Cookie / save-info checkbox
+				if ( $settings['comment_form_cookie_check'] !== 'yes' ) {
+					unset( $fields['cookies'] );
+				}
+
+				return $fields;
+			} );
+
+			// ── Comment form defaults filter (textarea + title + submit) ───────────
+			add_filter( 'comment_form_defaults', function( $defaults ) use ( $settings ) {
+
+				$show_title   = $settings['show_comment_form_title'] === 'yes';
+				$show_labels       = $settings['comment_form_labels'] === 'yes';
+				$show_placeholders = $settings['comment_form_input_placeholders'] === 'yes';
+				$req               = get_option( 'require_name_email' );
+
+				// Comment textarea label
+				$comment_label = $show_labels
+					? '<label for="comment">' . esc_html__( 'Comment', 'unlimited-elementor-inner-sections-by-boomdevs' ) . ( $req ? ' <span class="required">*</span>' : '' ) . '</label>'
+					: '';
+				$comment_ph = $show_placeholders ? esc_attr__( 'Write your comment...', 'unlimited-elementor-inner-sections-by-boomdevs' ) : '';
+
+				$defaults['comment_field'] = '<p class="comment-form-comment">'
+					. $comment_label
+					. '<textarea id="comment" name="comment" cols="45" rows="8" placeholder="' . $comment_ph . '" required></textarea>'
+					. '</p>';
+
+				// Form title
+				$defaults['title_reply']    = ! empty( $settings['comment_form_title'] )
+					? esc_html( $settings['comment_form_title'] )
+					: esc_html__( 'Leave a Reply', 'unlimited-elementor-inner-sections-by-boomdevs' );
+				$defaults['title_reply_to'] = esc_html__( 'Leave a Reply to %s', 'unlimited-elementor-inner-sections-by-boomdevs' );
+
+				// Submit button
+				$defaults['label_submit'] = ! empty( $settings['comment_form_submit_text'] )
+					? esc_html( $settings['comment_form_submit_text'] )
+					: esc_html__( 'Submit', 'unlimited-elementor-inner-sections-by-boomdevs' );
+
+				return $defaults;
+			} );
+
+			comment_form( [], $post );
+			?>
+
 		</div><!-- #comments -->
-    <?php endif;  
+		<?php
 	}
 
-
-
-	private function render_demo_comment_template() {
+	protected function content_template() {
 		?>
 		<div class="pea-single-post-comments-wrapper comments-area" id="comments">
 
-			<div class="pea-heading-bor-bt">
-				<h5 class="comments-title">
-					<?php esc_html_e('2 thoughts on “Demo Post Title”', 'unlimited-elementor-inner-sections-by-boomdevs'); ?>
-				</h5>
-			</div>
+			<# if ( settings.show_comment_form_title === 'yes' ) { #>
+				<div class="pea-heading-bor-bt">
+					<h5 class="comments-title">
+
+						<# if ( settings.show_comment_count === 'yes' ) { #>
+							2
+						<# } #>
+
+						<# if ( settings.show_comment_count === 'yes' && settings.comments_text_2 ) { #>
+							{{ settings.comments_text_2 }}
+						<# } else { #>
+							Comments
+						<# } #>
+
+					</h5>
+				</div>
+			<# } #>
 
 			<ol class="comment-list">
 
 				<li class="comment">
 					<div class="comment-body">
-						<div class="comment-author vcard">
-							<img src="https://secure.gravatar.com/avatar/?d=mp" class="avatar" />
-							<b class="fn"><a href="#">John Doe</a></b>
-							<span class="says">says:</span>
-						</div>
+						<footer class="comment-meta">
+
+							<div class="comment-author vcard">
+
+								<# if ( settings.comments_avatar === 'yes' ) { #>
+									<img src="https://secure.gravatar.com/avatar/?d=mp" class="avatar" />
+								<# } #>
+
+								<b class="fn">
+									<a href="#">John Doe</a>
+								</b>
+
+								<span class="says">says:</span>
+
+							</div>
+
+							<div class="comment-metadata">
+								<a href="#">
+									<time datetime="2026-05-26T08:24:23+00:00">
+										May 26, 2026 at 8:24 am
+									</time>
+								</a>
+							</div>
+
+						</footer>
 
 						<div class="comment-content">
 							<p>This is a demo comment. You can style everything from Elementor.</p>
@@ -1101,16 +1348,39 @@ class PostComment extends Widget_Base {
 						<div class="reply">
 							<a href="#">Reply</a>
 						</div>
+
 					</div>
 				</li>
 
 				<li class="comment odd alt thread-odd thread-alt depth-1 parent">
+
 					<div class="comment-body">
-						<div class="comment-author vcard">
-							<img src="https://secure.gravatar.com/avatar/?d=mp" class="avatar" />
-							<b class="fn"><a href="#">Jane Smith</a></b>
-							<span class="says">says:</span>
-						</div>
+
+						<footer class="comment-meta">
+
+							<div class="comment-author vcard">
+
+								<# if ( settings.comments_avatar === 'yes' ) { #>
+									<img src="https://secure.gravatar.com/avatar/?d=mp" class="avatar" />
+								<# } #>
+
+								<b class="fn">
+									<a href="#">Jane Smith</a>
+								</b>
+
+								<span class="says">says:</span>
+
+							</div>
+
+							<div class="comment-metadata">
+								<a href="#">
+									<time datetime="2026-05-26T08:24:23+00:00">
+										May 26, 2026 at 8:24 am
+									</time>
+								</a>
+							</div>
+
+						</footer>
 
 						<div class="comment-content">
 							<p>This is another demo comment for design preview.</p>
@@ -1119,71 +1389,197 @@ class PostComment extends Widget_Base {
 						<div class="reply">
 							<a href="#">Reply</a>
 						</div>
+
 					</div>
+
 					<ol class="children">
+
 						<li class="comment odd alt depth-2">
+
 							<article class="comment-body">
+
 								<footer class="comment-meta">
+
 									<div class="comment-author vcard">
-										<img alt="" src="https://secure.gravatar.com/avatar/?d=mp" srcset="https://secure.gravatar.com/avatar/?d=mp" class="avatar avatar-32 photo" height="32" width="32" decoding="async">						
+
+										<# if ( settings.comments_avatar === 'yes' ) { #>
+											<img src="https://secure.gravatar.com/avatar/?d=mp" class="avatar avatar-32 photo" />
+										<# } #>
+
 										<b class="fn">
-											<a href="https://www.google.com" class="url" rel="ugc external nofollow">Testing Name</a>
-										</b> 
-										<span class="says">says:</span>					
+											<a href="#" class="url">Testing Name</a>
+										</b>
+
+										<span class="says">says:</span>
+
 									</div>
+
 									<div class="comment-metadata">
-										<a href=""><time datetime="2026-04-21T12:35:32+00:00">April 21, 2026 at 12:35 pm</time></a>
+										<a href="#">
+											<time datetime="2026-04-21T12:35:32+00:00">
+												April 21 at 12:35 pm
+											</time>
+										</a>
 									</div>
+
 								</footer>
 
 								<div class="comment-content">
 									<p>This is a nested reply comment to show the structure.</p>
 								</div>
 
-								<div class="reply"><a rel="nofollow" class="comment-reply-link" href="#" data-commentid="4" data-postid="364" data-belowelement="div-comment-4" data-respondelement="respond" data-replyto="Reply to Testing Name" aria-label="Reply to Testing Name">Reply</a></div>			
+								<div class="reply">
+									<a href="#" class="comment-reply-link">Reply</a>
+								</div>
+
 							</article>
+
 						</li>
+
 					</ol>
+
 				</li>
 
 			</ol>
 
 			<div class="comment-respond">
-				<h5 id="reply-title"><?php esc_html_e('Leave a Reply', 'unlimited-elementor-inner-sections-by-boomdevs'); ?></h5>
+
+				<# if ( settings.comment_form_title !== '' ) { #>
+					<h5 id="reply-title">
+						{{ settings.comment_form_title || 'Leave a Reply' }}
+					</h5>
+				<# } #>
+
 				<form id="commentform" class="comment-form">
+
 					<p class="comment-notes">
-						<span id="email-notes">Your email address will not be published.</span> 
+						<span id="email-notes">
+							Your email address will not be published.
+						</span>
+
 						<span class="required-field-message">
-							Required fields are marked 
+							Required fields are marked
 							<span class="required">*</span>
 						</span>
 					</p>
+
 					<p class="comment-form-comment">
-						<label for="comment">Comment <span class="required">*</span></label> 
-						<textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required=""></textarea>
+
+						<# if ( settings.comment_form_labels === 'yes' ) { #>
+							<label for="comment">
+								Comment <span class="required">*</span>
+							</label>
+						<# } #>
+
+						<textarea
+							id="comment"
+							name="comment"
+							cols="45"
+							rows="8"
+
+							<# if ( settings.comment_form_input_placeholders === 'yes' ) { #>
+								placeholder="Write your comment..."
+							<# } #>
+
+						></textarea>
+
 					</p>
+
 					<p class="comment-form-author">
-						<label for="author">Name <span class="required">*</span></label> 
-						<input id="author" name="author" type="text" value="" size="30" maxlength="245" autocomplete="name" required="">
+
+						<# if ( settings.comment_form_labels === 'yes' ) { #>
+							<label for="author">
+								Name <span class="required">*</span>
+							</label>
+						<# } #>
+
+						<input
+							id="author"
+							name="author"
+							type="text"
+
+							<# if ( settings.comment_form_input_placeholders === 'yes' ) { #>
+								placeholder="Your Name"
+							<# } #>
+						>
+
 					</p>
+
 					<p class="comment-form-email">
-						<label for="email">Email <span class="required">*</span></label>
-						<input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" autocomplete="email" required="">
+
+						<# if ( settings.comment_form_labels === 'yes' ) { #>
+							<label for="email">
+								Email <span class="required">*</span>
+							</label>
+						<# } #>
+
+						<input
+							id="email"
+							name="email"
+							type="email"
+
+							<# if ( settings.comment_form_input_placeholders === 'yes' ) { #>
+								placeholder="Your Email"
+							<# } #>
+						>
+
 					</p>
-					<p class="comment-form-url">
-						<label for="url">Website</label> 
-						<input id="url" name="url" type="url" value="" size="30" maxlength="200" autocomplete="url">
-					</p>
-					<p class="comment-form-cookies-consent">
-						<input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes">
-						<label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label>
-					</p>
+
+					<# if ( settings.comment_form_website === 'yes' ) { #>
+
+						<p class="comment-form-url">
+
+							<# if ( settings.comment_form_labels === 'yes' ) { #>
+								<label for="url">Website</label>
+							<# } #>
+
+							<input
+								id="url"
+								name="url"
+								type="url"
+
+								<# if ( settings.comment_form_input_placeholders === 'yes' ) { #>
+									placeholder="Website URL"
+								<# } #>
+							>
+
+						</p>
+
+					<# } #>
+
+					<# if ( settings.comment_form_cookie_check === 'yes' ) { #>
+
+						<p class="comment-form-cookies-consent">
+
+							<input
+								id="wp-comment-cookies-consent"
+								name="wp-comment-cookies-consent"
+								type="checkbox"
+								value="yes"
+							>
+
+							<label for="wp-comment-cookies-consent">
+								Save my name, email, and website in this browser for the next time I comment.
+							</label>
+
+						</p>
+
+					<# } #>
+
 					<p class="form-submit">
-						<input name="submit" type="submit" id="submit" class="submit" value="Post Comment">
-						<input type="hidden" name="comment_post_ID" value="364" id="comment_post_ID">
-						<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+
+						<input
+							name="submit"
+							type="submit"
+							id="submit"
+							class="submit"
+							value="{{ settings.comment_form_submit_text || 'Submit' }}"
+						>
+
 					</p>
+
 				</form>
+
 			</div>
 
 		</div>

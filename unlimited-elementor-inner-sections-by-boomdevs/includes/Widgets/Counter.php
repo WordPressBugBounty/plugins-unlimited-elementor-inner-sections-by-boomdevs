@@ -1076,7 +1076,7 @@ class Counter extends Widget_Base {
                         <?php } ?>
                     </div>
                     <?php if($settings['counter_title'] === 'yes') { ?>
-                        <<?php echo esc_attr($settings['counter_title_tag']); ?> class="pea-counter-title"><?php echo esc_html($settings['counter_title_text']) ?></<?php echo esc_attr($settings['counter_title_tag']); ?>>
+                        <<?php echo tag_escape($settings['counter_title_tag']); ?> class="pea-counter-title"><?php echo esc_html($settings['counter_title_text']) ?></<?php echo tag_escape($settings['counter_title_tag']); ?>>
                     <?php } ?>
                 </div>
             </div>

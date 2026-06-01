@@ -1642,9 +1642,9 @@ class InfoBox extends Widget_Base {
                     </div>
                 </div>
                 <div class="pea-info-box-content-wrapper">
-                    <<?php echo esc_attr($settings['title_tag']); ?> class="pea-info-box-title " >
+                    <<?php echo tag_escape($settings['title_tag']); ?> class="pea-info-box-title " >
                         <?php echo wp_kses_post($title); ?>
-                    </<?php echo esc_attr($settings['title_tag']); ?>>
+                    </<?php echo tag_escape($settings['title_tag']); ?>>
                     <?php if($settings['show_description'] === 'yes'){ ?>
                         <p class="pea-info-box-description " >
                             <?php echo wp_kses_post($description); ?>

@@ -47,6 +47,19 @@ class PostCategories extends Widget_Base {
 			]
 		);
 
+        $this->add_control(
+            'post_taxonomy_source',
+            [
+                'label'   => esc_html__('Taxonomy source', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'type'    => Controls_Manager::SELECT,
+                'default' => 'category',
+                'options' => [
+                    'category' => esc_html__('Categories', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                    'post_tag' => esc_html__('Tags', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                ],
+            ]
+        );
+
 		$this->add_control(
 			'post_categories_flex_css',
 			[
@@ -96,7 +109,7 @@ class PostCategories extends Widget_Base {
         $this->start_controls_section(
             'post_categories_styling', 
             [
-                'label' => esc_html__('Category', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                'label' => esc_html__('Term', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
@@ -215,7 +228,7 @@ class PostCategories extends Widget_Base {
                             'label' => esc_html__('Hover Color', 'unlimited-elementor-inner-sections-by-boomdevs'),
                             'type' => Controls_Manager::COLOR,
                             'selectors' => [
-                                '{{WRAPPER}} .pea-post-grid-wrapper:hover .pea-single-post-category' => 'color: {{VALUE}}',
+                                '{{WRAPPER}} .pea-single-post-categories-wrapper:hover .pea-single-post-category' => 'color: {{VALUE}}',
                             ],
                         ]
                     );
@@ -226,7 +239,7 @@ class PostCategories extends Widget_Base {
                             'label' => esc_html__('Background Color', 'unlimited-elementor-inner-sections-by-boomdevs'),
                             'type' => Controls_Manager::COLOR,
                             'selectors' => [
-                                '{{WRAPPER}} .pea-post-grid-wrapper:hover .pea-single-post-category' => 'background-color: {{VALUE}}',
+                                '{{WRAPPER}} .pea-single-post-categories-wrapper:hover .pea-single-post-category' => 'background-color: {{VALUE}}',
                             ],
                         ]
                     );
@@ -237,7 +250,7 @@ class PostCategories extends Widget_Base {
                             'label' => esc_html__('Border Color', 'unlimited-elementor-inner-sections-by-boomdevs'),
                             'type' => Controls_Manager::COLOR,
                             'selectors' => [
-                                '{{WRAPPER}} .pea-post-grid-wrapper:hover .pea-single-post-category' => 'border-color: {{VALUE}};',
+                                '{{WRAPPER}} .pea-single-post-categories-wrapper:hover .pea-single-post-category' => 'border-color: {{VALUE}};',
                             ]
                         ]
                     );
@@ -323,7 +336,10 @@ class PostCategories extends Widget_Base {
                 return;
             }
 		} 
-		$cats = wp_get_object_terms($post_id, 'category');  ?>
+
+        $source    = $settings['post_taxonomy_source'] ?? 'category';
+
+		$cats = wp_get_object_terms($post_id, $source);  ?>
 		<div class="pea-single-post-categories-wrapper">
 			<?php if (!empty($cats) && !is_wp_error($cats)) { ?> 
 				<?php foreach ($cats as $cat) {
@@ -331,7 +347,9 @@ class PostCategories extends Widget_Base {
 					$cat_name = $cat->name; 
 					echo '<a href="' . esc_url($cats_link) . '" class="pea-single-post-category">'.esc_html($cat_name).'</a>';
 				} ?>
-			<?php } else{ echo "Categories has not been defined."; } ?>
+			<?php } else{ 
+                echo "No terms have been assigned to this post."; 
+            } ?>
 		</div>
 	<?php }
 }

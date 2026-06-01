@@ -5,6 +5,9 @@
     border-radius: 4px;
     padding: 0;
 }
+.pea-single-post-comments-wrapper input[type=email], .pea-single-post-comments-wrapper input[type=text], .pea-single-post-comments-wrapper input[type=url], .pea-single-post-comments-wrapper textarea {
+    border: none;
+}
 [data-widget_type="pea_post_comment.default"] .pea-single-post-comments-wrapper.comments-area::before {
     background: unset;
 }
@@ -75,6 +78,8 @@
     -ms-flex-direction: row;
     flex-direction: row;
     align-items: center;
+    margin-bottom: 0;
+    margin-block-end: 0px;
 }
 .pea-single-post-comments-wrapper.comments-area img.avatar {
     border-radius: 60%;
@@ -116,8 +121,9 @@
     transition: 0.3s ease-in-out 0s;
 }
 .pea-single-post-comments-wrapper.comments-area .reply a:hover {
-    background: #135e96;
-    border-color: #135e96;
+    background: transparent;
+    border-color: transparent;
+    text-decoration: underline;
 }
 .pea-single-post-comments-wrapper form p {
     margin-top: 0;

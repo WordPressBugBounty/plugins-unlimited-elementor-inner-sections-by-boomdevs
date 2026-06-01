@@ -3225,7 +3225,7 @@ class FlipBox extends Widget_Base {
                                     <?php if($front_title_show === 'yes'){  
                                         $front_title        = isset($settings['front_title_text']) ? $settings['front_title_text'] : '' ;  
                                         $front_title_tag    = isset($settings['front_title_tag']) ? $settings['front_title_tag'] : '' ;  ?>
-                                        <<?php echo esc_attr($front_title_tag); ?> class="pea-heading-text"><?php echo esc_html($front_title); ?></<?php echo esc_attr($front_title_tag); ?>>
+                                        <<?php echo tag_escape($front_title_tag); ?> class="pea-heading-text"><?php echo esc_html($front_title); ?></<?php echo tag_escape($front_title_tag); ?>>
                                     <?php } ?>
                                     <?php if($front_desc_show === 'yes'){ 
                                         $front_desc         = isset($settings['front_desc_text']) ? $settings['front_desc_text'] : '' ;?>
@@ -3278,7 +3278,7 @@ class FlipBox extends Widget_Base {
                                     <?php if($back_title_show === 'yes'){ 
                                         $back_title         = isset($settings['back_title_text']) ? $settings['back_title_text'] : '' ;  
                                         $back_title_tag     = isset($settings['back_title_tag']) ? $settings['back_title_tag'] : '' ;  ?>
-                                        <<?php echo esc_attr($back_title_tag); ?> class="pea-heading-text"><?php echo esc_html($back_title); ?></<?php echo esc_attr($back_title_tag); ?>>
+                                        <<?php echo tag_escape($back_title_tag); ?> class="pea-heading-text"><?php echo esc_html($back_title); ?></<?php echo tag_escape($back_title_tag); ?>>
                                     <?php } ?>
                                     <?php if($back_desc_show === 'yes'){ 
                                         $back_desc          = isset($settings['back_desc_text']) ? $settings['back_desc_text'] : '' ;?>

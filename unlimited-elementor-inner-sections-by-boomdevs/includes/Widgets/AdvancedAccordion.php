@@ -1393,7 +1393,7 @@ class AdvancedAccordion extends Widget_Nested_Base
                                                 <?php } ?>
                                             </div>
                                         <?php } ?>
-                                        <<?php echo esc_attr($settings['accordion_item_title_tag']); ?> class="pea-accordion-title"><?php echo esc_html($accordion['accordion_title']); ?></<?php echo esc_attr($settings['accordion_item_title_tag']); ?>>
+                                        <<?php echo tag_escape($settings['accordion_item_title_tag']); ?> class="pea-accordion-title"><?php echo esc_html($accordion['accordion_title']); ?></<?php echo tag_escape($settings['accordion_item_title_tag']); ?>>
                                         <?php if ($accordion['accordion_item_title_suffix_choose_icon_or_img'] !== 'none') { ?>
                                             <div class="pea-accordion-title-suffix">
                                                 <?php if ($accordion['accordion_item_title_suffix_choose_icon_or_img'] === 'icon') { ?>

@@ -13,14 +13,16 @@
 	font-size: 15px;
     font-weight: normal;
 }
-.pea-single-post-meta .pea-post-meta-item:not(.pea-post-meta-author) {
+.pea-single-post-meta .pea-post-meta-item {
     gap: 0.5rem;
+    transition: color 0.3s ease;
 }
 .pea-single-post-meta .pea-post-meta-item a{
     display: flex;
     align-items: center;
     color: #616161;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 .pea-single-post-meta .pea-post-meta-item a:hover{
     color: #3991FF;
@@ -30,8 +32,10 @@
     font-size: 14px;
     margin-right: 0.5rem;
 }
-.pea-single-post-meta .pea-post-meta-author-pic img {
-    margin-right: 8px;
+span.pea-post-meta-icon{
+    display: flex;
+}
+.pea-single-post-meta  img {
     margin-left: 1px;
     display: unset;  
     box-shadow:0 0 10px 0 #00000010;

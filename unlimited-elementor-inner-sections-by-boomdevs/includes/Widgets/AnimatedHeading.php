@@ -318,7 +318,7 @@ class AnimatedHeading extends Widget_Base
         <div class="pea-animated-heading-wrapper" data-animation="<?php echo esc_attr($animationType); ?>"
             style=" text-align:<?php echo esc_attr($alignment); ?>;">
 
-            <<?php echo esc_attr($htmlTag); ?> class="pea-animated-heading-text">
+            <<?php echo tag_escape($htmlTag); ?> class="pea-animated-heading-text">
 
                 <span class="pea-animated-heading-prefix-text pea-animated-normal-text ">
                     <?php echo esc_html($prefixText); ?>
@@ -347,7 +347,7 @@ class AnimatedHeading extends Widget_Base
                     <?php echo esc_html($suffixText); ?>
                 </span>
 
-            </<?php echo esc_attr($htmlTag); ?>>
+            </<?php echo tag_escape($htmlTag); ?>>
         </div>
 <?php
     }

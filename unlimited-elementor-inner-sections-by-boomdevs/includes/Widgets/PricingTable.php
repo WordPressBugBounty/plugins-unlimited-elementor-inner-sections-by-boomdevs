@@ -3290,10 +3290,10 @@ class PricingTable extends Widget_Base {
                     <?php if(!empty($title) || !empty($subtitle)){ ?>
                         <div class="pea-pricing-title-wrapper">
                             <?php if(!empty($title)){ ?>
-                                <<?php echo esc_attr($title_tag); ?> class="pea-pricing-title"><?php echo esc_html($title); ?></<?php echo esc_attr($title_tag); ?>>
+                                <<?php echo tag_escape($title_tag); ?> class="pea-pricing-title"><?php echo esc_html($title); ?></<?php echo tag_escape($title_tag); ?>>
                             <?php } ?>
                             <?php if(!empty($subtitle)){ ?>
-                                <<?php echo esc_attr($subtitle_tag); ?> class="pea-pricing-subtitle"><?php echo esc_html($subtitle); ?></<?php echo esc_attr($subtitle_tag); ?>>
+                                <<?php echo tag_escape($subtitle_tag); ?> class="pea-pricing-subtitle"><?php echo esc_html($subtitle); ?></<?php echo tag_escape($subtitle_tag); ?>>
                             <?php } ?>
                         </div>
                     <?php } ?>

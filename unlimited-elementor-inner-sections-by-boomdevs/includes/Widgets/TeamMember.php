@@ -2635,9 +2635,9 @@ class TeamMember extends Widget_Base {
                 </div>
                 <div class="pea-team-member-content-wrapper">
                     <div class="pea-team-member-content">
-                        <<?php echo esc_attr($name_tag); ?> class="pea-team-member-name">
+                        <<?php echo tag_escape($name_tag); ?> class="pea-team-member-name">
                             <?php echo esc_html($name); ?>
-                        </<?php echo esc_attr($name_tag); ?>>
+                        </<?php echo tag_escape($name_tag); ?>>
                         <span class="pea-team-member-designation">
                             <?php echo esc_html($designation); ?>
                         </span>
