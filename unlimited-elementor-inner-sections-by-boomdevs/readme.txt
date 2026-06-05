@@ -1,9 +1,8 @@
 === Prime Elementor Addons – Lightweight Elementor Widgets for Faster Pages ===
-Plugin Name: Prime Elementor Addons – Lightweight Elementor Widgets for Faster Pages
 tags: elementor, elementor-addon, elementor-widgets, accordion, tabs
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 Requires PHP: 7.4
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -296,6 +295,22 @@ It's very easy and straight forward to install this plugin. But before installin
 4.  Activate the plugin through the 'Plugins' screen form your WordPress website dashboard.
 
 == Changelog ==
+
+= 1.3.5 – 05 June 2026 =
+* New: Added **Mini Cart** widget – display WooCommerce cart contents in a stylish menu-style layout with extensive customization options.
+* Improvement: Added **Post Tags** support in the Post Categories widget.
+* Improvement: Added **Estimated Reading Time** to the Post Meta widget.
+* Improvement: Added date format presets and custom format options to the Archive Title widget.
+* Improvement: Added skeleton loading to the Site Builder.
+* Improvement: Enhanced Site Builder dashboard with unique template preview SVGs.
+* Improvement: Expanded the Post Comments widget with additional content options and improvements.
+* Improvement: Changed the default alignment to center in the Archive Title widget.
+* Improvement: Updated the fallback message in the Post Categories widget when no terms exist.
+* Improvement: Fixed hover styling selector issues in the Post Categories widget.
+* Improvement: Resolved React console warnings for SVG icons in the admin dashboard by correcting JSX properties.
+* Improvement: Increased the demo posts retrieval query limit in helper functions from 10 to 20.
+* Improvement: General bug fixes, performance optimizations, and stability improvements.
+
 
 = 1.3.4 – 01 June 2026 =
 * Security: Patched Authenticated Stored Cross-Site Scripting (XSS) vulnerability via Widget HTML Tag Settings (CVE-2026-8677).

@@ -14,6 +14,7 @@ use PrimeElementorAddons\Extensions\ExtensionsManager;
 use PrimeElementorAddons\Core\AnimationFileSupport;
 use PrimeElementorAddons\Core\SupportSvg;
 use PrimeElementorAddons\Core\TaxImageSupport;
+
 final class Plugin
 {
 
@@ -22,7 +23,7 @@ final class Plugin
      *
      * @var string
      */
-    const VERSION = '1.3.4';
+    const VERSION = '1.3.5';
 
     /**
      * Plugin slug
@@ -163,7 +164,6 @@ final class Plugin
 
         // Backward compatible with Unlimited elementor inner sections by boomdevs 
         $UEIS = new UnlimitedElementorInnerSections();
-
     }
 
     public function init_site_builder()
@@ -182,7 +182,7 @@ final class Plugin
         add_action('wp_enqueue_scripts', [$this, 'stabilize_elementor_modules_namespace'], 101);
         add_filter('script_loader_tag', [$this, 'normalize_elementor_script_tag'], 9999, 3);
         add_action('elementor/widgets/register', [$this, 'register_widgets']);
-        
+
         add_action('elementor/controls/register', [$this, 'register_custom_controls']);
         add_action('elementor/elements/categories_registered', [$this, 'register_prime_elementor_addons_category']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_widget_styles'], 998);
@@ -208,32 +208,39 @@ final class Plugin
         
         add_action('wp_ajax_pea_product_quick_view', [$this, 'product_quick_view']);
         add_action('wp_ajax_nopriv_pea_product_quick_view', [$this, 'product_quick_view']);
-        
-        // ─────────────────────────────────────────────────────────────────────────────
-          // 3. AJAX: SEARCH TEMPLATES
-          // Called by the editor when the user types in the Choose Template search box.
-          // Returns up to 20 matching Elementor templates as JSON.
-          // ─────────────────────────────────────────────────────────────────────────────
-          add_action(
-              'wp_ajax_pea_search_templates',
-              [ '\PrimeElementorAddonsPro\Widgets\Template', 'ajax_search_templates' ]
-          );
+        add_action('wp_ajax_pea_remove_cart_item', [$this, 'remove_cart_item_ajax']);
+        add_action('wp_ajax_nopriv_pea_remove_cart_item', [$this, 'remove_cart_item_ajax']);
+        add_action('wc_ajax_pea_remove_cart_item', [$this, 'remove_cart_item_ajax']);
 
-         
-          // ─────────────────────────────────────────────────────────────────────────────
-          // When a template is rendered inside the Template Widget, Elementor needs
-          // to know to enqueue the inner widgets' assets too.
-          // ─────────────────────────────────────────────────────────────────────────────
-          add_action( 'elementor/frontend/widget/before_render', function ( $element ) {
-              if ( 'pea_template' !== $element->get_name() ) return;
-           
-              $template_id = (int) $element->get_settings( 'template_id' );
-              if ( ! $template_id ) return;
-           
-              // Tell Elementor this template's content is being displayed
-              // so it registers the necessary scripts/styles for its inner widgets.
-              \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $template_id );
-          } );
+        // ─────────────────────────────────────────────────────────────────────────────
+        // 3. AJAX: SEARCH TEMPLATES
+        // Called by the editor when the user types in the Choose Template search box.
+        // Returns up to 20 matching Elementor templates as JSON.
+        // ─────────────────────────────────────────────────────────────────────────────
+        add_action(
+            'wp_ajax_pea_search_templates',
+            ['\PrimeElementorAddonsPro\Widgets\Template', 'ajax_search_templates']
+        );
+
+
+        // ─────────────────────────────────────────────────────────────────────────────
+        // When a template is rendered inside the Template Widget, Elementor needs
+        // to know to enqueue the inner widgets' assets too.
+        // ─────────────────────────────────────────────────────────────────────────────
+        add_action('elementor/frontend/widget/before_render', function ($element) {
+            if ('pea_template' !== $element->get_name()) return;
+
+            $template_id = (int) $element->get_settings('template_id');
+            if (! $template_id) return;
+
+            // Tell Elementor this template's content is being displayed
+            // so it registers the necessary scripts/styles for its inner widgets.
+            \Elementor\Plugin::$instance->frontend->get_builder_content_for_display($template_id);
+        });
+
+
+        // WooCommerce AJAX fragments handle korar filter hook
+        add_filter('woocommerce_add_to_cart_fragments', [$this, 'pea_mini_cart_ajax_fragments_update']);
     }
 
     public function extensions_manager()
@@ -421,7 +428,6 @@ final class Plugin
             );
 
             $button_text = esc_html__('Activate Elementor', 'unlimited-elementor-inner-sections-by-boomdevs');
-
         } else {
 
             // Install Elementor
@@ -518,7 +524,6 @@ final class Plugin
                 if (class_exists($class)) {
                     $widgets_manager->register(new $class());
                 }
-
             } elseif ($widget == true && $widgetType == 'pro' && PEA_IS_PRO_ACTIVE == true && defined('PEA_PRO_LICENSE_ACTIVE') && PEA_PRO_LICENSE_ACTIVE == true) {
 
                 $class_name = $allwidgets[$widgetkey]['class'];
@@ -530,11 +535,11 @@ final class Plugin
             }
         }
     }
-    
+
     public function register_custom_controls($controls_manager)
     {
         $controls_manager->register(new \PrimeElementorAddons\Controls\SortableMultiSelectControl());
-        if ( ! \Elementor\Plugin::$instance->controls_manager->get_control_groups( \PrimeElementorAddons\Controls\GradientControl::get_type() ) ) {
+        if (! \Elementor\Plugin::$instance->controls_manager->get_control_groups(\PrimeElementorAddons\Controls\GradientControl::get_type())) {
             \Elementor\Plugin::$instance->controls_manager->add_group_control(
                 \PrimeElementorAddons\Controls\GradientControl::get_type(),
                 new \PrimeElementorAddons\Controls\GradientControl()
@@ -590,7 +595,7 @@ final class Plugin
             ['prismjs'],
             '1.29.0'
         );
-        
+
         $widgets = [
             'advanced-button',
             'advanced-heading',
@@ -638,6 +643,7 @@ final class Plugin
             'post-comment',
             'template',
             'pdf-viewer',
+            "mini-cart",
 
             // add all your widgets here
         ];
@@ -714,6 +720,7 @@ final class Plugin
             'template',
             'pdf-viewer',
             "code-snippet",
+            "mini-cart",
             // add all your widgets here
         ];
 
@@ -795,7 +802,7 @@ final class Plugin
 
         foreach ($widgets as $widget) {
             $dependencies = ['jquery', 'elementor-frontend'];
-            if ('product-grid' === $widget && wp_script_is('wc-add-to-cart', 'registered')) {
+            if (('product-grid' === $widget || 'mini-cart' === $widget) && wp_script_is('wc-add-to-cart', 'registered')) {
                 $dependencies[] = 'wc-add-to-cart';
             }
             if ('rive-animation' === $widget && $rive_runtime_registered) {
@@ -849,8 +856,8 @@ final class Plugin
             'peaTemplateData',
             [
                 'adminUrl' => admin_url(),
-                'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
-                'nonce'    => wp_create_nonce( 'pea_template_nonce' ),
+                'ajaxUrl'  => admin_url('admin-ajax.php'),
+                'nonce'    => wp_create_nonce('pea_template_nonce'),
             ]
         );
 
@@ -871,7 +878,8 @@ final class Plugin
     }
 
     // method for widget script localization
-    public function localize_widget_scripts() {
+    public function localize_widget_scripts()
+    {
         wp_localize_script('prime-elementor-addons--post-grid', 'PeaAjax', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('prime_elementor_addons_nonce')
@@ -886,6 +894,11 @@ final class Plugin
                 'added' => esc_html__('Added', 'unlimited-elementor-inner-sections-by-boomdevs'),
                 'error' => esc_html__('Error', 'unlimited-elementor-inner-sections-by-boomdevs'),
             ],
+        ]);
+
+        wp_localize_script('prime-elementor-addons--mini-cart', 'PeaMiniCart', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('pea_mini_cart_nonce'),
         ]);
     }
 
@@ -951,17 +964,72 @@ final class Plugin
                     data-pea-processing-text="<?php echo esc_attr__('Processing', 'unlimited-elementor-inner-sections-by-boomdevs'); ?>"
                     data-pea-added-text="<?php echo esc_attr__('Added', 'unlimited-elementor-inner-sections-by-boomdevs'); ?>"
                     aria-label="<?php echo esc_attr(wp_strip_all_tags($product->add_to_cart_description())); ?>"
-                    rel="nofollow"
-                ><?php echo esc_html($product->add_to_cart_text()); ?></a>
+                    rel="nofollow"><?php echo esc_html($product->add_to_cart_text()); ?></a>
                 <?php echo wp_kses_post(sprintf('<a class="pea-quick-view-modal__view-product" href="%1$s">%2$s</a>', esc_url(get_permalink($product_id)), esc_html__('View Product', 'unlimited-elementor-inner-sections-by-boomdevs'))); ?>
             </div>
         </div>
-        <?php
+<?php
 
         wp_send_json_success(['html' => ob_get_clean()]);
     }
 
-	function select_testing_content($element) {
+    public function remove_cart_item_ajax()
+    {
+        if (!check_ajax_referer('pea_mini_cart_nonce', 'nonce', false)) {
+            wp_send_json_error(['message' => esc_html__('Invalid security token.', 'unlimited-elementor-inner-sections-by-boomdevs')]);
+        }
+
+        $cart_item_key = sanitize_text_field($_POST['cart_item_key'] ?? '');
+
+        if (class_exists('WooCommerce') && !empty($cart_item_key)) {
+            $cart = WC()->cart;
+            if ($cart && $cart->remove_cart_item($cart_item_key)) {
+                // Return refreshed fragments
+                \WC_AJAX::get_refreshed_fragments();
+            }
+        }
+
+        wp_send_json_error(['message' => esc_html__('Failed to remove item.', 'unlimited-elementor-inner-sections-by-boomdevs')]);
+    }
+
+    public function pea_mini_cart_ajax_fragments_update($fragments)
+    {
+        if (!class_exists('WooCommerce')) {
+            return $fragments;
+        }
+
+        // Cart Count Badge
+        ob_start();
+        ?>
+        <span class="pea_mini_cart_badge">
+            <?php echo esc_html(WC()->cart->get_cart_contents_count()); ?>
+        </span>
+        <?php
+        $fragments['span.pea_mini_cart_badge'] = ob_get_clean();
+
+        // Subtotal Amount (in trigger button)
+        ob_start();
+        ?>
+        <span class="pea_mini_cart_subtotal_amount">
+            <?php echo WC()->cart->get_cart_subtotal(); ?>
+        </span>
+        <?php
+        $fragments['span.pea_mini_cart_subtotal_amount'] = ob_get_clean();
+
+        // Mini Cart Content Wrapper
+        ob_start();
+        ?>
+        <div class="pea_mini_cart_content_wrapper">
+            <?php echo \PrimeElementorAddons\Widgets\MiniCart::get_mini_cart_inner_content_html(); ?>
+        </div>
+        <?php
+        $fragments['div.pea_mini_cart_content_wrapper'] = ob_get_clean();
+
+        return $fragments;
+    }
+
+    function select_testing_content($element)
+    {
         $post_type = get_post_type();
         if ($post_type == 'pea-site-builder') {
             $element->start_controls_section(
@@ -973,7 +1041,7 @@ final class Plugin
             );
 
             $element->add_control(
-                'pea_demo_post_id', 
+                'pea_demo_post_id',
                 [
                     'label' => __('Choose Post for Demo', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'type' => \Elementor\Controls_Manager::SELECT,
@@ -984,7 +1052,7 @@ final class Plugin
             );
 
             $element->end_controls_section();
- 
+
             $element->start_controls_section(
                 'pea_demo_archive_post_section',
                 [
@@ -994,86 +1062,87 @@ final class Plugin
             );
 
             $element->add_control(
-                'pea_demo_archive_select', 
+                'pea_demo_archive_select',
                 [
                     'label' => __('Choose Archive Type for Demo', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'type' => \Elementor\Controls_Manager::SELECT,
                     'label_block' => true,
                     'multiple' => false,
                     'options' => [
-                        'category' => esc_html__( 'Category', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                        'tag' => esc_html__( 'Tag', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                        'author'  => esc_html__( 'Author', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                        'date'  => esc_html__( 'Date', 'unlimited-elementor-inner-sections-by-boomdevs' ),
-                        'search'  => esc_html__( 'Search Result', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                        'category' => esc_html__('Category', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                        'tag' => esc_html__('Tag', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                        'author'  => esc_html__('Author', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                        'date'  => esc_html__('Date', 'unlimited-elementor-inner-sections-by-boomdevs'),
+                        'search'  => esc_html__('Search Result', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     ],
                 ]
             );
 
             $element->add_control(
-                'pea_demo_cat_archive_select', 
+                'pea_demo_cat_archive_select',
                 [
                     'label' => __('Choose Category for Archive Post Demo', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'type' => \Elementor\Controls_Manager::SELECT,
                     'label_block' => true,
                     'multiple' => false,
-                    'options' => Helper::get_categories( $demo = 1 ),
-                    'condition' =>[
-                        'pea_demo_archive_select' => 'category', 
+                    'options' => Helper::get_categories($demo = 1),
+                    'condition' => [
+                        'pea_demo_archive_select' => 'category',
                     ],
                 ]
             );
 
             $element->add_control(
-                'pea_demo_tag_archive_select', 
+                'pea_demo_tag_archive_select',
                 [
                     'label' => __('Choose Tag for Archive Post Demo', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'type' => \Elementor\Controls_Manager::SELECT,
                     'label_block' => true,
                     'multiple' => false,
-                    'options' => Helper::get_tags( $demo = 1 ),
-                    'condition' =>[
-                        'pea_demo_archive_select' => 'tag', 
+                    'options' => Helper::get_tags($demo = 1),
+                    'condition' => [
+                        'pea_demo_archive_select' => 'tag',
                     ],
                 ]
             );
 
             $element->add_control(
-                'pea_demo_author_archive_select', 
+                'pea_demo_author_archive_select',
                 [
                     'label' => __('Choose Author for Archive Post Demo', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'type' => \Elementor\Controls_Manager::SELECT,
                     'label_block' => true,
                     'multiple' => false,
-                    'options' => Helper::get_all_authors( $demo = 0 ),
-                    'condition' =>[
-                        'pea_demo_archive_select' => 'author', 
+                    'options' => Helper::get_all_authors($demo = 0),
+                    'condition' => [
+                        'pea_demo_archive_select' => 'author',
                     ],
                 ]
             );
 
             $element->add_control(
-                'pea_demo_date_year_archive_select', 
+                'pea_demo_date_year_archive_select',
                 [
                     'label' => __('Choose Category for Archive Post Demo', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'type' => \Elementor\Controls_Manager::SELECT,
                     'label_block' => true,
                     'multiple' => false,
                     'options' => Helper::get_post_years(),
-                    'condition' =>[
-                        'pea_demo_archive_select' => 'date', 
+                    'condition' => [
+                        'pea_demo_archive_select' => 'date',
                     ],
                 ]
             );
 
             $element->add_control(
-                'pea_demo_search_result_archive_select', [
-                    'label' => __( 'Demo Search', 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                'pea_demo_search_result_archive_select',
+                [
+                    'label' => __('Demo Search', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'type' => \Elementor\Controls_Manager::TEXT,
-                    'default' => __( 'Hello' , 'unlimited-elementor-inner-sections-by-boomdevs' ),
+                    'default' => __('Hello', 'unlimited-elementor-inner-sections-by-boomdevs'),
                     'label_block' => true,
-                    'condition' =>[
-                        'pea_demo_archive_select' => 'search', 
+                    'condition' => [
+                        'pea_demo_archive_select' => 'search',
                     ],
                 ]
             );
@@ -1372,17 +1441,20 @@ final class Plugin
         return $config;
     }
 
-    public function rive_and_lottie_support(){
-		AnimationFileSupport::get_instance();
+    public function rive_and_lottie_support()
+    {
+        AnimationFileSupport::get_instance();
     }
 
-    public function svg_support(){
-		SupportSvg::get_instance();
+    public function svg_support()
+    {
+        SupportSvg::get_instance();
     }
 
 
 
-    public function taxonomy_image_support(){
-		TaxImageSupport::get_instance();
+    public function taxonomy_image_support()
+    {
+        TaxImageSupport::get_instance();
     }
 }
